@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Spawner : MonoBehaviour{
+public class EnemySpawner : MonoBehaviour{
 
     [SerializeField] Turtle turtle;
 
@@ -21,7 +21,7 @@ public class Enemy_Spawner : MonoBehaviour{
         if (spawn && timePassed > timeNeeded) {
             Turtle newTurtle = Instantiate(turtle, transform.position, transform.rotation) as Turtle;
             newTurtle.transform.parent = transform;
-
+            FindObjectOfType<GameHandler>().ChangeEnemyNumber(1);   // Let GH about spawned enemy
             timeNeeded = Random.Range(0.5f, 3f);    // Get new random time
             timePassed = 0; // Reset Timer
         }

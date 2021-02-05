@@ -6,6 +6,8 @@ public class Player : MonoBehaviour{
 
     [SerializeField] Projectile projectile;
     [SerializeField] GameObject gunBarrel;
+    [SerializeField] AudioSource fireSound;
+    [SerializeField] AudioSource deadSound;
 
     bool fire;
 
@@ -18,7 +20,7 @@ public class Player : MonoBehaviour{
         if (fire) {
             Projectile newProjectile = Instantiate(projectile, gunBarrel.transform.position, transform.rotation) as Projectile;
             newProjectile.transform.parent = transform;
-            GetComponent<AudioSource>().Play();
+            fireSound.Play();
 
             fire = false;
         }
@@ -28,7 +30,10 @@ public class Player : MonoBehaviour{
         this.fire = fire;
     }
 
-    private void Fire() {
+    public void Killed() {
+        deadSound.Play();   // Play dead sound
+        transform.position = new Vector2(-100, -100);   // Send player out of range to simulate death
+        FindObjectOfType<GameHandler>().SetPlayerStatus(true); // Let the GH know player is dead now
     }
 
     /*private IEnumerator Fire() {

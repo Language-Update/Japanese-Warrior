@@ -14,8 +14,11 @@ public class Turtle : MonoBehaviour{
         transform.Translate(Vector2.left * 1f * Time.deltaTime);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {/*
-        Destroy(collision.gameObject);
-        Destroy(this.gameObject);*/
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.CompareTag("Player")) {
+            FindObjectOfType<Player>().Killed();
+            Destroy(collision.gameObject, 2);
+            Destroy(this.gameObject);
+        }
     }
 }

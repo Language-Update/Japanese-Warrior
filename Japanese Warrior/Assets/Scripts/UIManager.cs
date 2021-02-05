@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class UI_Manager : MonoBehaviour{
+public class UIManager : MonoBehaviour{
 
     [SerializeField] TextMeshProUGUI energyText;
     [SerializeField] TextMeshProUGUI questionText;
@@ -27,7 +27,7 @@ public class UI_Manager : MonoBehaviour{
                 energyValue++;  // Increase Energy
                 energyText.SetText("Energy: " + energyValue.ToString());  // Update GUI
                 givenAnswer = 0;    // Reset givenAnswer
-                FindObjectOfType<Game_Manager>().SetEnergyValue(energyValue);   // Update energy value on GM 
+                FindObjectOfType<GameHandler>().SetEnergyValue(energyValue);   // Update energy value on GM 
             }
 
             //Set new answer
