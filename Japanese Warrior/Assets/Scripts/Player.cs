@@ -9,19 +9,33 @@ public class Player : MonoBehaviour{
     [SerializeField] AudioSource fireSound;
     [SerializeField] AudioSource deadSound;
 
+    Animator animator;
+    GameHandler gameHandler;
+
     bool fire;
+    int energyValue, enemyNumber;
 
     void Start()    {
-        
+        animator = GetComponentInChildren<Animator>();
+        enemyNumber = 0;
+        gameHandler = FindObjectOfType<GameHandler>();
     }
 
 
     void Update()    {
-        if (fire) {
-            Projectile newProjectile = Instantiate(projectile, gunBarrel.transform.position, transform.rotation) as Projectile;
-            newProjectile.transform.parent = transform;
-            fireSound.Play();
+        if (energyValue > 0) {
+            animator.SetBool("hasBlade", true); // Equip Blade
+                if (enemyNumber > 0) {  // And if there an enemy
+                fire = true;
+            }
+        } else {
+            animator.SetBool("hasBlade", false);
+            fire = false;
+        }
 
+        if (fire) {
+            animator.SetTrigger("doAttack");
+            StartCoroutine(Fire());
             fire = false;
         }
     }
@@ -36,11 +50,26 @@ public class Player : MonoBehaviour{
         FindObjectOfType<GameHandler>().SetPlayerStatus(true); // Let the GH know player is dead now
     }
 
-    /*private IEnumerator Fire() {
-        fire = false;
+    private IEnumerator Fire() {
+        energyValue--;
+        gameHandler.ChangeEnemyNumber(-1);
+        gameHandler.SetEnergyValue(energyValue);
 
-        yield return new WaitForSeconds(1);
-    }*/
+        yield return new WaitForSeconds(0.4f);
+        
+        Projectile newProjectile = Instantiate(projectile, gunBarrel.transform.position, transform.rotation) as Projectile;
+        newProjectile.transform.parent = transform;
+        fireSound.Play();
+    }
+
+
+
+    public void SetEnergyValue(int energyValue) {
+        this.energyValue = energyValue;
+    }
+    public void SetEnemyNumber(int enemyNumber) {
+        this.enemyNumber = enemyNumber;
+    }
 
 
 

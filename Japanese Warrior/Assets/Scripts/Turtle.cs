@@ -11,7 +11,7 @@ public class Turtle : MonoBehaviour{
 
 
     void Update()    {
-        transform.Translate(Vector2.left * 1f * Time.deltaTime);
+        transform.Translate(Vector2.left * 0.6f * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {

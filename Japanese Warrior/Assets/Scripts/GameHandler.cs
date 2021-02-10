@@ -7,7 +7,6 @@ public class GameHandler : MonoBehaviour{
 
 
     int energyValue, enemyNumber;
-    float timePassed;
     bool isPlayerDead;
 
     void Start()    {
@@ -28,6 +27,7 @@ public class GameHandler : MonoBehaviour{
 
     public void SetEnergyValue(int energyValue) {
         this.energyValue = energyValue;
+        FindObjectOfType<UIManager>().SetEnergyValue(energyValue); // Update UI
     }
     public void ChangeEnemyNumber(int change) {
         enemyNumber += change;
@@ -39,27 +39,21 @@ public class GameHandler : MonoBehaviour{
     #endregion
 
     #region Getters
-
+    public int GetEnergyValue() {
+        return energyValue;
+    }
     #endregion
 
     #region Private Methods
 
     private void FireControl() {
-        timePassed += Time.deltaTime;
-        //Debug.Log("GM.Energy : " + energyValue);
-        if (energyValue > 0 && timePassed > 0.5f && enemyNumber > 0) {
-            enemyNumber--;  // Decrease enemy number because this projectile will kill one certainly
-            // The reason why I decrease enemy number not by death of the enemy is if I do that, while projectile
-            // goes to the enemy, player still continues to fire. Because there is stil an enemy. 
-            FindObjectOfType<Player>().SetFire(true);   // Let player fire 
-            energyValue--;  // Decrease energy 
-            FindObjectOfType<UIManager>().SetEnergyValue(energyValue); // Update GUI
-            timePassed = 0f;    // Reset Timer
-        }
-    }   // Controls Fire conditions
+        // Let player know the situation so that it can fire
+        FindObjectOfType<Player>().SetEnergyValue(energyValue); // Let it know the energy Value
+        FindObjectOfType<Player>().SetEnemyNumber(enemyNumber); // Let it know enemy number
+    }
+
     private void ResetGameParamaters() {
         energyValue = enemyNumber = 0;  // Integer values
-        timePassed = 0;                 // Float values
         isPlayerDead = false;           // Boolean values
     }   // Resets all game values
     private void GameStatusControl() {

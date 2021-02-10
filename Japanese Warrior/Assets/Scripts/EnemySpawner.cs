@@ -11,7 +11,7 @@ public class EnemySpawner : MonoBehaviour{
 
     void Start()    {
         spawn = true;
-        timeNeeded = Random.Range(0.5f, 3f);
+        timeNeeded = Random.Range(3f, 8f);
     }
 
 

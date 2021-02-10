@@ -1674,7 +1674,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1676485810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4, y: 2.825, z: 0}
+  m_LocalPosition: {x: 3.47, y: 2.825, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2352,12 +2352,12 @@ PrefabInstance:
     - target: {fileID: 5762026897847994452, guid: 34cd08a81c45a5f48919fac72468b090,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.636
+      value: -1.525
       objectReference: {fileID: 0}
     - target: {fileID: 5762026897847994452, guid: 34cd08a81c45a5f48919fac72468b090,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.811
+      value: 2.835
       objectReference: {fileID: 0}
     - target: {fileID: 5762026897847994452, guid: 34cd08a81c45a5f48919fac72468b090,
         type: 3}
@@ -2404,20 +2404,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5762026897847994452, guid: 34cd08a81c45a5f48919fac72468b090,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5762026897847994452, guid: 34cd08a81c45a5f48919fac72468b090,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 8398831970219960166, guid: 34cd08a81c45a5f48919fac72468b090,
         type: 3}
       propertyPath: m_Name
-      value: Player
+      value: Kazuki
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34cd08a81c45a5f48919fac72468b090, type: 3}
