@@ -3,25 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class UIManager : MonoBehaviour{
+public class UI_Handler : MonoBehaviour{
 
     [SerializeField] TextMeshProUGUI energyText;
     [SerializeField] TextMeshProUGUI questionText;
 
-    bool answered;
+    bool answered, canLoadQuestion;
     int answer, givenAnswer, energyValue;
 
     void Start()    {
         // Reset all paramaters
         energyText.SetText("Energy: 0"); // Start with zero energy   
-        answered = true; // Get new question
+        answered = canLoadQuestion = true; // Get new question
         givenAnswer = energyValue = 0;
         answer = 5;
     }
 
 
     void Update()    {
-        if (answered) {
+        if (answered && canLoadQuestion) {
 
             if (givenAnswer == answer) {
                 energyValue++;  // Increase Energy
@@ -48,6 +48,9 @@ public class UIManager : MonoBehaviour{
 
     public void SetEnergyValue(int energyValue) {
         this.energyValue = energyValue;
+    }
+    public void SetLoadQuestion(bool canLoadQuestion) {
+        this.canLoadQuestion = canLoadQuestion;
     }
 
 }

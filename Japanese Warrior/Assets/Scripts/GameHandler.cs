@@ -27,12 +27,12 @@ public class GameHandler : MonoBehaviour{
 
     public void SetEnergyValue(int energyValue) {
         this.energyValue = energyValue;
-        FindObjectOfType<UIManager>().SetEnergyValue(energyValue); // Update UI
+        FindObjectOfType<UI_Handler>().SetEnergyValue(energyValue); // Update UI
     }
     public void ChangeEnemyNumber(int change) {
         enemyNumber += change;
     }            // Changes number of the enemy
-    public void SetPlayerStatus(bool isPlayerDead) {
+    public void SetCharacterStatus(bool isPlayerDead) {
         this.isPlayerDead = isPlayerDead;
     }       // Sets players
 
@@ -48,8 +48,8 @@ public class GameHandler : MonoBehaviour{
 
     private void FireControl() {
         // Let player know the situation so that it can fire
-        FindObjectOfType<Player>().SetEnergyValue(energyValue); // Let it know the energy Value
-        FindObjectOfType<Player>().SetEnemyNumber(enemyNumber); // Let it know enemy number
+        FindObjectOfType<Character>().SetEnergyValue(energyValue); // Let it know the energy Value
+        FindObjectOfType<Character>().SetEnemyNumber(enemyNumber); // Let it know enemy number
     }
 
     private void ResetGameParamaters() {

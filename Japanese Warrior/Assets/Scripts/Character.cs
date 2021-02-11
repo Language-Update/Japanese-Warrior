@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour{
+public class Character : MonoBehaviour{
 
     [SerializeField] Projectile projectile;
     [SerializeField] GameObject gunBarrel;
@@ -47,7 +47,7 @@ public class Player : MonoBehaviour{
     public void Killed() {
         deadSound.Play();   // Play dead sound
         transform.position = new Vector2(-100, -100);   // Send player out of range to simulate death
-        FindObjectOfType<GameHandler>().SetPlayerStatus(true); // Let the GH know player is dead now
+        gameHandler.SetCharacterStatus(true); // Let the GH know player is dead now
     }
 
     private IEnumerator Fire() {
