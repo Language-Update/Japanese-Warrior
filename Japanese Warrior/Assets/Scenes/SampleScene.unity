@@ -1479,6 +1479,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   energyText: {fileID: 1046775742}
   questionText: {fileID: 2035820294}
+  buttons: []
 --- !u!4 &1375709708
 Transform:
   m_ObjectHideFlags: 0
@@ -1714,6 +1715,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turtle: {fileID: 1859143855719457257, guid: a2f912dce5db6a146a03ce629cfca07f, type: 3}
+  minSpawnTime: 0.5
+  maxSpawnTime: 4
 --- !u!1 &1686716157
 GameObject:
   m_ObjectHideFlags: 0

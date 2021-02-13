@@ -12,6 +12,7 @@ public class EnemyBase : MonoBehaviour{
 
     void Start()    {
         spawn = true;
+        minSpawnTime = 0.3f; maxSpawnTime = 3f;
         spawnTime = Random.Range(minSpawnTime, maxSpawnTime);
     }
 

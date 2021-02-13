@@ -10,12 +10,13 @@ public class GameHandler : MonoBehaviour{
     bool isPlayerDead;
 
     Content[] contentPool = new Content[20];
-    string[] japaneseContent = new string[] {"あ" + "い" + "う" + "え" + "お" + "か" + "き"
-    + "く" + "け" + "こ" + "が"+ "ぎ"+ "ぐ"+ "げ"+ "ご"+ "さ"+ "し"+ "す"+ "せ"+ "そ"};
-    string[] englishContent = new string[] {"a" + "i" + "u" + "e" + "o" + "ka" + "ki"
-    + "ku" + "ke" + "ko" + "ga"+ "gi"+ "gu"+ "ge"+ "go"+ "sa"+ "shi"+ "su"+ "se"+ "so"};
+    string[] japaneseContent = new string[] {"あ", "い", "う", "え", "お", "か", "き",
+    "く", "け", "こ", "が", "ぎ", "ぐ", "げ", "ご", "さ", "し", "す", "せ", "そ"};
+    string[] englishContent = new string[] {"a", "i", "u", "e", "o", "ka", "ki",
+    "ku", "ke", "ko", "ga", "gi", "gu", "ge", "go", "sa", "shi", "su", "se", "so"};
 
-    void Start()    {
+    void Start() {
+        Debug.Log("Content L: " + contentPool.Length + "   Jp L:" + japaneseContent.Length + "    En L: " + englishContent.Length);
         ResetGameParamaters();
         CreateContents();
     }
@@ -46,9 +47,10 @@ public class GameHandler : MonoBehaviour{
     #endregion
 
     #region Getters
-    public int GetEnergyValue() {
-        return energyValue;
-    }
+    public int GetEnergyValue() { return energyValue; }
+
+    public Content[] GetQuestionContent() { return contentPool; }
+
     #endregion
 
     #region Private Methods
@@ -67,8 +69,8 @@ public class GameHandler : MonoBehaviour{
 
     private void CreateContents() {
         // 20 Hiragana Creation. I'll add others later on
-        for (int contentID = 0; contentID < contentPool.Length; contentID++){
-            contentPool[contentID] = new Content(contentID, "hiragana", japaneseContent[contentID], englishContent[contentID]);
+        for (int i = 0; i < contentPool.Length; i++){
+            contentPool[i] = new Content(i, "hiragana", japaneseContent[i], englishContent[i]);
         }
     }
     
