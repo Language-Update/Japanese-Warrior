@@ -9,8 +9,15 @@ public class GameHandler : MonoBehaviour{
     int energyValue, enemyNumber;
     bool isPlayerDead;
 
+    Content[] contentPool = new Content[20];
+    string[] japaneseContent = new string[] {"あ" + "い" + "う" + "え" + "お" + "か" + "き"
+    + "く" + "け" + "こ" + "が"+ "ぎ"+ "ぐ"+ "げ"+ "ご"+ "さ"+ "し"+ "す"+ "せ"+ "そ"};
+    string[] englishContent = new string[] {"a" + "i" + "u" + "e" + "o" + "ka" + "ki"
+    + "ku" + "ke" + "ko" + "ga"+ "gi"+ "gu"+ "ge"+ "go"+ "sa"+ "shi"+ "su"+ "se"+ "so"};
+
     void Start()    {
         ResetGameParamaters();
+        CreateContents();
     }
 
 
@@ -52,10 +59,19 @@ public class GameHandler : MonoBehaviour{
         FindObjectOfType<Character>().SetEnemyNumber(enemyNumber); // Let it know enemy number
     }
 
+    // Resets all game values
     private void ResetGameParamaters() {
         energyValue = enemyNumber = 0;  // Integer values
         isPlayerDead = false;           // Boolean values
-    }   // Resets all game values
+    }   
+
+    private void CreateContents() {
+        // 20 Hiragana Creation. I'll add others later on
+        for (int contentID = 0; contentID < contentPool.Length; contentID++){
+            contentPool[contentID] = new Content(contentID, "hiragana", japaneseContent[contentID], englishContent[contentID]);
+        }
+    }
+    
     private void GameStatusControl() {
 
         // Check is player dead or not
@@ -63,7 +79,9 @@ public class GameHandler : MonoBehaviour{
             // if players is dead, then go back to menu for now
             StartCoroutine(LoadAfterGameScene());   // But after 3 seconds
         }
-    }       //Control Game Status
+    }
+    
+    //Control Game Status
     private IEnumerator LoadAfterGameScene() {
         yield return new WaitForSeconds(3);
         LoadSceneByName("Menu");
