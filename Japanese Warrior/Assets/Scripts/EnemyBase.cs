@@ -10,9 +10,11 @@ public class EnemyBase : MonoBehaviour{
     float timePassed, spawnTime;
     bool spawn;
 
+    public bool isMenu;
+
     void Start()    {
         spawn = true;
-        minSpawnTime = 0.3f; maxSpawnTime = 3f;
+        //minSpawnTime = 0.3f; maxSpawnTime = 3f;
         spawnTime = Random.Range(minSpawnTime, maxSpawnTime);
     }
 
@@ -31,6 +33,9 @@ public class EnemyBase : MonoBehaviour{
         FindObjectOfType<GameHandler>().ChangeEnemyNumber(1);   // Let GH about spawned enemy
         spawnTime = Random.Range(minSpawnTime, maxSpawnTime);    // Get new random time
         timePassed = 0; // Reset Timer
+
+        if (isMenu)
+            FindObjectOfType<Character>().AddMenuEnemy();
     }
 
     public void SetSpawn(bool spawn) {
