@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Turtle : MonoBehaviour{
 
-    [SerializeField] [Range(0.1f, 2f)] float speed;
+    public float speed;
 
     void Start()    {
         

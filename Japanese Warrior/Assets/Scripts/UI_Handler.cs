@@ -15,14 +15,15 @@ public class UI_Handler : MonoBehaviour{
     UnityEngine.UI.ColorBlock theColor;
     Color originalColor;
 
-    bool answered, canLoadQuestion, answeredTrue;
+    public bool canLoadQuestion, interactableButtons;
+    bool answered, answeredTrue;
     int answer, givenAnswer, energyValue;
 
     void Start()    {
         // Reset all paramaters
         energyText.SetText("Energy: 0"); // Start with zero energy   
         answered = false;
-        canLoadQuestion = answeredTrue = true; // Get new question
+        answeredTrue = true; // Get new question
         StartCoroutine(SetNewQuestion(answeredTrue));
 
         givenAnswer = 5;
@@ -37,6 +38,18 @@ public class UI_Handler : MonoBehaviour{
 
 
     void Update()    {
+        if (interactableButtons) {
+            foreach (Button button in buttons) {
+                button.interactable = true;
+            }
+        }
+        else {
+            foreach (Button button in buttons) {
+                button.interactable = false;
+            }
+        }
+
+
         if (answered && canLoadQuestion) {
             //  if player know the question, give them reward and color the buttons
             if (givenAnswer == answer) {    
@@ -65,7 +78,6 @@ public class UI_Handler : MonoBehaviour{
     private IEnumerator SetNewQuestion(bool answeredTrue) {
         canLoadQuestion = false; // Stop taking new questions (used this against buttons)
 
-        Debug.Log(answeredTrue);
         if (answeredTrue)
             yield return new WaitForSeconds(0.2f);
         else

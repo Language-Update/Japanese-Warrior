@@ -28,11 +28,15 @@ public class Character : MonoBehaviour{
         MenuState();
     }
 
-    //      ****************    STATES    ****************        //
+    //  ==============================================   //
+    //  =================   STATES   =================   //
+    //  ==============================================   //
+
     private void PlayState() {
         if (!_playState) { return; }    // If not in Play State, then return
 
         singlePlayerFire = true; multiplayerFire = menuFire = false;
+
         if (energyValue > 0) {
             animator.SetBool("hasBlade", true); // Equip Blade
             if (enemyNumber > 0) {  // And if there an enemy
@@ -64,7 +68,9 @@ public class Character : MonoBehaviour{
     }
 
 
-    //      ********        Private Methods     ********        //
+    //  ==============================================   //
+    //  =============   Private Methods   ============   //
+    //  ==============================================   //
 
     public void SetFire(bool fire) {
         this.fire = fire;
@@ -95,7 +101,9 @@ public class Character : MonoBehaviour{
 
 
 
-    //      ********        Public Methods     ********        //
+    //  ==============================================   //
+    //  =============   Public Methods   =============   //
+    //  ==============================================   //
 
     public void Killed() {
         deadSound.Play();   // Play dead sound
@@ -106,8 +114,9 @@ public class Character : MonoBehaviour{
         menuEnemy++;
     }
 
-
+    //  ****                            ****    //
     //  ****    Getters and Setters     ****    //
+    //  ****                            ****    //
 
     public void SetEnergyValue(int energyValue) {
         this.energyValue = energyValue;
