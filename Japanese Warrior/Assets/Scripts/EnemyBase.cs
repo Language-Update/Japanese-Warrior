@@ -1,17 +1,20 @@
 ﻿using System.Collections;
-//using System;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class EnemyBase : MonoBehaviour{
 
     [SerializeField] Turtle turtle;
 
+    [SerializeField] TextMeshProUGUI waveCounterText = null;
+    [SerializeField] TextMeshProUGUI enemyCounterText = null;
+
     public float minSpawnTime, maxSpawnTime, turtleSpeed;
     float timePassed, spawnTime;
     bool spawn;
     int waveNumber;
-    public int numberOfSpawnedEnemy;
+    public int numberOfEnemyToSpawn;
 
     public bool _menuState, _playState, _waveIntroState;
 
@@ -37,10 +40,11 @@ public class EnemyBase : MonoBehaviour{
 
         timePassed += Time.deltaTime;
 
-        if (spawn && timePassed > spawnTime && numberOfSpawnedEnemy <= waveNumber * 3) {
+        if (spawn && timePassed > spawnTime && numberOfEnemyToSpawn > 0) {
             Spawn();
-            numberOfSpawnedEnemy++;
-        } else if (numberOfSpawnedEnemy > waveNumber * 3) {
+            numberOfEnemyToSpawn--;
+            enemyCounterText.SetText("Enemy: " + numberOfEnemyToSpawn);
+        } else if (numberOfEnemyToSpawn <= 0) {
             _playState = false;
             StartCoroutine(StartNextWave());
         }
@@ -49,7 +53,9 @@ public class EnemyBase : MonoBehaviour{
         if (!_waveIntroState) { return; }
         _playState = _menuState = false;
 
-        numberOfSpawnedEnemy = 0;
+        waveCounterText.SetText("Wave: " + waveNumber);
+        numberOfEnemyToSpawn = waveNumber * 3;
+        enemyCounterText.SetText("Enemy: " + numberOfEnemyToSpawn);
     }
     private void MenuState() {
         if (!_menuState) { return; }

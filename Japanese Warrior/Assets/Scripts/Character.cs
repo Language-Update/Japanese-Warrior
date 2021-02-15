@@ -8,6 +8,7 @@ public class Character : MonoBehaviour{
     [SerializeField] GameObject gunBarrel;
     [SerializeField] AudioSource fireSound;
     [SerializeField] AudioSource deadSound;
+    [SerializeField] int damagePoint = 100;
 
     Animator animator;
     GameHandler gameHandler;
@@ -97,15 +98,15 @@ public class Character : MonoBehaviour{
         }
     }
 
-
-
-
+    private void OnTriggerEnter2D(Collider2D collision) {
+        collision.GetComponent<Health>().DealDamage(damagePoint);
+    }
 
     //  ==============================================   //
     //  =============   Public Methods   =============   //
     //  ==============================================   //
 
-    public void Killed() {
+    public void PerformDeath() {
         deadSound.Play();   // Play dead sound
         transform.position = new Vector2(-100, -100);   // Send player out of range to simulate death
         gameHandler.SetCharacterStatus(true); // Let the GH know player is dead now

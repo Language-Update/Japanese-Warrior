@@ -4,21 +4,27 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour{
 
-
-    void Start()    {
-    }
-
-
+    [SerializeField] int damagePoint = 0;
+    [SerializeField] bool opponent = false;
 
     void Update()    {
-        transform.Translate(Vector2.right * 2f * Time.deltaTime);        
+        if (!opponent)
+            transform.Translate(Vector2.right * 2f * Time.deltaTime);
+        else
+            transform.Translate(Vector2.left * 2f * Time.deltaTime);
     }
 
 
     private void OnTriggerEnter2D(Collider2D collision) {
+        collision.GetComponent<Health>().DealDamage(damagePoint);
+        
+        /*
         GetComponent<AudioSource>().Play();
         Destroy(collision.gameObject);
         transform.position = new Vector2(transform.position.x, 100);
         Destroy(this.gameObject, 0.3f);
+        */
     }
+
+    public void PerformDeath() { Destroy(gameObject); }
 }

@@ -49,8 +49,9 @@ public class GameHandler : MonoBehaviour{
         if (!_waveIntroState) { return; }    // if not in Wave Intro, then return
 
         waveText.SetText("Wave " + waveNumber);   // Write wave
-        uiHandler.SetLoadQuestion(false);
-        uiHandler.interactableButtons = false;
+        //uiHandler.SetLoadQuestion(false);
+        //uiHandler.interactableButtons = false;
+        enemyBase.SetWaveNumber(waveNumber); enemyBase._waveIntroState = true;
 
         // Get it in screen
         if (!waveUp && waveText.transform.localPosition.y > 500) {

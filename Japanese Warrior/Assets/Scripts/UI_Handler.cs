@@ -21,7 +21,7 @@ public class UI_Handler : MonoBehaviour{
 
     void Start()    {
         // Reset all paramaters
-        energyText.SetText("Energy: 0"); // Start with zero energy   
+        energyText.SetText("Blade: 0"); // Start with zero energy   
         answered = false;
         answeredTrue = true; // Get new question
         StartCoroutine(SetNewQuestion(answeredTrue));
@@ -54,7 +54,7 @@ public class UI_Handler : MonoBehaviour{
             //  if player know the question, give them reward and color the buttons
             if (givenAnswer == answer) {    
                 energyValue++;  // Increase Energy
-                energyText.SetText("Energy: " + energyValue.ToString());  // Update GUI
+                energyText.SetText("Blade: " + energyValue.ToString());  // Update GUI
                 gameHandler.SetEnergyValue(energyValue);   // Update energy value on GM 
 
                 buttons[answer].GetComponent<Image>().color = Color.green;
@@ -72,7 +72,7 @@ public class UI_Handler : MonoBehaviour{
             answered = false;   // Reset answered
         }
 
-        energyText.SetText("Energy: " + energyValue);   // Update Energy Value
+        energyText.SetText("Blade: " + energyValue);   // Update Energy Value
     }
 
     private IEnumerator SetNewQuestion(bool answeredTrue) {

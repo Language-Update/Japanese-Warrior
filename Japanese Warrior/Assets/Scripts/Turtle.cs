@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Turtle : MonoBehaviour{
 
+    [SerializeField] int damagePoint = 0;
+
     public float speed;
 
     void Start()    {
@@ -15,10 +17,15 @@ public class Turtle : MonoBehaviour{
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
+        collision.GetComponent<Health>().DealDamage(damagePoint);
+        /*
         if (collision.CompareTag("Player")) {
-            FindObjectOfType<Character>().Killed();
+            FindObjectOfType<Character>().PerformDeath();
             Destroy(collision.gameObject, 2);
             Destroy(this.gameObject);
         }
+        */
     }
+
+    public void PerformDeath() { Destroy(gameObject); }
 }
