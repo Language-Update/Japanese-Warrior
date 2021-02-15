@@ -40,4 +40,6 @@ public class Health : MonoBehaviour{
             if (TryGetComponent<Projectile>(out var projectile)) { projectile.PerformDeath(); }
         }
     }
+
+    public int GetHealth() { return health; }
 }

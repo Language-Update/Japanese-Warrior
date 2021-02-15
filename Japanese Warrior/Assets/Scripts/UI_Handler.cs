@@ -55,7 +55,7 @@ public class UI_Handler : MonoBehaviour{
             if (givenAnswer == answer) {    
                 energyValue++;  // Increase Energy
                 energyText.SetText("Blade: " + energyValue.ToString());  // Update GUI
-                gameHandler.SetEnergyValue(energyValue);   // Update energy value on GM 
+                gameHandler.SetBladeNumber(energyValue);   // Update energy value on GM 
 
                 buttons[answer].GetComponent<Image>().color = Color.green;
 
@@ -128,7 +128,7 @@ public class UI_Handler : MonoBehaviour{
         this.givenAnswer = givenAnswer;
     }
 
-    public void SetEnergyValue(int energyValue) {
+    public void SetBladeNumber(int energyValue) {
         this.energyValue = energyValue;
     }
     public void SetLoadQuestion(bool canLoadQuestion) {

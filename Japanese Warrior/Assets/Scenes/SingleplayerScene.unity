@@ -1673,7 +1673,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0.7052188}
-  m_AnchoredPosition: {x: 0, y: -51.500122}
+  m_AnchoredPosition: {x: 0, y: -51.50006}
   m_SizeDelta: {x: 720, y: 97}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1342104248
@@ -2204,6 +2204,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turtle: {fileID: 1859143855719457257, guid: a2f912dce5db6a146a03ce629cfca07f, type: 3}
+  bigTurtle: {fileID: 4134310651547095216, guid: 2d4be2d3c8aa0b243a628f5672159a2a,
+    type: 3}
+  armoredTurtle: {fileID: 2305078251620060481, guid: 4f4ad4e586cae974c9a68424dc4bfb50,
+    type: 3}
+  armoredBigTurtle: {fileID: 7925229383632125445, guid: 787dbec7597b6f040ac7e90a75e9fd7a,
+    type: 3}
   waveCounterText: {fileID: 1392447952}
   enemyCounterText: {fileID: 929191335}
   minSpawnTime: 2

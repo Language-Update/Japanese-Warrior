@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6288705392055826429}
   - component: {fileID: 1859143855719457257}
   - component: {fileID: 364591362857763187}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Turtle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damagePoint: 25
+  speedReference: 0.5
   speed: 0.602
 --- !u!114 &364591362857763187
 MonoBehaviour:
@@ -123,7 +124,7 @@ GameObject:
   - component: {fileID: 2619808351174102491}
   - component: {fileID: 4055593631234711634}
   - component: {fileID: 8845575292743440747}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Turtle Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -345,6 +346,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.02
       objectReference: {fileID: 0}
+    - target: {fileID: 4806925131772221440, guid: 84bca6c68bbedbd4292147bee1862f94,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5722947799194955673, guid: 84bca6c68bbedbd4292147bee1862f94,
         type: 3}
       propertyPath: m_SortingLayerID
@@ -359,6 +365,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Health Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6717665143569472970, guid: 84bca6c68bbedbd4292147bee1862f94,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6730708563657287391, guid: 84bca6c68bbedbd4292147bee1862f94,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8616267174311242272, guid: 84bca6c68bbedbd4292147bee1862f94,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84bca6c68bbedbd4292147bee1862f94, type: 3}

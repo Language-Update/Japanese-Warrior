@@ -14,13 +14,14 @@ public class Character : MonoBehaviour{
     GameHandler gameHandler;
 
     public bool _playState, _menuState;
-    bool fire, singlePlayerFire, multiplayerFire, menuFire;
-    int energyValue, enemyNumber, menuEnemy;
+    bool fire, fireCompleted, singlePlayerFire, multiplayerFire, menuFire;
+    int numberOfBlade, bladeNeeded, menuEnemy;
 
     void Start()    {
         animator = GetComponentInChildren<Animator>();
-        enemyNumber = 0;
+        bladeNeeded = 0;
         gameHandler = FindObjectOfType<GameHandler>();
+        fireCompleted = true;
     }
 
 
@@ -38,10 +39,12 @@ public class Character : MonoBehaviour{
 
         singlePlayerFire = true; multiplayerFire = menuFire = false;
 
-        if (energyValue > 0) {
+        Debug.Log("Now, I know " + bladeNeeded + " blade needed!");
+
+        if (numberOfBlade > 0) {
             animator.SetBool("hasBlade", true); // Equip Blade
-            if (enemyNumber > 0) {  // And if there an enemy
-                fire = true;
+            if (bladeNeeded > 0 && fireCompleted) {  // And if there an enemy
+                fire = true; fireCompleted = false;
             }
         }
         else {
@@ -51,6 +54,7 @@ public class Character : MonoBehaviour{
         if (fire) {
             animator.SetTrigger("doAttack");
             StartCoroutine(Fire());
+            Fire();
             fire = false;
         }
     }
@@ -72,22 +76,22 @@ public class Character : MonoBehaviour{
     //  ==============================================   //
     //  =============   Private Methods   ============   //
     //  ==============================================   //
-
-    public void SetFire(bool fire) {
-        this.fire = fire;
-    }    
+  
 
     private IEnumerator Fire() {
         if (singlePlayerFire) {
-            energyValue--;
-            gameHandler.ChangeEnemyNumber(-1);
-            gameHandler.SetEnergyValue(energyValue);
+
+            numberOfBlade--;
+            ChangeBladeNeeded(-1);
+            gameHandler.SetBladeNumber(numberOfBlade);
 
             yield return new WaitForSeconds(0.4f);
 
             Projectile newProjectile = Instantiate(projectile, gunBarrel.transform.position, transform.rotation) as Projectile;
             newProjectile.transform.parent = transform;
             fireSound.Play();
+
+            fireCompleted = true;
         }
         if (menuFire) {
             yield return new WaitForSeconds(0.7f);
@@ -106,6 +110,9 @@ public class Character : MonoBehaviour{
     //  =============   Public Methods   =============   //
     //  ==============================================   //
 
+    public void SetFire(bool fire) {
+        this.fire = fire;
+    }
     public void PerformDeath() {
         deadSound.Play();   // Play dead sound
         transform.position = new Vector2(-100, -100);   // Send player out of range to simulate death
@@ -119,11 +126,11 @@ public class Character : MonoBehaviour{
     //  ****    Getters and Setters     ****    //
     //  ****                            ****    //
 
-    public void SetEnergyValue(int energyValue) {
-        this.energyValue = energyValue;
+    public void SetBladeNumber(int bladeNumber) {
+        this.numberOfBlade = bladeNumber;
     }
-    public void SetEnemyNumber(int enemyNumber) {
-        this.enemyNumber = enemyNumber;
+    public void ChangeBladeNeeded(int neededBladeChange) {
+        this.bladeNeeded += neededBladeChange;
     }
 
 

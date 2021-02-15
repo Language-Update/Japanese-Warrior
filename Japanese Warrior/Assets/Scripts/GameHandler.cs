@@ -17,7 +17,7 @@ public class GameHandler : MonoBehaviour{
     string[] englishContent = new string[] {"a", "i", "u", "e", "o", "ka", "ki",
     "ku", "ke", "ko", "ga", "gi", "gu", "ge", "go", "sa", "shi", "su", "se", "so"};
 
-    int energyValue, enemyNumber, waveNumber;
+    int bladeNumber, enemyNumber, waveNumber, bladeNeeded;
     float timePassed;
     bool isPlayerDead, waveUp;
 
@@ -86,7 +86,7 @@ public class GameHandler : MonoBehaviour{
 
     // Resets all game values
     private void InitilizeParameters() {
-        energyValue = enemyNumber = 0;
+        bladeNumber = enemyNumber = bladeNeeded = 0;
         waveNumber = 1;  
         isPlayerDead = waveUp = false;     
 
@@ -102,8 +102,7 @@ public class GameHandler : MonoBehaviour{
     // Update Character about firing conditions
     private void FireControl() {
         // Let player know the situation so that it can fire
-        FindObjectOfType<Character>().SetEnergyValue(energyValue); // Let it know the energy Value
-        FindObjectOfType<Character>().SetEnemyNumber(enemyNumber); // Let it know enemy number
+        FindObjectOfType<Character>().SetBladeNumber(bladeNumber); // Let it know the energy Value
     }
 
     
@@ -154,10 +153,10 @@ public class GameHandler : MonoBehaviour{
     //  ****    Getters and Setters     ****    //
     //  ****                            ****    //
 
-    public void SetEnergyValue(int energyValue) {
-        this.energyValue = energyValue;
+    public void SetBladeNumber(int bladeNumber) {
+        this.bladeNumber = bladeNumber;
         // Update UI
-        FindObjectOfType<UI_Handler>().SetEnergyValue(energyValue); 
+        FindObjectOfType<UI_Handler>().SetBladeNumber(bladeNumber); 
     }
 
     // Changes number of the enemy
@@ -166,10 +165,13 @@ public class GameHandler : MonoBehaviour{
     // Sets players 
     public void SetCharacterStatus(bool isPlayerDead) { this.isPlayerDead = isPlayerDead;  }  
     
-    public int GetEnergyValue() { return energyValue; }
 
     public Content[] GetQuestionContent() { return contentPool; }
 
+    /*public void ChageNeedBlade(int neededBladeChange) { 
+        bladeNeeded += neededBladeChange;
+        FindObjectOfType<Character>().ChangeBladeNeeded(bladeNumber);
+    }*/
 
 
 
