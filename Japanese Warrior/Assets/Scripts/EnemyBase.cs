@@ -139,7 +139,7 @@ public class EnemyBase : MonoBehaviour{
 
         // Let the GameHandler know how many blade needed for this one
         FindObjectOfType<Character>().ChangeBladeNeeded(newTurtle.GetComponent<Health>().GetHealth() / 10);
-        Debug.Log("EnemyBase Sent: " + newTurtle.GetComponent<Health>().GetHealth() / 10);
+        //Debug.Log("EnemyBase Sent: " + newTurtle.GetComponent<Health>().GetHealth() / 10);
 
         if (_menuState) {
             FindObjectOfType<Character>().AddMenuEnemy();

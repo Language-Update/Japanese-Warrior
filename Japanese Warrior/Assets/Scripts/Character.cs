@@ -37,7 +37,7 @@ public class Character : MonoBehaviour{
 
         singlePlayerFire = true; multiplayerFire = menuFire = false;
 
-        Debug.Log("I need ------>     " + bladeNeeded);
+        //Debug.Log("I need ------>     " + bladeNeeded);
 
         if (numberOfBlade > 0) {
             animator.SetBool("hasBlade", true); // Equip Blade

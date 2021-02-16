@@ -1742,7 +1742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64a20b6a844d2da48b260669a8fdb42a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyText: {fileID: 1046775742}
+  bladeText: {fileID: 1046775742}
   questionText: {fileID: 2035820294}
   buttons:
   - {fileID: 412082685}
