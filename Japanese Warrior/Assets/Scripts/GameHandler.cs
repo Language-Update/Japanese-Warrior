@@ -102,7 +102,7 @@ public class GameHandler : MonoBehaviour{
     // Update Character about firing conditions
     private void FireControl() {
         // Let player know the situation so that it can fire
-        FindObjectOfType<Character>().SetBladeNumber(bladeNumber); // Let it know the energy Value
+        FindObjectOfType<Character>().SetBladeNumber(bladeNumber); // Let it know the blade number
     }
 
     

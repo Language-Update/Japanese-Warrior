@@ -6,8 +6,6 @@ public class Character : MonoBehaviour{
 
     [SerializeField] Projectile projectile;
     [SerializeField] GameObject gunBarrel;
-    [SerializeField] AudioSource fireSound;
-    [SerializeField] AudioSource deadSound;
     [SerializeField] int damagePoint = 100;
 
     Animator animator;
@@ -39,7 +37,7 @@ public class Character : MonoBehaviour{
 
         singlePlayerFire = true; multiplayerFire = menuFire = false;
 
-        Debug.Log("Now, I know " + bladeNeeded + " blade needed!");
+        Debug.Log("I need ------>     " + bladeNeeded);
 
         if (numberOfBlade > 0) {
             animator.SetBool("hasBlade", true); // Equip Blade
@@ -89,7 +87,7 @@ public class Character : MonoBehaviour{
 
             Projectile newProjectile = Instantiate(projectile, gunBarrel.transform.position, transform.rotation) as Projectile;
             newProjectile.transform.parent = transform;
-            fireSound.Play();
+            FindObjectOfType<AudioManager>().Play("Fire");
 
             fireCompleted = true;
         }
@@ -98,7 +96,7 @@ public class Character : MonoBehaviour{
 
             Projectile newProjectile = Instantiate(projectile, gunBarrel.transform.position, transform.rotation) as Projectile;
             newProjectile.transform.parent = transform;
-            fireSound.Play();
+            FindObjectOfType<AudioManager>().Play("Fire");
         }
     }
 
@@ -114,7 +112,7 @@ public class Character : MonoBehaviour{
         this.fire = fire;
     }
     public void PerformDeath() {
-        deadSound.Play();   // Play dead sound
+        FindObjectOfType<AudioManager>().Play("DyingMan");   // Play dead sound
         transform.position = new Vector2(-100, -100);   // Send player out of range to simulate death
         gameHandler.SetCharacterStatus(true); // Let the GH know player is dead now
     }
@@ -131,6 +129,8 @@ public class Character : MonoBehaviour{
     }
     public void ChangeBladeNeeded(int neededBladeChange) {
         this.bladeNeeded += neededBladeChange;
+        // Avoid needed blade below zero
+        if(this.bladeNeeded <= 0) { this.bladeNeeded = 0; }
     }
 
 

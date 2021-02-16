@@ -6,7 +6,7 @@ using TMPro;
 
 public class UI_Handler : MonoBehaviour{
 
-    [SerializeField] TextMeshProUGUI energyText = null;
+    [SerializeField] TextMeshProUGUI bladeText = null;
     [SerializeField] TextMeshProUGUI questionText = null;
     [SerializeField] UnityEngine.UI.Button[] buttons = null;
 
@@ -17,17 +17,17 @@ public class UI_Handler : MonoBehaviour{
 
     public bool canLoadQuestion, interactableButtons;
     bool answered, answeredTrue;
-    int answer, givenAnswer, energyValue;
+    int answer, givenAnswer, bladeNumber;
 
     void Start()    {
         // Reset all paramaters
-        energyText.SetText("Blade: 0"); // Start with zero energy   
+        bladeText.SetText("Blade: 0"); // Start with zero blade   
         answered = false;
         answeredTrue = true; // Get new question
         StartCoroutine(SetNewQuestion(answeredTrue));
 
         givenAnswer = 5;
-        energyValue = 0;
+        bladeNumber = 0;
         answer = Random.Range(0, 3);
 
         originalColor = buttons[0].GetComponent<Image>().color;
@@ -53,16 +53,18 @@ public class UI_Handler : MonoBehaviour{
         if (answered && canLoadQuestion) {
             //  if player know the question, give them reward and color the buttons
             if (givenAnswer == answer) {    
-                energyValue++;  // Increase Energy
-                energyText.SetText("Blade: " + energyValue.ToString());  // Update GUI
-                gameHandler.SetBladeNumber(energyValue);   // Update energy value on GM 
+                bladeNumber++;  // Increase blade number
+                bladeText.SetText("Blade: " + bladeNumber.ToString());  // Update GUI
+                gameHandler.SetBladeNumber(bladeNumber);   // Update blade number on GM 
 
                 buttons[answer].GetComponent<Image>().color = Color.green;
+                FindObjectOfType<AudioManager>().Play("TrueAnswer");
 
                 answeredTrue = true;
                 givenAnswer = 5;    // Reset givenAnswer
             }
             else {
+                FindObjectOfType<AudioManager>().Play("WrongAnswer");
                 buttons[answer].GetComponent<Image>().color = Color.green;
                 buttons[givenAnswer].GetComponent<Image>().color = Color.red;
                 answeredTrue = false;
@@ -72,7 +74,7 @@ public class UI_Handler : MonoBehaviour{
             answered = false;   // Reset answered
         }
 
-        energyText.SetText("Blade: " + energyValue);   // Update Energy Value
+        bladeText.SetText("Blade: " + bladeNumber);   // Update blade number
     }
 
     private IEnumerator SetNewQuestion(bool answeredTrue) {
@@ -128,8 +130,8 @@ public class UI_Handler : MonoBehaviour{
         this.givenAnswer = givenAnswer;
     }
 
-    public void SetBladeNumber(int energyValue) {
-        this.energyValue = energyValue;
+    public void SetBladeNumber(int bladeNumber) {
+        this.bladeNumber = bladeNumber;
     }
     public void SetLoadQuestion(bool canLoadQuestion) {
         this.canLoadQuestion = canLoadQuestion;

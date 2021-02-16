@@ -26,6 +26,7 @@ public class Turtle : MonoBehaviour{
     }
 
     public void PerformDeath() {
+        FindObjectOfType<AudioManager>().Play("EnemyDeath");
         FindObjectOfType<GameHandler>().ChangeEnemyNumber(-1);
         Destroy(gameObject); 
     }

@@ -1673,7 +1673,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0.7052188}
-  m_AnchoredPosition: {x: 0, y: -51.50006}
+  m_AnchoredPosition: {x: 0, y: -51.500122}
   m_SizeDelta: {x: 720, y: 97}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1342104248
@@ -2881,6 +2881,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _playState
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 460589529866490528, guid: 34cd08a81c45a5f48919fac72468b090,
+        type: 3}
+      propertyPath: _menuState
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1150466751078307122, guid: 34cd08a81c45a5f48919fac72468b090,
         type: 3}
