@@ -33,7 +33,6 @@ public class UI_Handler : MonoBehaviour{
         originalColor = buttons[0].GetComponent<Image>().color;
 
         gameHandler = FindObjectOfType<GameHandler>();
-        contentPool = gameHandler.GetQuestionContent();
     }
 
 
@@ -81,9 +80,12 @@ public class UI_Handler : MonoBehaviour{
         canLoadQuestion = false; // Stop taking new questions (used this against buttons)
 
         if (answeredTrue)
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.3f);
         else
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(2f);
+
+
+        contentPool = gameHandler.GetQuestionContent(); // Get updated content pool from Game Handler
 
         foreach (UnityEngine.UI.Button button in buttons) {  // Set all colors back
             button.GetComponent<Image>().color = originalColor;
@@ -96,11 +98,13 @@ public class UI_Handler : MonoBehaviour{
         questionText.SetText(questionToAsk.japaneseContent);                        //  Add it's Hiragana to the question Text
         buttons[answer].GetComponentInChildren<TextMeshProUGUI>().SetText(questionToAsk.englishContent);                  //  Add it's answer to the right place
         for (int i = 0; i < buttons.Length; i++) {                              //  Add random other 3 answers
+            string typeOfAnswer = "";
             if (i != answer) {  // skip the true button cuz we already put the true answer in it.
                 do {        // I'll pick a number from the pool to get random answer
                     randomQuestionIndex = Random.Range(0, contentPool.Length);
+                    typeOfAnswer = contentPool[randomQuestionIndex].contentType;
                 }
-                while (randomQuestionIndex == questionToAsk.contentID);  // But if that number is equal my true number, then do it again
+                while (randomQuestionIndex == questionToAsk.contentID || typeOfAnswer != questionToAsk.contentType);  // But if that number is equal my true number, then do it again
 
                 buttons[i].GetComponentInChildren<TextMeshProUGUI>().SetText(contentPool[randomQuestionIndex].englishContent); // if not put it into button
             }

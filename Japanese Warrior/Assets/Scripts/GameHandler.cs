@@ -11,11 +11,47 @@ public class GameHandler : MonoBehaviour{
     UI_Handler uiHandler;
     EnemyBase enemyBase;
 
-    Content[] contentPool = new Content[20];
-    string[] japaneseContent = new string[] {"あ", "い", "う", "え", "お", "か", "き",
+    #region Content Part
+    Content[] contentPool;
+
+    // Hiragana
+    string[] hiragana_JP = new string[] {"あ", "い", "う", "え", "お", "か", "き",
     "く", "け", "こ", "が", "ぎ", "ぐ", "げ", "ご", "さ", "し", "す", "せ", "そ"};
-    string[] englishContent = new string[] {"a", "i", "u", "e", "o", "ka", "ki",
+
+    string[] hiragana_EN = new string[] {"a", "i", "u", "e", "o", "ka", "ki",
     "ku", "ke", "ko", "ga", "gi", "gu", "ge", "go", "sa", "shi", "su", "se", "so"};
+
+    // Katakana
+    string[] katakana_JP = new string[] {"ア", "イ", "ウ", "エ", "オ", "カ", "キ",
+    "ク", "ケ", "コ", "サ", "シ", "ス", "セ", "ソ", "タ", "チ", "ツ", "テ", "ト"};
+
+    string[] katakana_EN = new string[] {"a", "i", "u", "e", "o", "ka", "ki",
+    "ku", "ke", "ko", "sa", "shi", "su", "se", "so", "ta", "chi", "tsu", "te", "to"};
+
+    // first20
+    string[] first20_JP = new string[] {"おはようございます", "こんにちは", "こんばんは",
+
+        "おやすみなさい", "ありがとうございます", "わたしのなまえは ～ です", "わたしの ～ です",
+
+        "～ へいきたいです", "～ はどこですか？", "まっすぐです", "～ をください",
+
+        "いくらですか？", "～ ありますか？", "すきです", "だいじょうぶです",
+
+        "なに", "わかりません", "ぐあいがわるいです", "おいしい", "トイレ"};
+
+    string[] first20_EN = new string[] {"Good Morning", "Hello", "Good Evening",
+
+        "Good Night", "Thank You", "My name is ~", "This is my ~",
+
+        "I want to go to ~", "Where is ~ ?", "Go straight", "May I have ~",
+
+        "How much is it?", "Is there any ~ ?", "I like it", "I'm fine",
+
+        "What?", "I don't understand", "I don't feel well", "Delicious", "Toilet"};
+
+
+    #endregion
+
 
     int bladeNumber, enemyNumber, waveNumber, bladeNeeded;
     float timePassed;
@@ -109,11 +145,129 @@ public class GameHandler : MonoBehaviour{
     
     // Creates the content
     private void CreateContents() {
-        // 20 Hiragana Creation. I'll add others later on
-        for (int i = 0; i < contentPool.Length; i++) {
-            contentPool[i] = new Content(i, "hiragana", japaneseContent[i], englishContent[i]);
+        int numberOfContent = 0;
+
+        if (PlayerPrefs.GetInt("hiragana") == 1) {
+            //Debug.Log("Hiragana Detected");
+            numberOfContent += 20;
+        }
+        if (PlayerPrefs.GetInt("katakana") == 1) {
+            //Debug.Log("Katakana Detected");
+            numberOfContent += 20;
+        }
+        if (PlayerPrefs.GetInt("first20") == 1) {
+            //Debug.Log("First20 Detected");
+            numberOfContent += 20;
+        }
+
+        //Debug.Log("Number of Content:" + numberOfContent);
+        contentPool = new Content[numberOfContent];
+        int startingNumber = 0;
+
+        // If there no option selected, then give them just Hiragana
+        if (numberOfContent < 20) {
+            //Debug.Log("Selected Option Number: 0");
+        
+            contentPool = new Content[20];
+            for (int i = 0; i < 20; i++) {
+                contentPool[i] = new Content(i, "hiragana", hiragana_JP[i], hiragana_EN[i]);
+            }
+        }
+       
+        // If there is 1 option selected
+        else if (numberOfContent < 40) {
+            //Debug.Log("Selected Option Number: 1");
+
+            if (PlayerPrefs.GetInt("hiragana") == 1) {
+                for (int i = 0; i < 20; i++) {
+                    contentPool[i] = new Content(i, "hiragana", hiragana_JP[i], hiragana_EN[i]);
+                }
+                return; // if hiragana added, then finish the work
+            }
+
+            if (PlayerPrefs.GetInt("katakana") == 1) {
+                for (int i = 0; i < 20; i++) {
+                    contentPool[i] = new Content(i, "katakana", katakana_JP[i], katakana_EN[i]);
+                }
+                return; // if katakana added, then finish the work
+            }
+
+            if (PlayerPrefs.GetInt("first20") == 1) {
+                for (int i = 0; i < 20; i++) {
+                    contentPool[i] = new Content(i, "first20", first20_JP[i], first20_EN[i]);
+                }
+                return; // if first20 added, then finish the work
+            }
+        }
+       
+        // If there are 2 option selected
+        else if (numberOfContent < 60) {
+            //Debug.Log("Selected Option Number: 2");
+
+            if (PlayerPrefs.GetInt("hiragana") == 1) {
+                for (int i = startingNumber; i < startingNumber + 20; i++) {
+                    contentPool[i] = new Content(i, "hiragana", hiragana_JP[i], hiragana_EN[i]);
+                }
+                startingNumber += 20;
+                //Debug.Log("Starting Number: " + startingNumber);
+            }
+            // HERE ! tempAddresser variable for keep string array's position 0-20
+            if (PlayerPrefs.GetInt("katakana") == 1) {
+                int tempAddresser = 0;
+                for (int i = startingNumber; i < startingNumber + 20; i++) {
+                    contentPool[i] = new Content(i, "katakana", katakana_JP[tempAddresser], katakana_EN[tempAddresser]);
+                    tempAddresser++;
+                }
+                startingNumber += 20;
+                //Debug.Log("Starting Number: " + startingNumber);
+            }
+
+            if (PlayerPrefs.GetInt("first20") == 1) {
+                int tempAddresser = 0;
+                for (int i = startingNumber; i < startingNumber + 20; i++) {
+                    contentPool[i] = new Content(i, "first20", first20_JP[tempAddresser], first20_EN[tempAddresser]);
+                    tempAddresser++;
+                }
+                startingNumber += 20;
+                //Debug.Log("Starting Number: " + startingNumber);
+            }
+        }
+       
+        // If all options selected
+        else {
+            Debug.Log("Selected Option Number: 3");
+
+            if (PlayerPrefs.GetInt("hiragana") == 1) {
+                for (int i = startingNumber; i < startingNumber + 20; i++) {
+                    contentPool[i] = new Content(i, "hiragana", hiragana_JP[i], hiragana_EN[i]);
+                }
+                startingNumber += 20;
+                //Debug.Log("Starting Number: " + startingNumber);
+            }
+
+            if (PlayerPrefs.GetInt("katakana") == 1) {
+                int tempAddresser = 0;
+                for (int i = startingNumber; i < startingNumber + 20; i++) {
+                    contentPool[i] = new Content(i, "katakana", katakana_JP[tempAddresser], katakana_EN[tempAddresser]);
+                    tempAddresser++;
+                }
+                startingNumber += 20;
+                //Debug.Log("Starting Number: " + startingNumber);
+            }
+
+            if (PlayerPrefs.GetInt("first20") == 1) {
+                int tempAddresser = 0;
+                for (int i = startingNumber; i < startingNumber + 20; i++) {
+                    contentPool[i] = new Content(i, "first20", first20_JP[tempAddresser], first20_EN[tempAddresser]);
+                    tempAddresser++;
+                }
+                startingNumber += 20;
+                //Debug.Log("Starting Number: " + startingNumber);
+            }
         }
     }
+
+
 
     //Control Game Status
     private void GameStatusControl() {
@@ -167,16 +321,5 @@ public class GameHandler : MonoBehaviour{
     
 
     public Content[] GetQuestionContent() { return contentPool; }
-
-    /*public void ChageNeedBlade(int neededBladeChange) { 
-        bladeNeeded += neededBladeChange;
-        FindObjectOfType<Character>().ChangeBladeNeeded(bladeNumber);
-    }*/
-
-
-
-    //  ==============================================   //
-    //  =================   Buttons  =================   //
-    //  ==============================================  //
-    
+        
 }

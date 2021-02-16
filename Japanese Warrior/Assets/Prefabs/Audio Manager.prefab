@@ -53,7 +53,7 @@ MonoBehaviour:
   - name: DyingMan
     clip: {fileID: 8300000, guid: aba842107a1390d479c7ef342ceeddba, type: 3}
     source: {fileID: 0}
-    volume: 1
+    volume: 0.5
     pitch: 1
     loop: 0
   - name: EnemyDeath
