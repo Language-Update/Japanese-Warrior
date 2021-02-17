@@ -1820,6 +1820,10 @@ MonoBehaviour:
   - {fileID: 838251296}
   canLoadQuestion: 0
   interactableButtons: 0
+  slots: []
+  learningButtons: []
+  _learningState: 0
+  _playState: 1
 --- !u!4 &1375709708
 Transform:
   m_ObjectHideFlags: 0
@@ -2079,8 +2083,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveText: {fileID: 686740089}
+  sectionsCanvas: {fileID: 0}
+  questionsCanvas: {fileID: 0}
   _playState: 0
   _waveIntroState: 0
+  _multiplayerState: 0
+  _menuState: 0
 --- !u!4 &1606714139
 Transform:
   m_ObjectHideFlags: 0
@@ -2691,7 +2699,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2109107066
 GameObject:

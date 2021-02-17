@@ -8,11 +8,14 @@ public class MenuHandler : MonoBehaviour{
 
     [SerializeField] GameObject optionsCanvas = null;
     [SerializeField] GameObject buttons = null;
-
+    [SerializeField] GameObject matchingCanvas = null;
+    [SerializeField] TextMeshProUGUI matchingText = null;
     [SerializeField] TextMeshProUGUI[] texts;
 
     Color activeColor;
     Color NotActiveColor;
+
+    bool matchingUp;
 
     private void Start() {
         activeColor = texts[0].color;
@@ -20,8 +23,30 @@ public class MenuHandler : MonoBehaviour{
         activeColor.r = 0.07843138f; activeColor.g = 0.7843137f; activeColor.b = 0f; activeColor.a = 1f;
         NotActiveColor.r = 1f; NotActiveColor.g = 0.8627451f; NotActiveColor.b = 0.8627451f; NotActiveColor.a = 1f;
 
+        matchingUp = false;
+
         // if this is first start on this device, set default options
         SetDefaultOptions();
+    }
+
+    private void Update() {
+        MatchingTextAnim();
+    }
+
+    private void MatchingTextAnim() {
+        var alpha = matchingText.alpha;
+
+        if (alpha >= 1) {
+            matchingUp = false;
+        }
+        else if (alpha <= 0) {
+            matchingUp = true;
+        }
+
+        if (matchingUp) { alpha += 1f * Time.deltaTime; }
+        else { alpha -= 1.5f * Time.deltaTime; }
+
+        matchingText.alpha = alpha;
     }
 
     private void SetDefaultOptions() {     
@@ -96,5 +121,19 @@ public class MenuHandler : MonoBehaviour{
     public void LoadSceneByName(string SceneName) {
         SceneManager.LoadScene(SceneName);
     }
+
+    public void Matching() {
+        buttons.SetActive(false);
+        matchingCanvas.SetActive(true);
+
+        StartCoroutine(LoadMultiplayerScene());
+        IEnumerator LoadMultiplayerScene() {
+            float matchingTime = Random.Range(3f, 10f);
+            yield return new WaitForSeconds(matchingTime);
+
+            LoadSceneByName("MultiplayerScene");
+        }
+    }
+
 
 }

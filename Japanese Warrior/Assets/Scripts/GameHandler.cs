@@ -7,6 +7,8 @@ using TMPro;
 public class GameHandler : MonoBehaviour{
 
     [SerializeField] TextMeshProUGUI waveText = null;
+    [SerializeField] GameObject sectionsCanvas = null;
+    [SerializeField] GameObject questionsCanvas = null;
 
     UI_Handler uiHandler;
     EnemyBase enemyBase;
@@ -311,6 +313,32 @@ public class GameHandler : MonoBehaviour{
         _playState = false; _waveIntroState = true;
     }
 
+    public void LoadLearningCanvas(string contentType) {
+        if (contentType == "hiragana") {
+
+            contentPool = new Content[20];
+            for (int i = 0; i < 20; i++) {
+                contentPool[i] = new Content(i, "hiragana", hiragana_JP[i], hiragana_EN[i]);
+            }
+        }
+        if (contentType == "katakana") {
+
+            contentPool = new Content[20];
+            for (int i = 0; i < 20; i++) {
+                contentPool[i] = new Content(i, "katakana", katakana_JP[i], katakana_EN[i]);
+            }
+        }
+        if (contentType == "first20") {
+
+            contentPool = new Content[20];
+            for (int i = 0; i < 20; i++) {
+                contentPool[i] = new Content(i, "first20", first20_JP[i], first20_EN[i]);
+            }
+        }
+
+        uiHandler.LaydownQuestions();
+        sectionsCanvas.SetActive(false);
+    }
 
     //  ****                            ****    //
     //  ****    Getters and Setters     ****    //

@@ -1890,6 +1890,10 @@ MonoBehaviour:
   - {fileID: 838251296}
   canLoadQuestion: 0
   interactableButtons: 0
+  slots: []
+  learningButtons: []
+  _learningState: 0
+  _playState: 1
 --- !u!4 &1375709708
 Transform:
   m_ObjectHideFlags: 0
@@ -2149,6 +2153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveText: {fileID: 686740089}
+  sectionsCanvas: {fileID: 0}
+  questionsCanvas: {fileID: 0}
   _playState: 0
   _waveIntroState: 0
   _multiplayerState: 1
@@ -2490,12 +2496,12 @@ PrefabInstance:
     - target: {fileID: 5762026897847994452, guid: 34cd08a81c45a5f48919fac72468b090,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.69
+      value: 2.48
       objectReference: {fileID: 0}
     - target: {fileID: 5762026897847994452, guid: 34cd08a81c45a5f48919fac72468b090,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.835
+      value: 2.88
       objectReference: {fileID: 0}
     - target: {fileID: 5762026897847994452, guid: 34cd08a81c45a5f48919fac72468b090,
         type: 3}
@@ -3211,12 +3217,12 @@ PrefabInstance:
     - target: {fileID: 5762026897847994452, guid: 34cd08a81c45a5f48919fac72468b090,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.68
+      value: -2.41
       objectReference: {fileID: 0}
     - target: {fileID: 5762026897847994452, guid: 34cd08a81c45a5f48919fac72468b090,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.835
+      value: 2.88
       objectReference: {fileID: 0}
     - target: {fileID: 5762026897847994452, guid: 34cd08a81c45a5f48919fac72468b090,
         type: 3}
