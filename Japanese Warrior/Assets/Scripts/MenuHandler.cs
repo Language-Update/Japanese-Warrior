@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MenuHandler : MonoBehaviour{
 
@@ -91,6 +92,9 @@ public class MenuHandler : MonoBehaviour{
                     text.color = NotActiveColor;
             }
         }
+    }
+    public void LoadSceneByName(string SceneName) {
+        SceneManager.LoadScene(SceneName);
     }
 
 }

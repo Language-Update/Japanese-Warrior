@@ -11,8 +11,8 @@ public class Character : MonoBehaviour{
     Animator animator;
     GameHandler gameHandler;
 
-    public bool _playState, _menuState;
-    bool fire, fireCompleted, singlePlayerFire, multiplayerFire, menuFire;
+    public bool _playState, _menuState, _multiplayerState;
+    bool fire, fireCompleted, singlePlayerFire, menuFire;
     int numberOfBlade, bladeNeeded, menuEnemy;
 
     void Start()    {
@@ -35,9 +35,10 @@ public class Character : MonoBehaviour{
     private void PlayState() {
         if (!_playState) { return; }    // If not in Play State, then return
 
-        singlePlayerFire = true; multiplayerFire = menuFire = false;
+        singlePlayerFire = true; menuFire = false;
 
-        //Debug.Log("I need ------>     " + bladeNeeded);
+        if (_multiplayerState) { this.bladeNeeded = 10; }       // Always need blade in multi
+        //Debug.Log("I have blade ------>     " + numberOfBlade);
 
         if (numberOfBlade > 0) {
             animator.SetBool("hasBlade", true); // Equip Blade
@@ -59,7 +60,7 @@ public class Character : MonoBehaviour{
     private void MenuState() {
         if (!_menuState) { return; }    // If not in Menu State, then return
 
-        menuFire = true; multiplayerFire = singlePlayerFire = false;
+        menuFire = true; singlePlayerFire = false;
 
         animator.SetBool("hasBlade", true); // Equip Blade
 
@@ -128,9 +129,8 @@ public class Character : MonoBehaviour{
         this.numberOfBlade = bladeNumber;
     }
     public void ChangeBladeNeeded(int neededBladeChange) {
-        this.bladeNeeded += neededBladeChange;
-        // Avoid needed blade below zero
-        if(this.bladeNeeded <= 0) { this.bladeNeeded = 0; }
+        this.bladeNeeded += neededBladeChange;        
+        if (this.bladeNeeded <= 0) { this.bladeNeeded = 0; }    // Avoid needed blade below zero
     }
 
 

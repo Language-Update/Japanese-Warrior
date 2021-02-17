@@ -834,7 +834,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1606714138}
+      - m_Target: {fileID: 445899356}
         m_MethodName: LoadSceneByName
         m_Mode: 5
         m_Arguments:
@@ -2275,7 +2275,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1606714138}
+      - m_Target: {fileID: 445899356}
         m_MethodName: LoadSceneByName
         m_Mode: 5
         m_Arguments:
@@ -2821,7 +2821,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1606714138}
+      - m_Target: {fileID: 445899356}
         m_MethodName: LoadSceneByName
         m_Mode: 5
         m_Arguments:
@@ -3034,6 +3034,8 @@ MonoBehaviour:
   waveText: {fileID: 0}
   _playState: 0
   _waveIntroState: 0
+  _multiplayerState: 0
+  _menuState: 1
 --- !u!4 &1606714139
 Transform:
   m_ObjectHideFlags: 0

@@ -57,7 +57,7 @@ public class GameHandler : MonoBehaviour{
     float timePassed;
     bool isPlayerDead, waveUp;
 
-    public bool _playState, _waveIntroState;
+    public bool _playState, _waveIntroState, _multiplayerState, _menuState;
 
     void Start() {
         InitilizeParameters();
@@ -82,12 +82,20 @@ public class GameHandler : MonoBehaviour{
     }
 
     private void WaveIntroState() {
-        if (!_waveIntroState) { return; }    // if not in Wave Intro, then return
+        if (!_waveIntroState || _menuState) { return; }    // if not in Wave Intro, then return
 
         waveText.SetText("Wave " + waveNumber);   // Write wave
-        //uiHandler.SetLoadQuestion(false);
-        //uiHandler.interactableButtons = false;
         enemyBase.SetWaveNumber(waveNumber); enemyBase._waveIntroState = true;
+
+        if (_multiplayerState) {    // if we're in multiState, jump to the end
+            uiHandler.SetLoadQuestion(true);    // Start loading Questions
+            uiHandler.interactableButtons = true;
+            enemyBase.SetSpawn(true);           // Let enemy base spawn for now, will be inform about wave later on
+            enemyBase.SetWaveNumber(waveNumber); enemyBase._playState = true;
+            _waveIntroState = false; _playState = true; // Change State
+            waveUp = false;
+            return;
+        }
 
         // Get it in screen
         if (!waveUp && waveText.transform.localPosition.y > 500) {
@@ -122,6 +130,7 @@ public class GameHandler : MonoBehaviour{
 
     // Resets all game values
     private void InitilizeParameters() {
+        if (_menuState) { return; }
         bladeNumber = enemyNumber = bladeNeeded = 0;
         waveNumber = 1;  
         isPlayerDead = waveUp = false;     
