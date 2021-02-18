@@ -101,18 +101,18 @@ public class GameHandler : MonoBehaviour{
         // Get it in screen
         if (!waveUp && waveText.transform.localPosition.y > 500) {
             timePassed = 0; // Reset up conditions
-            waveText.transform.Translate(Vector2.down * 200f * Time.deltaTime);
+            waveText.transform.Translate(Vector2.down * 300f * Time.deltaTime);
         } 
         else if (!waveUp && waveText.transform.localPosition.y <= 500) { // Once we arrive the pos, wait in there
-            timePassed++;
-            if (timePassed > 150) {
+            timePassed++; ;
+            if (timePassed > 50) {
                 waveUp = true;
             }
         }
 
         // Get it out screen
         if (waveUp && waveText.transform.localPosition.y < 800) {   // if time is up
-            waveText.transform.Translate(Vector2.up * 200f * Time.deltaTime);
+            waveText.transform.Translate(Vector2.up * 300f * Time.deltaTime);
         }
         else if (waveUp && waveText.transform.localPosition.y >= 800) {   // if we arrive there, then finish intro
             uiHandler.SetLoadQuestion(true);    // Start loading Questions
