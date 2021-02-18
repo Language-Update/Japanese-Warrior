@@ -10,7 +10,7 @@ public class MenuHandler : MonoBehaviour{
     [SerializeField] GameObject buttons = null;
     [SerializeField] GameObject matchingCanvas = null;
     [SerializeField] TextMeshProUGUI matchingText = null;
-    [SerializeField] TextMeshProUGUI[] texts;
+    [SerializeField] TextMeshProUGUI[] texts = null;
 
     Color activeColor;
     Color NotActiveColor;

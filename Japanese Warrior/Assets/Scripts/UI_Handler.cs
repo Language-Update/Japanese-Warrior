@@ -30,6 +30,7 @@ public class UI_Handler : MonoBehaviour{
     int numberOfTrueSelection, firstSelection, secondSelection, newSelection,
         firstID, secondID;
     string learningButton = "";
+    Color normalColor;
 
     public bool _learningState, _playState;
 
@@ -57,11 +58,13 @@ public class UI_Handler : MonoBehaviour{
             gameHandler = FindObjectOfType<GameHandler>();
 
             // if it's first time to start, create data storage for button actions
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 10; i++) {
                 learningButton = "learningButton" + i.ToString();
                 if (!PlayerPrefs.HasKey(learningButton))
                     PlayerPrefs.SetInt(learningButton, 0);
             }
+            // Get a normal color at the beginning
+            normalColor = learningButtons[0].image.color;
         }
         
     }
@@ -117,6 +120,16 @@ public class UI_Handler : MonoBehaviour{
     private void LearningState() {
         if (!_learningState) { return; }
 
+        // if we did 5 correct answer, then get new contents and reset counter
+        if (numberOfTrueSelection >= 5) {
+            laydown = true;
+            numberOfTrueSelection = 0;
+        } else if (numberOfTrueSelection == 0) {
+            foreach (Button button in learningButtons) {
+                button.gameObject.SetActive(true);
+            }
+        }
+
         if (laydown)
             LaydownQuestions();
 
@@ -125,14 +138,16 @@ public class UI_Handler : MonoBehaviour{
 
             // Place the selection
             if (!firstAnswer) {
-                learningButtons[firstSelection].image.color = Color.yellow;
                 firstSelection = newSelection;
+                //Debug.Log("First Selection: " + firstSelection);
+                learningButtons[firstSelection].image.color = Color.yellow;
                 firstAnswer = true;
             }
             else {
                 if (newSelection == firstSelection) { return; }
-                secondAnswer = true;
                 secondSelection = newSelection;
+                //Debug.Log("Second Selection: " + secondSelection);
+                secondAnswer = true;
             }
 
             // if we get 2 answer in total
@@ -140,8 +155,11 @@ public class UI_Handler : MonoBehaviour{
                 // Get what they are
                 learningButton = "learningButton" + firstSelection.ToString();
                 firstID = selectedContents[PlayerPrefs.GetInt(learningButton)].contentID;
+                //Debug.Log("Learning Button: " + learningButton + "   ID: " + firstID);
+
                 learningButton = "learningButton" + secondSelection.ToString();
-                firstID = selectedContents[PlayerPrefs.GetInt(learningButton)].contentID;
+                secondID = selectedContents[PlayerPrefs.GetInt(learningButton)].contentID;
+                //Debug.Log("Learning Button: " + learningButton + "   ID: " + secondID);
 
                 // compare them
                 if (firstID == secondID) {
@@ -158,10 +176,6 @@ public class UI_Handler : MonoBehaviour{
             }
             newAnswer = false; // wait for a new selection
         }
-
-        // If there is no button to select, start it again.
-        if (numberOfTrueSelection >= 5)
-            laydown = true;
     }
 
     private IEnumerator LearningButtonColor(bool correctAnswer) {
@@ -173,7 +187,9 @@ public class UI_Handler : MonoBehaviour{
                 button.interactable = false;
             }
 
-            yield return new WaitForSeconds(1f);
+            numberOfTrueSelection++;
+
+            yield return new WaitForSeconds(1f);            
 
             learningButtons[firstSelection].gameObject.SetActive(false);
             learningButtons[secondSelection].gameObject.SetActive(false);
@@ -183,7 +199,6 @@ public class UI_Handler : MonoBehaviour{
             }
         }
         else {
-            Color normalColor = learningButtons[secondSelection].image.color;
             learningButtons[firstSelection].image.color = Color.red;
             learningButtons[secondSelection].image.color = Color.red;
 
@@ -205,8 +220,6 @@ public class UI_Handler : MonoBehaviour{
     public void LaydownQuestions() {
         // Get content pool
         contentPool = gameHandler.GetQuestionContent();
-
-        Debug.Log(" ------  LAYOUT  ----- ");
 
         // Laydown 5 of them with their counterparts
         int contentOrder = 0;
@@ -255,7 +268,8 @@ public class UI_Handler : MonoBehaviour{
             // If we get different order, then place it to the next button and save this random content number
             selectedOnes[i] = randomContentIndex;
             learningButtons[i].GetComponentInChildren<TextMeshProUGUI>().SetText(selectedContents[randomContentIndex].japaneseContent);
-            Debug.Log("***learningButton " + i.ToString() + "  --Got: " + randomContentIndex);
+            //Debug.Log("***learningButton " + i.ToString() + "  --Got: " + randomContentIndex +
+            //    "  --ID: " + selectedContents[randomContentIndex].contentID);
             learningButton = "learningButton" + i.ToString();   // Write which content we wrote in which button
             PlayerPrefs.SetInt(learningButton, randomContentIndex);
 
@@ -280,13 +294,18 @@ public class UI_Handler : MonoBehaviour{
             // If we get different order, then place it to the next button and save this random content number
             selectedOnes[i - 5] = randomContentIndex; // this is 0-4 array. 5 in length
             learningButtons[i].GetComponentInChildren<TextMeshProUGUI>().SetText(selectedContents[randomContentIndex].englishContent);
-            Debug.Log("***learningButton " + i.ToString() + "  --Got: " + randomContentIndex);
+            //Debug.Log("***learningButton " + i.ToString() + "  --Got: " + randomContentIndex +
+            //    "  --ID: " + selectedContents[randomContentIndex].contentID);
             learningButton = "learningButton" + i.ToString();   // Write which content we wrote in which button
             PlayerPrefs.SetInt(learningButton, randomContentIndex);
 
             contentOrder++;
         }
 
+        foreach(Button button in learningButtons) {
+            button.image.color = normalColor;
+            button.gameObject.SetActive(true);
+        }
         laydown = false;
     }
 

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Opponent : MonoBehaviour {
 
-    [SerializeField] Projectile projectile;
-    [SerializeField] GameObject gunBarrel;
+    [SerializeField] Projectile projectile = null;
+    [SerializeField] GameObject gunBarrel = null;
     [SerializeField] int damagePoint = 100;
 
-    [SerializeField] [Range(1, 5)] float minFireTime;
-    [SerializeField] [Range(3, 8)] float maxFireTime;
+    [SerializeField] [Range(1, 5)] float minFireTime = 0;
+    [SerializeField] [Range(3, 8)] float maxFireTime = 0;
 
-    Animator animator;
+    Animator animator = null;
 
     bool fire, fireCompleted;
     int bladeNeeded;

@@ -5,15 +5,15 @@ using TMPro;
 
 public class EnemyBase : MonoBehaviour{
 
-    [SerializeField] Turtle turtle;
-    [SerializeField] Turtle bigTurtle;
-    [SerializeField] Turtle armoredTurtle;
-    [SerializeField] Turtle armoredBigTurtle;
+    [SerializeField] Turtle turtle = null;
+    [SerializeField] Turtle bigTurtle = null;
+    [SerializeField] Turtle armoredTurtle = null;
+    [SerializeField] Turtle armoredBigTurtle = null;
 
     [SerializeField] TextMeshProUGUI waveCounterText = null;
     [SerializeField] TextMeshProUGUI enemyCounterText = null;
 
-    GameHandler gameHandler;
+    GameHandler gameHandler = null;
 
     public float minSpawnTime, maxSpawnTime, turtleSpeed;
     float timePassed, spawnTime;

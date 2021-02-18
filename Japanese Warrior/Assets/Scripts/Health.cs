@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class Health : MonoBehaviour{
 
     [SerializeField] int health = 100;
-    [SerializeField] bool displayAlways;
+    [SerializeField] bool displayAlways = false;
 
-    [SerializeField] Canvas healthCanvas;
+    [SerializeField] Canvas healthCanvas = null;
 
 
     private void Start() {

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Character : MonoBehaviour{
 
-    [SerializeField] Projectile projectile;
-    [SerializeField] GameObject gunBarrel;
+    [SerializeField] Projectile projectile = null;
+    [SerializeField] GameObject gunBarrel = null;
     [SerializeField] int damagePoint = 100;
 
     Animator animator;

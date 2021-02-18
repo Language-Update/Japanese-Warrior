@@ -8,7 +8,6 @@ public class GameHandler : MonoBehaviour{
 
     [SerializeField] TextMeshProUGUI waveText = null;
     [SerializeField] GameObject sectionsCanvas = null;
-    [SerializeField] GameObject questionsCanvas = null;
 
     UI_Handler uiHandler;
     EnemyBase enemyBase;
@@ -55,7 +54,7 @@ public class GameHandler : MonoBehaviour{
     #endregion
 
 
-    int bladeNumber, enemyNumber, waveNumber, bladeNeeded;
+    int bladeNumber, enemyNumber, waveNumber;
     float timePassed;
     bool isPlayerDead, waveUp;
 
@@ -133,7 +132,7 @@ public class GameHandler : MonoBehaviour{
     // Resets all game values
     private void InitilizeParameters() {
         if (_menuState) { return; }
-        bladeNumber = enemyNumber = bladeNeeded = 0;
+        bladeNumber = enemyNumber = 0;
         waveNumber = 1;  
         isPlayerDead = waveUp = false;     
 
@@ -304,15 +303,6 @@ public class GameHandler : MonoBehaviour{
     public void LoadSceneByName(string SceneName) {
         SceneManager.LoadScene(SceneName);
     }
-    #endregion
-
-    public void StartNextWave() {
-        waveNumber++;
-
-        enemyBase._waveIntroState = true;
-        _playState = false; _waveIntroState = true;
-    }
-
     public void LoadLearningCanvas(string contentType) {
         if (contentType == "hiragana") {
 
@@ -339,6 +329,16 @@ public class GameHandler : MonoBehaviour{
         uiHandler.LaydownQuestions();
         sectionsCanvas.SetActive(false);
     }
+    #endregion
+
+    public void StartNextWave() {
+        waveNumber++;
+
+        enemyBase._waveIntroState = true;
+        _playState = false; _waveIntroState = true;
+    }
+
+    
 
     //  ****                            ****    //
     //  ****    Getters and Setters     ****    //
