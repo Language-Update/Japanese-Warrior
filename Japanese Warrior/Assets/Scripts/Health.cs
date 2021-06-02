@@ -38,7 +38,6 @@ public class Health : MonoBehaviour{
             if (TryGetComponent<Character>(out var character)) { character.PerformDeath(); }
             if (TryGetComponent<Opponent>(out var opponent)) { opponent.PerformDeath(); }
             if (TryGetComponent<Turtle>(out var turtle)) { turtle.PerformDeath(); }
-            if (TryGetComponent<Projectile>(out var projectile)) { projectile.PerformDeath(); }
         }
     }
 

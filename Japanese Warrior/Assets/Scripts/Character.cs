@@ -15,6 +15,7 @@ public class Character : MonoBehaviour{
     bool fire, fireCompleted, singlePlayerFire, menuFire;
     int numberOfBlade, bladeNeeded, menuEnemy;
 
+    // Initiate the referances and values
     void Start()    {
         animator = GetComponentInChildren<Animator>();
         bladeNeeded = 0;
@@ -42,8 +43,8 @@ public class Character : MonoBehaviour{
 
         if (numberOfBlade > 0) {
             animator.SetBool("hasBlade", true); // Equip Blade
-            if (bladeNeeded > 0 && fireCompleted) {  // And if there an enemy
-                fire = true; fireCompleted = false;
+            if (bladeNeeded > 0 && fireCompleted) {  // If there is enemy and we completed the fire
+                fire = true; fireCompleted = false; // Then fire
             }
         }
         else {
@@ -78,8 +79,8 @@ public class Character : MonoBehaviour{
   
 
     private IEnumerator Fire() {
+        // If it is singleplayer then decrease number of blade 
         if (singlePlayerFire) {
-
             numberOfBlade--;
             ChangeBladeNeeded(-1);
             gameHandler.SetBladeNumber(numberOfBlade);
@@ -107,7 +108,7 @@ public class Character : MonoBehaviour{
 
     //  ==============================================   //
     //  =============   Public Methods   =============   //
-    //  ==============================================   //
+    //  =============== communication ================   //
 
     public void SetFire(bool fire) {
         this.fire = fire;

@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id" xmlns:tools="http://schemas.android.com/tools">
+  <string name="firebase_database_url" translatable="false">https://japanese-warrior-default-rtdb.europe-west1.firebasedatabase.app</string>
+  <string name="gcm_defaultSenderId" translatable="false">387540997795</string>
+  <string name="google_storage_bucket" translatable="false">japanese-warrior.appspot.com</string>
+  <string name="project_id" translatable="false">japanese-warrior</string>
+  <string name="google_api_key" translatable="false">AIzaSyCiKvaWronaZXX7FNCfleTBmZjSavx10ZU</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCiKvaWronaZXX7FNCfleTBmZjSavx10ZU</string>
+  <string name="google_app_id" translatable="false">1:387540997795:android:de0deb7aadd5796f4ed116</string>
+  <string name="default_web_client_id" translatable="false">387540997795-utmlqi66tpadne4ej2bbuh7b1ktk4l0t.apps.googleusercontent.com</string>
+</resources>

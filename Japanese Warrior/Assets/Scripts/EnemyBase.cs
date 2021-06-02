@@ -148,6 +148,7 @@ public class EnemyBase : MonoBehaviour{
             
     }
 
+    // COM
     private IEnumerator StartNextWave() {
         yield return new WaitForSeconds(4);
 

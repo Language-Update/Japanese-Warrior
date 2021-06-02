@@ -359,6 +359,7 @@ public class UI_Handler : MonoBehaviour{
         this.canLoadQuestion = canLoadQuestion;
     }
     
+    // Get the selected button's index
     public void SetLearningAnswer(int answer) {
         newAnswer = true;
         newSelection = answer;

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "387540997795",
+    "firebase_url": "https://japanese-warrior-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "japanese-warrior",
+    "storage_bucket": "japanese-warrior.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:387540997795:android:de0deb7aadd5796f4ed116",
+        "android_client_info": {
+          "package_name": "com.LanguageUpdate.JapaneseWarrior"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "387540997795-utmlqi66tpadne4ej2bbuh7b1ktk4l0t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiKvaWronaZXX7FNCfleTBmZjSavx10ZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "387540997795-utmlqi66tpadne4ej2bbuh7b1ktk4l0t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

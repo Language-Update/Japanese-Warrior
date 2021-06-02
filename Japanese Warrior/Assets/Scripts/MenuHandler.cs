@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Firebase;
+using Firebase.Auth;
 
 public class MenuHandler : MonoBehaviour{
 
+    [SerializeField] GameObject menuCanvas = null;
     [SerializeField] GameObject optionsCanvas = null;
+    [SerializeField] GameObject landingCanvas = null;
+    [SerializeField] GameObject loginUI = null;
+    [SerializeField] GameObject registerUI = null;
     [SerializeField] GameObject buttons = null;
     [SerializeField] GameObject matchingCanvas = null;
     [SerializeField] TextMeshProUGUI matchingText = null;
@@ -17,7 +23,17 @@ public class MenuHandler : MonoBehaviour{
 
     bool matchingUp;
 
+    Firebase.Auth.FirebaseAuth auth;
+    Firebase.Auth.FirebaseUser user;
+
+    private void Awake() {
+    }
+
     private void Start() {
+        // If already loggedin, then no need to login UI. Bring menu now
+        if (PlayerPrefs.GetInt("loggedIN") == 1)
+            LoginSuccess();
+
         activeColor = texts[0].color;
         NotActiveColor = texts[0].color;
         activeColor.r = 0.07843138f; activeColor.g = 0.7843137f; activeColor.b = 0f; activeColor.a = 1f;
@@ -80,9 +96,28 @@ public class MenuHandler : MonoBehaviour{
         }
     }
 
+    //--------------------------//
+    //      PUBLIC METHODS      //
+    //--------------------------//
+
     public void OpenOptions() {
         optionsCanvas.SetActive(true);
         buttons.SetActive(false);
+    }
+
+    public void LoginSuccess() {
+        menuCanvas.SetActive(true);
+        landingCanvas.SetActive(false);
+    }
+
+    public void OpenRegisterUI() {
+        loginUI.SetActive(false);
+        registerUI.SetActive(true);
+    }
+
+    public void RegisterSuccess() {
+        registerUI.SetActive(false);
+        loginUI.SetActive(true);
     }
 
     public void BackToMenu() {
@@ -92,7 +127,11 @@ public class MenuHandler : MonoBehaviour{
         buttons.SetActive(true);
     }
 
-    public void QuitButton() { Application.Quit(); ; }
+    public void QuitButton() { 
+        Application.Quit();
+        // Flag as logged out
+        PlayerPrefs.SetInt("loggedIN", 0); 
+    }
 
     public void ToggleActivation(string optionName) {
         // if there no information in the system

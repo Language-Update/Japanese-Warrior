@@ -331,6 +331,7 @@ public class GameHandler : MonoBehaviour{
     }
     #endregion
 
+    // Increase wave number and start it in Enemy Base 
     public void StartNextWave() {
         waveNumber++;
 

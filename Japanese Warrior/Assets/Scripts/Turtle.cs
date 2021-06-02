@@ -9,20 +9,16 @@ public class Turtle : MonoBehaviour{
 
     public float speed;
 
-    void Start()    {
-        
-    }
-
     void Update()    {
         transform.Translate(Vector2.left * Mathf.Min(3f, speed) * Time.deltaTime);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        collision.GetComponent<Health>().DealDamage(damagePoint);
-
+    private void OnTriggerEnter2D(Collider2D collision) {   
         // if Character gets damage, then no need to throw blade, it's too late.
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player")) {
             FindObjectOfType<Character>().ChangeBladeNeeded(-(gameObject.GetComponent<Health>().GetHealth()) / 10);
+            collision.GetComponent<Health>().DealDamage(damagePoint);
+        }
     }
 
     public void PerformDeath() {
