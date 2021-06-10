@@ -5,6 +5,7 @@ using Firebase.Auth;
 using Firebase.Database;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class FirebaseManager : MonoBehaviour {
 
@@ -31,7 +32,6 @@ public class FirebaseManager : MonoBehaviour {
     [SerializeField] TMP_InputField emailRegisterField = null;
     [SerializeField] TMP_InputField passwordRegisterField = null;
     [SerializeField] TMP_InputField passwordRegisterVerifyField = null;
-
 
     void Awake() {
         // Singleton
@@ -60,28 +60,52 @@ public class FirebaseManager : MonoBehaviour {
     }
 
     //  -------------------------------------------  //
-    //  ---------------   BUTTONS   ---------------  //
+    //  -----------   PUBLIC METHODS   ------------  //
     //  -------------------------------------------  //
+
+    //              Calls from ouside                //
+
+    public void SignOut() { auth.SignOut(); }
 
     // Function for the login button
     public void LoginButton() {
         // Call the login coroutine passing the email and password
         StartCoroutine(Login(emailLoginField.text, passwordLoginField.text));
     }
+
     //Function for the register button
     public void RegisterButton() {
-        // Call the register coroutine passing the email, password, and username
         StartCoroutine(Register(emailRegisterField.text, passwordRegisterField.text, usernameRegisterField.text));
     }
 
+    // Writing data
+    public void WriteUserData(string[,] _data) { StartCoroutine(UserDataWrite(_data)); }
+    //public void ReadUserData(string[] _paths) { StartCoroutine(UserDataRead(_paths)); }
 
-    //  -------------------------------------------  //
-    //  -----------   PUBLIC METHODS   ------------  //
-    //  -------------------------------------------  //
+    // Reading Data
+    public void ReadUserData(string _path, System.Action<DataSnapshot> action) {
+        // Create path for the current user
+        string dataPath = "users/" + User.UserId + "/" + _path;
+        //Debug.Log("Data path: " + dataPath);
+        FirebaseDatabase.DefaultInstance.GetReference(dataPath)
+            .GetValueAsync().ContinueWith(task => {
+                if (task.IsFaulted) {
+                    // Handle the error...
+                }
+                else if (task.IsCompleted) {
+                    Debug.Log("The data has been received!");
+                    DataSnapshot snapshot = task.Result;
+                    action(snapshot);
+                }
+            });
+    }
 
 
-    public void SignOut() { auth.SignOut(); }
+    //              Getters and Setters              //
 
+    public string GetUsername() { return User.DisplayName; }
+    public string GetUserEmail() { return User.Email; }
+    public string GetUserID() { return User.UserId; }
 
     //  -------------------------------------------  //
     //  -----------   PRIVATE METHODS   -----------  //
@@ -273,6 +297,34 @@ public class FirebaseManager : MonoBehaviour {
         }
         else {
             // Database username is now updated
+        }
+    }
+
+    // Writing data into the database
+    
+    IEnumerator UserDataWrite(string[,] _data) {
+        // _data = {path1, path2, path3....pathN},      // ROW 0    _data(0, x)
+        //         {value1, value2, value3....valueN}   // ROW 1    _data(1, x)
+        // _data = [ROWS, COLUMNS]
+
+        string userDataPath = "users/" + User.UserId + "/";
+
+        int i = 0;  // Take the first path
+        // userdata path + desired data path = data     Get first path (0,0) and first value (1,0)
+        var DBTask = DBref.Child(userDataPath + _data[0, i]).SetValueAsync(_data[1, i]);
+        i++; // Increase the index
+
+        while (i < _data.GetLength(1)) {    // If there is more path, then write them
+            DBTask = DBref.Child(userDataPath + _data[0, i]).SetValueAsync(_data[1, i]);
+            i++;
+        }
+
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+        if (DBTask.Exception != null) {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else {
+            Debug.LogFormat("Data successfully written");
         }
     }
 

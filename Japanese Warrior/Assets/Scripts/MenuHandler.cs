@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using Firebase;
+using Firebase.Database;
 using Firebase.Auth;
 
 public class MenuHandler : MonoBehaviour{
@@ -23,13 +24,15 @@ public class MenuHandler : MonoBehaviour{
 
     bool matchingUp;
 
-    Firebase.Auth.FirebaseAuth auth;
-    Firebase.Auth.FirebaseUser user;
+    // Database stuff
+    FirebaseManager FBmanager;
 
     private void Awake() {
     }
 
     private void Start() {
+        FBmanager = FindObjectOfType<FirebaseManager>();
+
         // If already loggedin, then no need to login UI. Bring menu now
         if (PlayerPrefs.GetInt("loggedIN") == 1)
             LoginSuccess();
@@ -174,5 +177,17 @@ public class MenuHandler : MonoBehaviour{
         }
     }
 
+    //      Private Methods     //
+
+    void TestReading(DataSnapshot snapshot){
+        Debug.Log("All children data");
+        foreach (DataSnapshot snap in snapshot.Children) {  // prints all the first layer children of the user
+            Debug.Log("Snap Key: " + snap.Key + "    Value: " + snap.Value);
+        }
+
+        DataSnapshot profileSnapshot = snapshot.Child("profileInfo");
+        Debug.Log("Is this first time in the app? --> " + profileSnapshot.Child("appFirstTime").Value); // prints yes
+        Debug.Log("Is this first time in singleplayer mod? --> " + profileSnapshot.Child("singleFirstTime").Value); // prints no
+    }
 
 }
