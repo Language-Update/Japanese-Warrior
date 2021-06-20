@@ -34,8 +34,7 @@ public class MenuHandler : MonoBehaviour{
         FBmanager = FindObjectOfType<FirebaseManager>();
 
         // If already loggedin, then no need to login UI. Bring menu now
-        if (PlayerPrefs.GetInt("loggedIN") == 1)
-            LoginSuccess();
+        // if (PlayerPrefs.GetInt("loggedIN") == 1) { LoginSuccess(); }
 
         activeColor = texts[0].color;
         NotActiveColor = texts[0].color;
@@ -106,6 +105,9 @@ public class MenuHandler : MonoBehaviour{
     public void OpenOptions() {
         optionsCanvas.SetActive(true);
         buttons.SetActive(false);
+        //FBmanager.ReadUserData("", TestReading);
+        try { Debug.Log("Current User: " + FBmanager.GetUsername()); }
+        catch { Debug.LogError("No user logged-in !!!"); }
     }
 
     public void LoginSuccess() {
@@ -132,8 +134,7 @@ public class MenuHandler : MonoBehaviour{
 
     public void QuitButton() { 
         Application.Quit();
-        // Flag as logged out
-        PlayerPrefs.SetInt("loggedIN", 0); 
+        // FBmanager.SignOut();    // User Sign-out
     }
 
     public void ToggleActivation(string optionName) {
@@ -188,6 +189,10 @@ public class MenuHandler : MonoBehaviour{
         DataSnapshot profileSnapshot = snapshot.Child("profileInfo");
         Debug.Log("Is this first time in the app? --> " + profileSnapshot.Child("appFirstTime").Value); // prints yes
         Debug.Log("Is this first time in singleplayer mod? --> " + profileSnapshot.Child("singleFirstTime").Value); // prints no
+    }
+
+    void TestOrderedReading(DataSnapshot snapshot) {
+        Debug.Log("READ ordered data");
     }
 
 }

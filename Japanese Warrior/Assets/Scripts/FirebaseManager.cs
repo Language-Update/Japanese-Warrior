@@ -54,9 +54,6 @@ public class FirebaseManager : MonoBehaviour {
                 Debug.LogError("Could not resolve all Firebase dependencies: " + dependencyStatus);
             }
         });
-
-        // Flag that user not logged in!
-        PlayerPrefs.SetInt("loggedIN", 0);
     }
 
     //  -------------------------------------------  //
@@ -85,7 +82,7 @@ public class FirebaseManager : MonoBehaviour {
     // Reading Data
     public void ReadUserData(string _path, System.Action<DataSnapshot> action) {
         // Create path for the current user
-        string dataPath = "users/" + User.UserId + "/" + _path;
+        string dataPath = "users/" + auth.CurrentUser.UserId + "/" + _path;
         //Debug.Log("Data path: " + dataPath);
         FirebaseDatabase.DefaultInstance.GetReference(dataPath)
             .GetValueAsync().ContinueWith(task => {
@@ -100,12 +97,11 @@ public class FirebaseManager : MonoBehaviour {
             });
     }
 
-
     //              Getters and Setters              //
 
-    public string GetUsername() { return User.DisplayName; }
-    public string GetUserEmail() { return User.Email; }
-    public string GetUserID() { return User.UserId; }
+    public string GetUsername() { return auth.CurrentUser.DisplayName; }
+    public string GetUserEmail() { return auth.CurrentUser.Email; }
+    public string GetUserID() { return auth.CurrentUser.UserId; }
 
     //  -------------------------------------------  //
     //  -----------   PRIVATE METHODS   -----------  //
@@ -288,7 +284,7 @@ public class FirebaseManager : MonoBehaviour {
 
     IEnumerator UpdateUsernameDatabase(string _username) {
         // Set the currently logged in user username in the database
-        var DBTask = DBref.Child("users").Child(User.UserId).Child("username").SetValueAsync(_username);
+        var DBTask = DBref.Child("users").Child(auth.CurrentUser.UserId).Child("username").SetValueAsync(_username);
 
         yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
 
@@ -307,7 +303,7 @@ public class FirebaseManager : MonoBehaviour {
         //         {value1, value2, value3....valueN}   // ROW 1    _data(1, x)
         // _data = [ROWS, COLUMNS]
 
-        string userDataPath = "users/" + User.UserId + "/";
+        string userDataPath = "users/" + auth.CurrentUser.UserId + "/";
 
         int i = 0;  // Take the first path
         // userdata path + desired data path = data     Get first path (0,0) and first value (1,0)

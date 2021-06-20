@@ -605,12 +605,12 @@ GameObject:
   - component: {fileID: 115737605}
   - component: {fileID: 115737604}
   m_Layer: 5
-  m_Name: Landing Canvas
+  m_Name: Sign-in Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &115737604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3990,7 +3990,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &863755269
 MonoBehaviour:
   m_ObjectHideFlags: 0
