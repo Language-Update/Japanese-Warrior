@@ -80,11 +80,13 @@ public class FirebaseManager : MonoBehaviour {
     //public void ReadUserData(string[] _paths) { StartCoroutine(UserDataRead(_paths)); }
 
     // Reading Data
-    public void ReadUserData(string _path, System.Action<DataSnapshot> action) {
+    public void ReadUserData(string _path, System.Action<DataSnapshot> action, string _readingType) {
         // Create path for the current user
         string dataPath = "users/" + auth.CurrentUser.UserId + "/" + _path;
         //Debug.Log("Data path: " + dataPath);
-        FirebaseDatabase.DefaultInstance.GetReference(dataPath)
+
+        if (_readingType == "normal") {
+            FirebaseDatabase.DefaultInstance.GetReference(dataPath)
             .GetValueAsync().ContinueWith(task => {
                 if (task.IsFaulted) {
                     // Handle the error...
@@ -95,7 +97,22 @@ public class FirebaseManager : MonoBehaviour {
                     action(snapshot);
                 }
             });
+        }
+        else if (_readingType == "ordered") {
+            // TO-DO
+        }
+        else if (_readingType == "filtered") {
+            // TO-DO
+        }
+        else if (_readingType == "ordered-filtered") {
+            // TO-DO
+        }
+        else {
+            Debug.LogWarning("Wrong reading type requested !! Please use normal, ordered, filtered" +
+                " or ordered-filtered as the request type000");
+        }
     }
+
 
     //              Getters and Setters              //
 
@@ -129,7 +146,7 @@ public class FirebaseManager : MonoBehaviour {
                 // Firebase Unity SDK is not safe to use here.
             }
         });
-
+        Debug.Log("Current user: " + auth.CurrentUser.DisplayName);
     }
 
     IEnumerator ShowMessage(string _message, float time) {

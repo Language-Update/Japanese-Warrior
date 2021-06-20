@@ -105,9 +105,11 @@ public class MenuHandler : MonoBehaviour{
     public void OpenOptions() {
         optionsCanvas.SetActive(true);
         buttons.SetActive(false);
-        //FBmanager.ReadUserData("", TestReading);
+        //FBmanager.ReadUserData("", TestReading, "normal");
         try { Debug.Log("Current User: " + FBmanager.GetUsername()); }
         catch { Debug.LogError("No user logged-in !!!"); }
+
+        FBmanager.ReadUserData("path", TestOrderedReading, "ordered");
     }
 
     public void LoginSuccess() {
@@ -193,6 +195,8 @@ public class MenuHandler : MonoBehaviour{
 
     void TestOrderedReading(DataSnapshot snapshot) {
         Debug.Log("READ ordered data");
+
+
     }
 
 }
