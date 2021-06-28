@@ -106,10 +106,13 @@ public class MenuHandler : MonoBehaviour{
         optionsCanvas.SetActive(true);
         buttons.SetActive(false);
         //FBmanager.ReadUserData("", TestReading, "normal");
-        try { Debug.Log("Current User: " + FBmanager.GetUsername()); }
-        catch { Debug.LogError("No user logged-in !!!"); }
+        //try { Debug.Log("Current User: " + FBmanager.GetUsername()); }
+        //catch { Debug.LogError("No user logged-in !!!"); }
 
-        FBmanager.ReadUserData("path", TestOrderedReading, "ordered");
+        //FBmanager.ReadNormalData("EN-JP/hiragana", TestOrderedAndFilteredReading, false);
+        //FBmanager.ReadedOrderedData("EN-JP/hiragana", TestOrderedReading, false, "specific", "AP");
+        FBmanager.ReadedOrderedAndFilteredData("EN-JP/hiragana", TestOrderedAndFilteredReading, false, 
+            "specific", "AC", "New");
     }
 
     public void LoginSuccess() {
@@ -193,10 +196,46 @@ public class MenuHandler : MonoBehaviour{
         Debug.Log("Is this first time in singleplayer mod? --> " + profileSnapshot.Child("singleFirstTime").Value); // prints no
     }
 
-    void TestOrderedReading(DataSnapshot snapshot) {
+    void TestOrderedReading(DataSnapshot _snapshot) {
         Debug.Log("READ ordered data");
 
+        foreach (DataSnapshot snapChild in _snapshot.Children) {
+            Debug.Log("I get: " + snapChild.Child("content_EN").Value
+                + "   Its AP: " + snapChild.Child("AP").Value);
 
+            /* This prints this:
+             * I get: first_test   Its AP: 1
+             * I get: second_test   Its AP: 2
+             * I get: third_test   Its AP: 3
+             * I get: 5_tes   Its AP: 5
+             * I get: 10_test   Its AP: 10
+             * 
+             * So when we get snaphot as a whole, it has main children. When you get 1 child,
+             * you need to go deeper. When you use .Child(key) you get that child. 
+             * It may contain a value or children/child. So you get it's key and value seperately
+             */
+        }
+    }
+    void TestOrderedAndFilteredReading(DataSnapshot _snapshot) {
+
+        Debug.Log("We have " + _snapshot.ChildrenCount + " children");
+
+        foreach (DataSnapshot snapChild in _snapshot.Children) {
+            Debug.Log("I get: " + snapChild.Child("content_EN").Value
+                + "   Its AP: " + snapChild.Child("AP").Value);
+
+            /* This prints this:
+             * I get: first_test   Its AP: 1
+             * I get: second_test   Its AP: 2
+             * I get: third_test   Its AP: 3
+             * I get: 5_tes   Its AP: 5
+             * I get: 10_test   Its AP: 10
+             * 
+             * So when we get snaphot as a whole, it has main children. When you get 1 child,
+             * you need to go deeper. When you use .Child(key) you get that child. 
+             * It may contain a value or children/child. So you get it's key and value seperately
+             */
+        }
     }
 
 }
