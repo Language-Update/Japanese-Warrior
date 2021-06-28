@@ -103,187 +103,28 @@ public class FirebaseManager : MonoBehaviour {
     }
 
     public void ReadedOrderedData(string _path, System.Action<DataSnapshot> action, 
-        bool _isUserData, string _orderType, string _specificKey) {
+        bool _isUserData, string _specificKey) {
         string dataPath = "";
 
         // If user data requested that include the current user's user ID
         if (_isUserData) { dataPath = "users/" + auth.CurrentUser.UserId + "/" + _path; }
         else { dataPath = _path; }
 
-        switch (_orderType) {
-            case "specific":
-                FirebaseDatabase.DefaultInstance.GetReference(dataPath).OrderByChild(_specificKey)
-                    .GetValueAsync().ContinueWith(task => {
-                        if (task.IsFaulted) {
-                            Debug.LogError("Someting went wrong with reading data ordered by Specific Key. Error Code: "
-                                + task.Exception);
-                        }
-                        else if (task.IsCompleted) {
-                            Debug.Log("The specific ordered data has been received!");
-                            DataSnapshot snapshot = null;
-                            snapshot = task.Result;
-                            action(snapshot);
-                        }
-                    });
-                break;
-            case "byChild":
-                FirebaseDatabase.DefaultInstance.GetReference(dataPath).OrderByKey()
-                    .GetValueAsync().ContinueWith(task => {
-                        if (task.IsFaulted) {
-                            Debug.LogError("Someting went wrong with reading data ordered by Child. Error Code: "
-                                + task.Exception);
-                        }
-                        else if (task.IsCompleted) {
-                            Debug.Log("The data ordered by Child has been received!");
-                            DataSnapshot snapshot = null;
-                            snapshot = task.Result;
-                            action(snapshot);
-                        }
-                    });
-                break;
-            case "byKey":
-                FirebaseDatabase.DefaultInstance.GetReference(dataPath).OrderByValue()
-                    .GetValueAsync().ContinueWith(task => {
-                        if (task.IsFaulted) {
-                            Debug.LogError("Someting went wrong with reading data ordered by Key. Error Code: "
-                                + task.Exception);
-                        }
-                        else if (task.IsCompleted) {
-                            Debug.Log("The data ordered by Key has been received!");
-                            DataSnapshot snapshot = task.Result;
-                            action(snapshot);
-                        }
-                    });
-                break;
-            default:
-                Debug.Log("Someting went wrong with reading ordered data. Plase check related lines");
-                break;
-        }
+        Debug.Log("Gettin data from: " + dataPath + "  ordered by " + _specificKey);
 
-    }
-
-    public void ReadedFilteredData(string _path, System.Action<DataSnapshot> action,
-        bool _isUserData, string _orderType, string _specificKey) {
-        string dataPath = "";
-        /*
-        // If user data requested that include the current user's user ID
-        if (_isUserData) { dataPath = "users/" + auth.CurrentUser.UserId + "/" + _path; }
-        else { dataPath = _path; }
-
-        switch (_orderType) {
-            case "specific":
-                FirebaseDatabase.DefaultInstance.GetReference(dataPath).OrderByChild(_specificKey)
-                    .GetValueAsync().ContinueWith(task => {
-                        if (task.IsFaulted) {
-                            Debug.LogError("Someting went wrong with reading data ordered by Specific Key. Error Code: "
-                                + task.Exception);
-                        }
-                        else if (task.IsCompleted) {
-                            Debug.Log("The specific ordered data has been received!");
-                            DataSnapshot snapshot = null;
-                            snapshot = task.Result;
-                            action(snapshot);
-                        }
-                    });
-                break;
-            case "byChild":
-                FirebaseDatabase.DefaultInstance.GetReference(dataPath).OrderByKey()
-                    .GetValueAsync().ContinueWith(task => {
-                        if (task.IsFaulted) {
-                            Debug.LogError("Someting went wrong with reading data ordered by Child. Error Code: "
-                                + task.Exception);
-                        }
-                        else if (task.IsCompleted) {
-                            Debug.Log("The data ordered by Child has been received!");
-                            DataSnapshot snapshot = null;
-                            snapshot = task.Result;
-                            action(snapshot);
-                        }
-                    });
-                break;
-            case "byKey":
-                FirebaseDatabase.DefaultInstance.GetReference(dataPath).OrderByValue()
-                    .GetValueAsync().ContinueWith(task => {
-                        if (task.IsFaulted) {
-                            Debug.LogError("Someting went wrong with reading data ordered by Key. Error Code: "
-                                + task.Exception);
-                        }
-                        else if (task.IsCompleted) {
-                            Debug.Log("The data ordered by Key has been received!");
-                            DataSnapshot snapshot = task.Result;
-                            action(snapshot);
-                        }
-                    });
-                break;
-            default:
-                Debug.Log("Someting went wrong with reading ordered data. Plase check related lines");
-                break;
-        
-        }*/
-
-    }
-
-    public void ReadedOrderedAndFilteredData(string _path, System.Action<DataSnapshot> action,
-        bool _isUserData, string _orderType, string _specificKey, string _filterBy) {
-        string dataPath = "";
-
-        // If user data requested that include the current user's user ID
-        if (_isUserData) { dataPath = "users/" + auth.CurrentUser.UserId + "/" + _path; }
-        else { dataPath = _path; }
-
-        Debug.Log("Gettin data from: " + dataPath);
-        Debug.Log("We are getting " + _specificKey + " type of data filtered by " + _filterBy);
-
-        switch (_orderType) {
-            case "specific":
-                FirebaseDatabase.DefaultInstance.GetReference(dataPath).OrderByChild(_specificKey)
-                    .EqualTo(_filterBy).GetValueAsync().ContinueWith(task => {
-                        if (task.IsFaulted) {
-                            Debug.LogError("Someting went wrong with reading data ordered by Specific Key. Error Code: "
-                                + task.Exception);
-                        }
-                        else if (task.IsCompleted) {
-                            Debug.Log("The specific ordered data has been received!");
-                            DataSnapshot snapshot = null;
-                            snapshot = task.Result;
-                            action(snapshot);
-                        }
-                    });
-                break;
-            case "byChild":
-                FirebaseDatabase.DefaultInstance.GetReference(dataPath).OrderByKey()
-                    .EqualTo(_filterBy).GetValueAsync().ContinueWith(task => {
-                        if (task.IsFaulted) {
-                            Debug.LogError("Someting went wrong with reading data ordered by Child. Error Code: "
-                                + task.Exception);
-                        }
-                        else if (task.IsCompleted) {
-                            Debug.Log("The data ordered by Child has been received!");
-                            DataSnapshot snapshot = null;
-                            snapshot = task.Result;
-                            action(snapshot);
-                        }
-                    });
-                break;
-            case "byKey":
-                FirebaseDatabase.DefaultInstance.GetReference(dataPath).OrderByValue()
-                    .EqualTo(_filterBy).GetValueAsync().ContinueWith(task => {
-                        if (task.IsFaulted) {
-                            Debug.LogError("Someting went wrong with reading data ordered by Key. Error Code: "
-                                + task.Exception);
-                        }
-                        else if (task.IsCompleted) {
-                            Debug.Log("The data ordered by Key has been received!");
-                            DataSnapshot snapshot = task.Result;
-                            action(snapshot);
-                        }
-                    });
-                break;
-            default:
-                Debug.Log("Someting went wrong with reading ordered data. Plase check related lines");
-                break;
-        }
-
+        FirebaseDatabase.DefaultInstance.GetReference(dataPath).OrderByChild(_specificKey)
+            .GetValueAsync().ContinueWith(task => {
+                if (task.IsFaulted) {
+                    Debug.LogError("Someting went wrong with reading data ordered by Specific Key. Error Code: "
+                    + task.Exception);
+                }
+                else if (task.IsCompleted) {
+                    Debug.Log("The specific ordered data has been received!");
+                    DataSnapshot snapshot = null;
+                    snapshot = task.Result;
+                    action(snapshot);
+                }
+            });
     }
 
 
