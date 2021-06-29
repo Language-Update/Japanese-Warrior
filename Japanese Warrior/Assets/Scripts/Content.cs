@@ -6,27 +6,29 @@ public class Content {
     
     // Public getters, private setters
     public int contentID { get; private set; }
+    public string language { get; private set; }
     public string contentType { get; private set; }
     public string japaneseContent { get; private set; }
     public string englishContent { get; private set; }
 
     // Public getters and setters
-    public int retentionRank { get; set; }
-    public float retentionPoint { get; set; }
-    // public int retentionClass { get; set; }          I disabled this field to keep it simple for now
+    public string AC { get; set; }              // Acquisition Category
+    public double AP { get; set; }              // Acquisition Point
+    public double AP_Multiplier { get; set; }   // Acquisition Point Multiplier
+    public int numberOfTest { get; set; }       // How many times user tested itself?
 
     
-    public Content(int contentID, string contentType, 
-        string japaneseContent, string englishContent) {
+    public Content(int _contentID, string _AC, double _AP, string _englishContent) {
 
-        this.contentID = contentID;
-        this.contentType = contentType;
-        this.japaneseContent = japaneseContent;
-        this.englishContent = englishContent;
+        contentID = _contentID;
+        AC = _AC;
+        AP = _AP;
+        englishContent = _englishContent;
 
+        /*
         // Initialize the Retention System Parameters
         retentionRank = 1;
-        retentionPoint = 1;
+        retentionPoint = 1;*/
     }
 
 }
