@@ -10,16 +10,16 @@ public class Algorithm : MonoBehaviour{
 
 	// Trash
 	List<Content> contents = new List<Content>();
-	int userContentConunt_Native = 50;
-	int userContentConunt_Perfect = 100;
-	int userContentConunt_Good = 150;
-	int userContentConunt_Moderate = 200;
-	int userContentConunt_Weak = 250;
-	int userContentConunt_New = 300;
+	int userContentConunt_Native = 0;
+	int userContentConunt_Perfect = 2;
+	int userContentConunt_Good = 3;
+	int userContentConunt_Moderate = 4;
+	int userContentConunt_Weak = 6;
+	int userContentConunt_New = 10;
 
 	// Needed Categories
 	int NC_Native = 0;  int NC_Perfect = 0; int NC_Good = 0; 
-	int NC_Moderate = 0; int NC_Weak = 0; int NC_New = 0;
+	int NC_Moderate = 0; int NC_Weak = 0; int NC_New = 0; int NC_Total = 0;
 
 
     // Here you can find how algorithm works by it's explaination, psuedo code, values, and actual code
@@ -211,47 +211,217 @@ public class Algorithm : MonoBehaviour{
 
 	void TestDataManupulation(DataSnapshot _snapshot) {
 		Debug.Log("Testing Data manupulation");
-
 		contents.Clear();   // Clear the list before using
 
-		// We should define how many content needed for each type when we want 5 content to ask
+		// ---------   Calculate Needed Content   --------- //
+		/* TODO:						Status:
+		 * * Execute NC_Definer			DONE
+		 */
 
-		TestDefineNeededCategories(50d);
+		// We should define how many content needed for each type when we want 5 content to ask
+		TestDefineNeededCategories(5d);
+
+		// ---------   Pick the needed content   --------- //
+		/* TODO:																Status:
+		 * - Check data's AC and is it needed? If so, add it to the list		DONE
+		 * - Send it to the GM													DONE
+		 */
 
 		foreach (DataSnapshot snapChild in _snapshot.Children) {
 
-			// In here we're getting all the date from the data base. But we need take what we want.
+			// In here we're getting all the date from the data that we get from database. 
+			//But we just need to take what we need and if we're done, we will break the loop.
 
+			if (NC_Total <= 0) { break; } // if we're done. Then break.
+			else {	// is that new? okay, and do I need a new? if so, get it. 
+				if (snapChild.Child("AC").Value.ToString() == "New" && NC_New > 0) {
+					Debug.Log("============== NEW ============== ");
 
-			/*
+					string contentID = "empty"; double contentAP = 0; string contentAC = "empty"; string contentEN = "empty";
 
-			Debug.Log("============== NEW ============== ");
+					try { contentID = snapChild.Child("content_ID").Value.ToString(); } catch { Debug.LogError(" Problem ID"); }
+					// If I don't use .Replace(",",".") then it gets 1.5 and 1,5 wrong. Both wrong. 
+					// I did use .Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture as a whole
+					// Which Replaced commas with points (raplace) and then convert them reverse (InveriantCulture) LOL :D
+					// So, just use double.Parse(string s);
 
-			string contentID = "empty"; double contentAP = 0; string contentAC = "empty"; string contentEN = "empty";
+					// And Firebase database only sorts 1.5 format. So, don't use "," when writing !!!
+					try { contentAP = double.Parse(snapChild.Child("AP").Value.ToString()); } catch { Debug.LogError(" Problem AP"); }
+					try { contentAC = snapChild.Child("AC").Value.ToString(); } catch { Debug.LogError(" Problem AC"); }
+					try { contentEN = snapChild.Child("content_EN").Value.ToString(); } catch { Debug.LogError(" Problem content_EN"); }
+					/*
+					Debug.Log("Content ID (root): " + contentID + "  its type: " + contentID.GetType());
+					Debug.Log("Content AC: " + contentAC + "  its type: " + contentAC.GetType());
+					Debug.Log("Content AP: " + contentAP + "  its type: " + contentAP.GetType());
+					Debug.Log("Content EN: " + contentEN + "  its type: " + contentEN.GetType());*/
 
-			try { contentID = snapChild.Child("content_ID").Value.ToString(); } catch { Debug.LogError(" Problem ID"); }
-			// If I don't use .Replace(",",".") then it gets 1.5 and 1,5 wrong. Both wrong. 
-			// I did use .Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture as a whole
-			// Which Replaced commas with points (raplace) and then convert them reverse (InveriantCulture) LOL :D
-			// So, just use double.Parse(string s);
+					Debug.Log("Added: " + contentID + "-" + contentAP + "-" + contentAC + "-" + contentEN);
+					contents.Add(new Content(contentID, contentAC, contentAP, contentEN));
 
-			// And Firebase database only sorts 1.5 format. So, don't use "," when writing !!!
-			try { contentAP = double.Parse(snapChild.Child("AP").Value.ToString()); } catch { Debug.LogError(" Problem AP"); }
-			try { contentAC = snapChild.Child("AC").Value.ToString(); } catch { Debug.LogError(" Problem AC"); }
-			try { contentEN = snapChild.Child("content_EN").Value.ToString(); } catch { Debug.LogError(" Problem content_EN"); }
-			/*
-            Debug.Log("Content ID (root): " + contentID + "  its type: " + contentID.GetType());
-            Debug.Log("Content AC: " + contentAC + "  its type: " + contentAC.GetType());
-            Debug.Log("Content AP: " + contentAP + "  its type: " + contentAP.GetType());
-            Debug.Log("Content EN: " + contentEN + "  its type: " + contentEN.GetType());/
+					// Update Needed Contents
+					NC_New--; NC_Total--;
+				}
+				else if (snapChild.Child("AC").Value.ToString() == "Weak" && NC_Weak > 0) {
+					Debug.Log("============== NEW ============== ");
 
-			Debug.Log("Added: " + contentID + "-" + contentAP + "-" + contentAC + "-" + contentEN);
-			contents.Add(new Content(contentID, contentAC, contentAP, contentEN));
-			*/
+					string contentID = "empty"; double contentAP = 0; string contentAC = "empty"; string contentEN = "empty";
 
+					try { contentID = snapChild.Child("content_ID").Value.ToString(); } catch { Debug.LogError(" Problem ID"); }
+					// If I don't use .Replace(",",".") then it gets 1.5 and 1,5 wrong. Both wrong. 
+					// I did use .Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture as a whole
+					// Which Replaced commas with points (raplace) and then convert them reverse (InveriantCulture) LOL :D
+					// So, just use double.Parse(string s);
+
+					// And Firebase database only sorts 1.5 format. So, don't use "," when writing !!!
+					try { contentAP = double.Parse(snapChild.Child("AP").Value.ToString()); } catch { Debug.LogError(" Problem AP"); }
+					try { contentAC = snapChild.Child("AC").Value.ToString(); } catch { Debug.LogError(" Problem AC"); }
+					try { contentEN = snapChild.Child("content_EN").Value.ToString(); } catch { Debug.LogError(" Problem content_EN"); }
+					/*
+					Debug.Log("Content ID (root): " + contentID + "  its type: " + contentID.GetType());
+					Debug.Log("Content AC: " + contentAC + "  its type: " + contentAC.GetType());
+					Debug.Log("Content AP: " + contentAP + "  its type: " + contentAP.GetType());
+					Debug.Log("Content EN: " + contentEN + "  its type: " + contentEN.GetType());*/
+
+					Debug.Log("Added: " + contentID + "-" + contentAP + "-" + contentAC + "-" + contentEN);
+					contents.Add(new Content(contentID, contentAC, contentAP, contentEN));
+
+					// Update Needed Contents
+					NC_Weak--; NC_Total--;
+				}
+				else if (snapChild.Child("AC").Value.ToString() == "Moderate" && NC_Moderate > 0) {
+					Debug.Log("============== NEW ============== ");
+
+					string contentID = "empty"; double contentAP = 0; string contentAC = "empty"; string contentEN = "empty";
+
+					try { contentID = snapChild.Child("content_ID").Value.ToString(); } catch { Debug.LogError(" Problem ID"); }
+					// If I don't use .Replace(",",".") then it gets 1.5 and 1,5 wrong. Both wrong. 
+					// I did use .Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture as a whole
+					// Which Replaced commas with points (raplace) and then convert them reverse (InveriantCulture) LOL :D
+					// So, just use double.Parse(string s);
+
+					// And Firebase database only sorts 1.5 format. So, don't use "," when writing !!!
+					try { contentAP = double.Parse(snapChild.Child("AP").Value.ToString()); } catch { Debug.LogError(" Problem AP"); }
+					try { contentAC = snapChild.Child("AC").Value.ToString(); } catch { Debug.LogError(" Problem AC"); }
+					try { contentEN = snapChild.Child("content_EN").Value.ToString(); } catch { Debug.LogError(" Problem content_EN"); }
+					/*
+					Debug.Log("Content ID (root): " + contentID + "  its type: " + contentID.GetType());
+					Debug.Log("Content AC: " + contentAC + "  its type: " + contentAC.GetType());
+					Debug.Log("Content AP: " + contentAP + "  its type: " + contentAP.GetType());
+					Debug.Log("Content EN: " + contentEN + "  its type: " + contentEN.GetType());*/
+
+					Debug.Log("Added: " + contentID + "-" + contentAP + "-" + contentAC + "-" + contentEN);
+					contents.Add(new Content(contentID, contentAC, contentAP, contentEN));
+
+					// Update Needed Contents
+					NC_Moderate--; NC_Total--;
+				}
+				else if (snapChild.Child("AC").Value.ToString() == "Good" && NC_Good > 0) {
+					Debug.Log("============== NEW ============== ");
+
+					string contentID = "empty"; double contentAP = 0; string contentAC = "empty"; string contentEN = "empty";
+
+					try { contentID = snapChild.Child("content_ID").Value.ToString(); } catch { Debug.LogError(" Problem ID"); }
+					// If I don't use .Replace(",",".") then it gets 1.5 and 1,5 wrong. Both wrong. 
+					// I did use .Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture as a whole
+					// Which Replaced commas with points (raplace) and then convert them reverse (InveriantCulture) LOL :D
+					// So, just use double.Parse(string s);
+
+					// And Firebase database only sorts 1.5 format. So, don't use "," when writing !!!
+					try { contentAP = double.Parse(snapChild.Child("AP").Value.ToString()); } catch { Debug.LogError(" Problem AP"); }
+					try { contentAC = snapChild.Child("AC").Value.ToString(); } catch { Debug.LogError(" Problem AC"); }
+					try { contentEN = snapChild.Child("content_EN").Value.ToString(); } catch { Debug.LogError(" Problem content_EN"); }
+					/*
+					Debug.Log("Content ID (root): " + contentID + "  its type: " + contentID.GetType());
+					Debug.Log("Content AC: " + contentAC + "  its type: " + contentAC.GetType());
+					Debug.Log("Content AP: " + contentAP + "  its type: " + contentAP.GetType());
+					Debug.Log("Content EN: " + contentEN + "  its type: " + contentEN.GetType());*/
+
+					Debug.Log("Added: " + contentID + "-" + contentAP + "-" + contentAC + "-" + contentEN);
+					contents.Add(new Content(contentID, contentAC, contentAP, contentEN));
+
+					// Update Needed Contents
+					NC_Good--; NC_Total--;
+				}
+				else if (snapChild.Child("AC").Value.ToString() == "Perfect" && NC_Perfect > 0) {
+					Debug.Log("============== NEW ============== ");
+
+					string contentID = "empty"; double contentAP = 0; string contentAC = "empty"; string contentEN = "empty";
+
+					try { contentID = snapChild.Child("content_ID").Value.ToString(); } catch { Debug.LogError(" Problem ID"); }
+					// If I don't use .Replace(",",".") then it gets 1.5 and 1,5 wrong. Both wrong. 
+					// I did use .Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture as a whole
+					// Which Replaced commas with points (raplace) and then convert them reverse (InveriantCulture) LOL :D
+					// So, just use double.Parse(string s);
+
+					// And Firebase database only sorts 1.5 format. So, don't use "," when writing !!!
+					try { contentAP = double.Parse(snapChild.Child("AP").Value.ToString()); } catch { Debug.LogError(" Problem AP"); }
+					try { contentAC = snapChild.Child("AC").Value.ToString(); } catch { Debug.LogError(" Problem AC"); }
+					try { contentEN = snapChild.Child("content_EN").Value.ToString(); } catch { Debug.LogError(" Problem content_EN"); }
+					/*
+					Debug.Log("Content ID (root): " + contentID + "  its type: " + contentID.GetType());
+					Debug.Log("Content AC: " + contentAC + "  its type: " + contentAC.GetType());
+					Debug.Log("Content AP: " + contentAP + "  its type: " + contentAP.GetType());
+					Debug.Log("Content EN: " + contentEN + "  its type: " + contentEN.GetType());*/
+
+					Debug.Log("Added: " + contentID + "-" + contentAP + "-" + contentAC + "-" + contentEN);
+					contents.Add(new Content(contentID, contentAC, contentAP, contentEN));
+
+					// Update Needed Contents
+					NC_Perfect--; NC_Total--;
+				}
+				else if (snapChild.Child("AC").Value.ToString() == "Native" && NC_Native > 0) {
+					Debug.Log("============== NEW ============== ");
+
+					string contentID = "empty"; double contentAP = 0; string contentAC = "empty"; string contentEN = "empty";
+
+					try { contentID = snapChild.Child("content_ID").Value.ToString(); } catch { Debug.LogError(" Problem ID"); }
+					// If I don't use .Replace(",",".") then it gets 1.5 and 1,5 wrong. Both wrong. 
+					// I did use .Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture as a whole
+					// Which Replaced commas with points (raplace) and then convert them reverse (InveriantCulture) LOL :D
+					// So, just use double.Parse(string s);
+
+					// And Firebase database only sorts 1.5 format. So, don't use "," when writing !!!
+					try { contentAP = double.Parse(snapChild.Child("AP").Value.ToString()); } catch { Debug.LogError(" Problem AP"); }
+					try { contentAC = snapChild.Child("AC").Value.ToString(); } catch { Debug.LogError(" Problem AC"); }
+					try { contentEN = snapChild.Child("content_EN").Value.ToString(); } catch { Debug.LogError(" Problem content_EN"); }
+					/*
+					Debug.Log("Content ID (root): " + contentID + "  its type: " + contentID.GetType());
+					Debug.Log("Content AC: " + contentAC + "  its type: " + contentAC.GetType());
+					Debug.Log("Content AP: " + contentAP + "  its type: " + contentAP.GetType());
+					Debug.Log("Content EN: " + contentEN + "  its type: " + contentEN.GetType());*/
+
+					Debug.Log("Added: " + contentID + "-" + contentAP + "-" + contentAC + "-" + contentEN);
+					contents.Add(new Content(contentID, contentAC, contentAP, contentEN));
+
+					// Update Needed Contents
+					NC_Native--; NC_Total--;
+				}
+			}
 		}
+		// Now we get all the data we want in a list mixed. 
 
-		// Now we get all the data we want in a list. We should seperate them 
+		/*	We should send it to the game manager. Game Manager sends it to the Question Handler.
+			Question handler asks and keep records true answers. 
+			Then it will pass the final type of them to us via Game Manager.
+			We (algorithm) will execute AP Calculation and AC identifier to calculte new AP and
+				define AC for all. If there is any change, we will record it to the StatusInfo in the database
+
+			When user wants to see it's data
+		*/
+
+		// ---------   Manupulate Data   --------- //
+		/* TODO:						Status:
+		 * - Increse true answers		Will Do
+		 */
+
+		// ---------   Update Data   --------- //
+		/* TODO:						Status:
+		 * - Calculate AP				Will Do
+		 * - Identify AC				Will Do
+		 * - Record Changes				Will Do
+		 * - Update All Data			Will Do
+		 */
+
 	}
 
 	void TestDefineNeededCategories(double TotalNeededContent) {
@@ -297,6 +467,10 @@ public class Algorithm : MonoBehaviour{
 		Debug.Log("---- OUT ---- Moderate: " + NC_Moderate);
 		Debug.Log("---- OUT ---- Weak: " + NC_Weak);
 		Debug.Log("---- OUT ---- New: " + NC_New);
+
+		// Keep total number of needed
+		NC_Total = NC_Native + NC_Perfect + NC_Good + NC_Moderate + NC_Weak + NC_New;
+		Debug.Log("Total returned content: " + NC_Total);
 	}
 
 
