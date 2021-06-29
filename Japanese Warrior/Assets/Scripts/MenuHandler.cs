@@ -24,15 +24,10 @@ public class MenuHandler : MonoBehaviour{
 
     bool matchingUp;
 
-    // Database stuff
-    FirebaseManager FBmanager;
-
     private void Awake() {
     }
 
     private void Start() {
-        FBmanager = FindObjectOfType<FirebaseManager>();
-
         // If already loggedin, then no need to login UI. Bring menu now
         // if (PlayerPrefs.GetInt("loggedIN") == 1) { LoginSuccess(); }
 
@@ -105,12 +100,8 @@ public class MenuHandler : MonoBehaviour{
     public void OpenOptions() {
         optionsCanvas.SetActive(true);
         buttons.SetActive(false);
-        //FBmanager.ReadUserData("", TestReading, "normal");
-        //try { Debug.Log("Current User: " + FBmanager.GetUsername()); }
-        //catch { Debug.LogError("No user logged-in !!!"); }
 
-        //FBmanager.ReadNormalData("EN-JP/hiragana", TestOrderedAndFilteredReading, false);
-        FBmanager.ReadedOrderedData("EN-JP/hiragana", TestOrderedReading, false, "AP");
+        FindObjectOfType<Algorithm>().OpenOptionsAction();
     }
 
     public void LoginSuccess() {
@@ -183,35 +174,5 @@ public class MenuHandler : MonoBehaviour{
 
     //      Private Methods     //
 
-    void TestReading(DataSnapshot snapshot){
-        Debug.Log("All children data");
-        foreach (DataSnapshot snap in snapshot.Children) {  // prints all the first layer children of the user
-            Debug.Log("Snap Key: " + snap.Key + "    Value: " + snap.Value);
-        }
-
-        DataSnapshot profileSnapshot = snapshot.Child("profileInfo");
-        Debug.Log("Is this first time in the app? --> " + profileSnapshot.Child("appFirstTime").Value); // prints yes
-        Debug.Log("Is this first time in singleplayer mod? --> " + profileSnapshot.Child("singleFirstTime").Value); // prints no
-    }
-
-    void TestOrderedReading(DataSnapshot _snapshot) {
-        Debug.Log("READ ordered data");
-
-        foreach (DataSnapshot snapChild in _snapshot.Children) {
-            Debug.Log("I get: " + snapChild.Child("content_EN").Value
-                + "   Its AP: " + snapChild.Child("AP").Value);
-
-            /* This prints this:
-             * I get: first_test   Its AP: 1
-             * I get: second_test   Its AP: 2
-             * I get: third_test   Its AP: 3
-             * I get: 5_tes   Its AP: 5
-             * I get: 10_test   Its AP: 10
-             * 
-             * So when we get snaphot as a whole, it has main children. When you get 1 child,
-             * you need to go deeper. When you use .Child(key) you get that child. 
-             * It may contain a value or children/child. So you get it's key and value seperately
-             */
-        }
-    }
+   
 }

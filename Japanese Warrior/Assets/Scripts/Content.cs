@@ -5,7 +5,8 @@ using UnityEngine;
 public class Content {
     
     // Public getters, private setters
-    public int contentID { get; private set; }
+    public string contentID { get; private set; }
+    public int contentID_OLD { get; private set; }
     public string language { get; private set; }
     public string contentType { get; private set; }
     public string japaneseContent { get; private set; }
@@ -18,7 +19,7 @@ public class Content {
     public int numberOfTest { get; set; }       // How many times user tested itself?
 
     
-    public Content(int _contentID, string _AC, double _AP, string _englishContent) {
+    public Content(string _contentID, string _AC, double _AP, string _englishContent) {
 
         contentID = _contentID;
         AC = _AC;
@@ -29,6 +30,15 @@ public class Content {
         // Initialize the Retention System Parameters
         retentionRank = 1;
         retentionPoint = 1;*/
+    }
+
+    public Content(int _contentID, string _contentType, string _japaneseContent, string _englishContent) {
+
+        this.contentID_OLD -= _contentID;
+        this.contentType = _contentType;
+        this.japaneseContent = _japaneseContent;
+        this.englishContent = _englishContent;
+
     }
 
 }
