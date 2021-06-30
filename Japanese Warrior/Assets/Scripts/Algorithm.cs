@@ -216,8 +216,9 @@ public class Algorithm : MonoBehaviour{
 		// ---------   Calculate Needed Content   --------- //
 		/* TODO:						Status:
 		 * * Execute NC_Definer			DONE
+		 * 
 		 */
-
+		Debug.Log(""); Debug.Log("Defining Needed Contents"); Debug.Log("");
 		// We should define how many content needed for each type when we want 5 content to ask
 		TestDefineNeededCategories(5d);
 
@@ -226,7 +227,7 @@ public class Algorithm : MonoBehaviour{
 		 * - Check data's AC and is it needed? If so, add it to the list		DONE
 		 * - Send it to the GM													DONE
 		 */
-
+		Debug.Log(""); Debug.Log("Picking needed contents"); Debug.Log("");
 		foreach (DataSnapshot snapChild in _snapshot.Children) {
 
 			// In here we're getting all the date from the data that we get from database. 
@@ -398,6 +399,11 @@ public class Algorithm : MonoBehaviour{
 				}
 			}
 		}
+		Debug.Log(""); Debug.Log("Contents list created"); Debug.Log("");
+		Debug.Log("Content Amount: " + contents.Count);
+		/*foreach (Content content in contents) {
+			Debug.Log("Added Content: " + content.englishContent);
+        }*/
 		// Now we get all the data we want in a list mixed. 
 
 		/*	We should send it to the game manager. Game Manager sends it to the Question Handler.
@@ -411,16 +417,51 @@ public class Algorithm : MonoBehaviour{
 
 		// ---------   Manupulate Data   --------- //
 		/* TODO:						Status:
-		 * - Increse true answers		Will Do
+		 * - Increse true answers		DONE
+		 * - Calculate AP				DONE
+		 * - Identify AC				SKIPPED
 		 */
+		Debug.Log(""); Debug.Log("Data manupulation starts"); Debug.Log("");
 
+		// Increasing True Answers
+		System.Random rnd = new System.Random();
+		foreach (Content content in contents) {
+			int temp = content.trueAnswers;
+			content.trueAnswers = rnd.Next(10);
+			Debug.Log("Content: " + content.englishContent);
+			Debug.Log("Changed: " + temp + " --> " + content.trueAnswers);
+        }
+
+		// Calculate AP
+		foreach (Content content in contents) {
+			double initialAP = content.AP;	int initialTrue = content.trueAnswers;
+			while (content.trueAnswers > 0) {
+				content.AP += Mathf.Pow(2, (float)content.AP_Multiplier);	// Add new point
+				content.AP_Multiplier += 0.1; // It will be 0.05			// Increase point multiplier
+				content.trueAnswers--;										// Decrease True Answer
+            }
+			Debug.Log("Change On: " + content.englishContent + " with " + initialTrue + " amount of True."
+				+ "    AP: " + initialAP + " --> " + content.AP);
+        }
+
+		// Identify AC	** NO NEED TO TEST **
+		foreach (Content content in contents) {
+			string initialAC = content.AC;
+
+			
+        }
+
+
+
+		Debug.Log(""); Debug.Log("Update Data"); Debug.Log("");
 		// ---------   Update Data   --------- //
 		/* TODO:						Status:
-		 * - Calculate AP				Will Do
-		 * - Identify AC				Will Do
-		 * - Record Changes				Will Do
+		 * - Record Changes				DOING
 		 * - Update All Data			Will Do
 		 */
+
+		// Record Changes
+
 
 	}
 
