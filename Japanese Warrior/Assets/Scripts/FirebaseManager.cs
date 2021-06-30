@@ -77,6 +77,20 @@ public class FirebaseManager : MonoBehaviour {
 
     // Writing data
     public void WriteUserData(string[,] _data) { StartCoroutine(UserDataWrite(_data)); }
+
+    // Writing Json Data
+    public void WriteJsonData(string[,] _data) { 
+        Debug.Log("here ??"); 
+        for (int i = 0; i < _data.GetLength(0); i++) {
+            DBref.Child(_data[0, i]).SetRawJsonValueAsync(_data[1, i]);
+        }
+        Debug.Log(_data.GetLength(0) + " Json successfully written into the Database!!");
+    }
+    public void SingleJson(string _address, string _json) { Debug.Log("here 22 ??");
+        //StartCoroutine(SingleJsonWriting(_address, _json)); 
+        DBref.Child(_address).SetRawJsonValueAsync(_json);
+        Debug.Log("Test Address: " + _address + "   JSON: " + _json);
+    }
     //public void ReadUserData(string[] _paths) { StartCoroutine(UserDataRead(_paths)); }
 
     // Reading Data
@@ -330,8 +344,8 @@ public class FirebaseManager : MonoBehaviour {
     // Writing data into the database
     
     IEnumerator UserDataWrite(string[,] _data) {
-        // _data = {path1, path2, path3....pathN},      // ROW 0    _data(0, x)
-        //         {value1, value2, value3....valueN}   // ROW 1    _data(1, x)
+        // _data = {path1, path2, path3....pathN},      // ROW 0    _data(0, x) - Address
+        //         {value1, value2, value3....valueN}   // ROW 1    _data(1, x) - Value
         // _data = [ROWS, COLUMNS]
 
         string userDataPath = "users/" + auth.CurrentUser.UserId + "/";
@@ -354,6 +368,5 @@ public class FirebaseManager : MonoBehaviour {
             Debug.LogFormat("Data successfully written");
         }
     }
-
     #endregion
 }

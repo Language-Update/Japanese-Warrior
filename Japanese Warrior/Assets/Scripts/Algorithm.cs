@@ -159,22 +159,10 @@ public class Algorithm : MonoBehaviour{
 		//catch { Debug.LogError("No user logged-in !!!"); }
 
 		//FBmanager.ReadNormalData("EN-JP/hiragana", TestOrderedAndFilteredReading, false);
-		FBmanager.ReadedOrderedData("EN-JP/hiragana", TestDataManupulation, false, "AP");
-		/*
-		int needed = 99;
-
-		needed = (int)(10d * (30d / 100d));
-		Debug.Log("Needed 0 - " + needed);
-		needed = (int)(10d * (25d / 100d));
-		Debug.Log("Needed 1 - " + needed);
-		needed = (int)(12d * (30d / 100d));
-		Debug.Log("Needed 2 - " + needed);
-		needed = (int)(4.9);
-		Debug.Log("Needed 3 - " + needed);
-		needed = (int)(5.0);
-		Debug.Log("Needed 4 - " + needed);
-		needed = (int)(5.1);
-		Debug.Log("Needed 5 - " + needed);*/
+				
+		//	== All test done. Final Method:	
+		// Bmanager.ReadedOrderedData("EN-JP/hiragana", TestDataManupulation, false, "AP");
+		
 	}
 
 	void TestReading(DataSnapshot snapshot) {
@@ -240,7 +228,7 @@ public class Algorithm : MonoBehaviour{
 
 					string contentID = "empty"; double contentAP = 0; string contentAC = "empty"; string contentEN = "empty";
 
-					try { contentID = snapChild.Child("content_ID").Value.ToString(); } catch { Debug.LogError(" Problem ID"); }
+					try { contentID = snapChild.Child("contentID").Value.ToString(); } catch { Debug.LogError(" Problem ID"); }
 					// If I don't use .Replace(",",".") then it gets 1.5 and 1,5 wrong. Both wrong. 
 					// I did use .Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture as a whole
 					// Which Replaced commas with points (raplace) and then convert them reverse (InveriantCulture) LOL :D
@@ -249,7 +237,7 @@ public class Algorithm : MonoBehaviour{
 					// And Firebase database only sorts 1.5 format. So, don't use "," when writing !!!
 					try { contentAP = double.Parse(snapChild.Child("AP").Value.ToString()); } catch { Debug.LogError(" Problem AP"); }
 					try { contentAC = snapChild.Child("AC").Value.ToString(); } catch { Debug.LogError(" Problem AC"); }
-					try { contentEN = snapChild.Child("content_EN").Value.ToString(); } catch { Debug.LogError(" Problem content_EN"); }
+					try { contentEN = snapChild.Child("englishContent").Value.ToString(); } catch { Debug.LogError(" Problem content_EN"); }
 					/*
 					Debug.Log("Content ID (root): " + contentID + "  its type: " + contentID.GetType());
 					Debug.Log("Content AC: " + contentAC + "  its type: " + contentAC.GetType());
@@ -267,7 +255,7 @@ public class Algorithm : MonoBehaviour{
 
 					string contentID = "empty"; double contentAP = 0; string contentAC = "empty"; string contentEN = "empty";
 
-					try { contentID = snapChild.Child("content_ID").Value.ToString(); } catch { Debug.LogError(" Problem ID"); }
+					try { contentID = snapChild.Child("contentID").Value.ToString(); } catch { Debug.LogError(" Problem ID"); }
 					// If I don't use .Replace(",",".") then it gets 1.5 and 1,5 wrong. Both wrong. 
 					// I did use .Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture as a whole
 					// Which Replaced commas with points (raplace) and then convert them reverse (InveriantCulture) LOL :D
@@ -276,7 +264,7 @@ public class Algorithm : MonoBehaviour{
 					// And Firebase database only sorts 1.5 format. So, don't use "," when writing !!!
 					try { contentAP = double.Parse(snapChild.Child("AP").Value.ToString()); } catch { Debug.LogError(" Problem AP"); }
 					try { contentAC = snapChild.Child("AC").Value.ToString(); } catch { Debug.LogError(" Problem AC"); }
-					try { contentEN = snapChild.Child("content_EN").Value.ToString(); } catch { Debug.LogError(" Problem content_EN"); }
+					try { contentEN = snapChild.Child("englishContent").Value.ToString(); } catch { Debug.LogError(" Problem content_EN"); }
 					/*
 					Debug.Log("Content ID (root): " + contentID + "  its type: " + contentID.GetType());
 					Debug.Log("Content AC: " + contentAC + "  its type: " + contentAC.GetType());
@@ -294,7 +282,7 @@ public class Algorithm : MonoBehaviour{
 
 					string contentID = "empty"; double contentAP = 0; string contentAC = "empty"; string contentEN = "empty";
 
-					try { contentID = snapChild.Child("content_ID").Value.ToString(); } catch { Debug.LogError(" Problem ID"); }
+					try { contentID = snapChild.Child("contentID").Value.ToString(); } catch { Debug.LogError(" Problem ID"); }
 					// If I don't use .Replace(",",".") then it gets 1.5 and 1,5 wrong. Both wrong. 
 					// I did use .Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture as a whole
 					// Which Replaced commas with points (raplace) and then convert them reverse (InveriantCulture) LOL :D
@@ -303,7 +291,7 @@ public class Algorithm : MonoBehaviour{
 					// And Firebase database only sorts 1.5 format. So, don't use "," when writing !!!
 					try { contentAP = double.Parse(snapChild.Child("AP").Value.ToString()); } catch { Debug.LogError(" Problem AP"); }
 					try { contentAC = snapChild.Child("AC").Value.ToString(); } catch { Debug.LogError(" Problem AC"); }
-					try { contentEN = snapChild.Child("content_EN").Value.ToString(); } catch { Debug.LogError(" Problem content_EN"); }
+					try { contentEN = snapChild.Child("englishContent").Value.ToString(); } catch { Debug.LogError(" Problem content_EN"); }
 					/*
 					Debug.Log("Content ID (root): " + contentID + "  its type: " + contentID.GetType());
 					Debug.Log("Content AC: " + contentAC + "  its type: " + contentAC.GetType());
@@ -321,7 +309,7 @@ public class Algorithm : MonoBehaviour{
 
 					string contentID = "empty"; double contentAP = 0; string contentAC = "empty"; string contentEN = "empty";
 
-					try { contentID = snapChild.Child("content_ID").Value.ToString(); } catch { Debug.LogError(" Problem ID"); }
+					try { contentID = snapChild.Child("contentID").Value.ToString(); } catch { Debug.LogError(" Problem ID"); }
 					// If I don't use .Replace(",",".") then it gets 1.5 and 1,5 wrong. Both wrong. 
 					// I did use .Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture as a whole
 					// Which Replaced commas with points (raplace) and then convert them reverse (InveriantCulture) LOL :D
@@ -330,7 +318,7 @@ public class Algorithm : MonoBehaviour{
 					// And Firebase database only sorts 1.5 format. So, don't use "," when writing !!!
 					try { contentAP = double.Parse(snapChild.Child("AP").Value.ToString()); } catch { Debug.LogError(" Problem AP"); }
 					try { contentAC = snapChild.Child("AC").Value.ToString(); } catch { Debug.LogError(" Problem AC"); }
-					try { contentEN = snapChild.Child("content_EN").Value.ToString(); } catch { Debug.LogError(" Problem content_EN"); }
+					try { contentEN = snapChild.Child("englishContent").Value.ToString(); } catch { Debug.LogError(" Problem content_EN"); }
 					/*
 					Debug.Log("Content ID (root): " + contentID + "  its type: " + contentID.GetType());
 					Debug.Log("Content AC: " + contentAC + "  its type: " + contentAC.GetType());
@@ -348,7 +336,7 @@ public class Algorithm : MonoBehaviour{
 
 					string contentID = "empty"; double contentAP = 0; string contentAC = "empty"; string contentEN = "empty";
 
-					try { contentID = snapChild.Child("content_ID").Value.ToString(); } catch { Debug.LogError(" Problem ID"); }
+					try { contentID = snapChild.Child("contentID").Value.ToString(); } catch { Debug.LogError(" Problem ID"); }
 					// If I don't use .Replace(",",".") then it gets 1.5 and 1,5 wrong. Both wrong. 
 					// I did use .Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture as a whole
 					// Which Replaced commas with points (raplace) and then convert them reverse (InveriantCulture) LOL :D
@@ -357,7 +345,7 @@ public class Algorithm : MonoBehaviour{
 					// And Firebase database only sorts 1.5 format. So, don't use "," when writing !!!
 					try { contentAP = double.Parse(snapChild.Child("AP").Value.ToString()); } catch { Debug.LogError(" Problem AP"); }
 					try { contentAC = snapChild.Child("AC").Value.ToString(); } catch { Debug.LogError(" Problem AC"); }
-					try { contentEN = snapChild.Child("content_EN").Value.ToString(); } catch { Debug.LogError(" Problem content_EN"); }
+					try { contentEN = snapChild.Child("englishContent").Value.ToString(); } catch { Debug.LogError(" Problem content_EN"); }
 					/*
 					Debug.Log("Content ID (root): " + contentID + "  its type: " + contentID.GetType());
 					Debug.Log("Content AC: " + contentAC + "  its type: " + contentAC.GetType());
@@ -375,7 +363,7 @@ public class Algorithm : MonoBehaviour{
 
 					string contentID = "empty"; double contentAP = 0; string contentAC = "empty"; string contentEN = "empty";
 
-					try { contentID = snapChild.Child("content_ID").Value.ToString(); } catch { Debug.LogError(" Problem ID"); }
+					try { contentID = snapChild.Child("contentID").Value.ToString(); } catch { Debug.LogError(" Problem ID"); }
 					// If I don't use .Replace(",",".") then it gets 1.5 and 1,5 wrong. Both wrong. 
 					// I did use .Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture as a whole
 					// Which Replaced commas with points (raplace) and then convert them reverse (InveriantCulture) LOL :D
@@ -384,7 +372,7 @@ public class Algorithm : MonoBehaviour{
 					// And Firebase database only sorts 1.5 format. So, don't use "," when writing !!!
 					try { contentAP = double.Parse(snapChild.Child("AP").Value.ToString()); } catch { Debug.LogError(" Problem AP"); }
 					try { contentAC = snapChild.Child("AC").Value.ToString(); } catch { Debug.LogError(" Problem AC"); }
-					try { contentEN = snapChild.Child("content_EN").Value.ToString(); } catch { Debug.LogError(" Problem content_EN"); }
+					try { contentEN = snapChild.Child("englishContent").Value.ToString(); } catch { Debug.LogError(" Problem content_EN"); }
 					/*
 					Debug.Log("Content ID (root): " + contentID + "  its type: " + contentID.GetType());
 					Debug.Log("Content AC: " + contentAC + "  its type: " + contentAC.GetType());
@@ -456,62 +444,78 @@ public class Algorithm : MonoBehaviour{
 		Debug.Log(""); Debug.Log("Update Data"); Debug.Log("");
 		// ---------   Update Data   --------- //
 		/* TODO:						Status:
-		 * - Record Changes				DOING
-		 * - Update All Data			Will Do
+		 * - Record Changes				SKIPPED
+		 * - Update All Data			DONE
 		 */
 
-		// Record Changes
+		// Update All Data
+		
+		// Create 2D array which will carry Json data and the path to write it
+		
+		string[,] DataToUpdate = new string[contents.Count, contents.Count];
+		
+		for (int i = 0; i < contents.Count; i++) {
+			DataToUpdate[0, i] = "EN-JP/hiragana/" + contents[i].contentID;	// Address
+			DataToUpdate[1, i] = JsonUtility.ToJson(contents[i]);			// Value
+        }
 
+		FBmanager.WriteJsonData(DataToUpdate);
+		/*
+		string address = "EN-JP/hiragana/" + contents[0].contentID;
+		string json = JsonUtility.ToJson(contents[0]);
+		Debug.Log("Json test - " + contents[0].AP.ToString());
+		Debug.Log("JSON ?? - " + json); ;
+		FBmanager.SingleJson(address, json);*/
 
 	}
 
 	void TestDefineNeededCategories(double TotalNeededContent) {
 		// Define how many content you need for each type
-		NC_Native = (int)(TotalNeededContent * (3d / 100d)) + 1;	Debug.Log("---- IN ---- Native: " + NC_Native);
-		NC_Perfect = (int)(TotalNeededContent * (8d / 100d)) + 1; Debug.Log("---- IN ---- Perfect: " + NC_Perfect);
-		NC_Good = (int)(TotalNeededContent * (14d / 100d)) + 1; Debug.Log("---- IN ---- Good: " + NC_Good);
-		NC_Moderate = (int)(TotalNeededContent * (20d / 100d)) + 1; Debug.Log("---- IN ---- Moderate: " + NC_Moderate);
-		NC_Weak = (int)(TotalNeededContent * (25d / 100d)) + 1; Debug.Log("---- IN ---- Weak: " + NC_Weak);
-		NC_New = (int)(TotalNeededContent * (30d / 100d)) + 1; Debug.Log("---- IN ---- New: " + NC_New);
+		NC_Native = (int)(TotalNeededContent * (3d / 100d)) + 1;	//Debug.Log("---- IN ---- Native: " + NC_Native);
+		NC_Perfect = (int)(TotalNeededContent * (8d / 100d)) + 1;// Debug.Log("---- IN ---- Perfect: " + NC_Perfect);
+		NC_Good = (int)(TotalNeededContent * (14d / 100d)) + 1; //Debug.Log("---- IN ---- Good: " + NC_Good);
+		NC_Moderate = (int)(TotalNeededContent * (20d / 100d)) + 1; //Debug.Log("---- IN ---- Moderate: " + NC_Moderate);
+		NC_Weak = (int)(TotalNeededContent * (25d / 100d)) + 1; //Debug.Log("---- IN ---- Weak: " + NC_Weak);
+		NC_New = (int)(TotalNeededContent * (30d / 100d)) + 1; //Debug.Log("---- IN ---- New: " + NC_New);
 
 		// If user has less then needed, then transfer the difference to the lower type and take what User's have
 
 		if (userContentConunt_Native < NC_Native ) {
 			NC_Perfect += NC_Native - userContentConunt_Native;	
-			Debug.Log(NC_Native - userContentConunt_Native + " goes to Perfect!" + " - Now Perfect: " + NC_Perfect);
-			NC_Native = userContentConunt_Native; Debug.Log(NC_Native + " amount left in Native !");
+			//Debug.Log(NC_Native - userContentConunt_Native + " goes to Perfect!" + " - Now Perfect: " + NC_Perfect);
+			NC_Native = userContentConunt_Native; //Debug.Log(NC_Native + " amount left in Native !");
         }
 		if (userContentConunt_Perfect < NC_Perfect) {
 			NC_Good += NC_Perfect - userContentConunt_Perfect; 
-			Debug.Log(NC_Perfect - userContentConunt_Perfect + " goes to Good!" + " - Now Good: " + NC_Good);
-			NC_Perfect = userContentConunt_Perfect; Debug.Log(NC_Perfect + " amount left in Perfect !");
+			//Debug.Log(NC_Perfect - userContentConunt_Perfect + " goes to Good!" + " - Now Good: " + NC_Good);
+			NC_Perfect = userContentConunt_Perfect; //Debug.Log(NC_Perfect + " amount left in Perfect !");
 		}
 		if (userContentConunt_Good < NC_Good) {
 			NC_Moderate += NC_Good - userContentConunt_Good; 
-			Debug.Log(NC_Good - userContentConunt_Good + " goes to Moderate!" + " - Now Moderate: " + NC_Moderate);
-			NC_Good = userContentConunt_Good; Debug.Log(NC_Good + " amount left in Good !");
+			//Debug.Log(NC_Good - userContentConunt_Good + " goes to Moderate!" + " - Now Moderate: " + NC_Moderate);
+			NC_Good = userContentConunt_Good; //Debug.Log(NC_Good + " amount left in Good !");
 		}
 		if (userContentConunt_Moderate < NC_Moderate) {
 			NC_Weak += NC_Moderate - userContentConunt_Moderate; 
-			Debug.Log(NC_Moderate - userContentConunt_Moderate + " goes to Weak!" + " - Now Weak: " + NC_Weak);
-			NC_Moderate = userContentConunt_Moderate; Debug.Log(NC_Moderate + " amount left in Moderate !");
+			//Debug.Log(NC_Moderate - userContentConunt_Moderate + " goes to Weak!" + " - Now Weak: " + NC_Weak);
+			NC_Moderate = userContentConunt_Moderate;// Debug.Log(NC_Moderate + " amount left in Moderate !");
 		}
 		if (userContentConunt_Weak < NC_Weak) {
 			NC_New += NC_Weak - userContentConunt_Weak; 
-			Debug.Log(NC_Weak - userContentConunt_Weak + " goes to New!" + " - Now New: " + NC_New);
-			NC_Weak = userContentConunt_Weak; Debug.Log(NC_Weak + " amount left in Weak !");
+			//Debug.Log(NC_Weak - userContentConunt_Weak + " goes to New!" + " - Now New: " + NC_New);
+			NC_Weak = userContentConunt_Weak; //Debug.Log(NC_Weak + " amount left in Weak !");
 		}
 		// Define how many content you need for each type
-		Debug.Log("---- OUT ---- Native: " + NC_Native);
+		/*Debug.Log("---- OUT ---- Native: " + NC_Native);
 		Debug.Log("---- OUT ---- Perfect: " + NC_Perfect);
 		Debug.Log("---- OUT ---- Good: " + NC_Good);
 		Debug.Log("---- OUT ---- Moderate: " + NC_Moderate);
 		Debug.Log("---- OUT ---- Weak: " + NC_Weak);
-		Debug.Log("---- OUT ---- New: " + NC_New);
+		Debug.Log("---- OUT ---- New: " + NC_New);*/
 
 		// Keep total number of needed
 		NC_Total = NC_Native + NC_Perfect + NC_Good + NC_Moderate + NC_Weak + NC_New;
-		Debug.Log("Total returned content: " + NC_Total);
+		//Debug.Log("Total returned content: " + NC_Total);
 	}
 
 

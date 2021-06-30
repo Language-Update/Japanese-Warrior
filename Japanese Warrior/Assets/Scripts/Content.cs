@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Content {
-    
+
     // Public getters, private setters
-    public string contentID { get; private set; }
-    public int contentID_OLD { get; private set; }
-    public string language { get; private set; }
-    public string contentType { get; private set; }
-    public string japaneseContent { get; private set; }
-    public string englishContent { get; private set; }
+    public string contentID;
+    public int contentID_OLD;
+    public string language;
+    public string contentType;
+    public string japaneseContent;
+    public string englishContent;
 
     // Public getters and setters
-    public string AC { get; set; }              // Acquisition Category
-    public double AP { get; set; }              // Acquisition Point
-    public double AP_Multiplier { get; set; }   // Acquisition Point Multiplier
-    public int numberOfTest { get; set; }       // How many times user tested itself?
-    public int trueAnswers { get; set; }        // How many times user answered true?
+    public string AC;             // Acquisition Category
+    public double AP;             // Acquisition Point
+    public double AP_Multiplier;  // Acquisition Point Multiplier
+    public int numberOfTest;       // How many times user tested itself?
+    public int trueAnswers;       // How many times user answered true?
 
     
     public Content(string _contentID, string _AC, double _AP, string _englishContent) {
@@ -43,5 +43,4 @@ public class Content {
         this.englishContent = _englishContent;
 
     }
-
 }
