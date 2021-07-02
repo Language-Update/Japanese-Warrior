@@ -24,18 +24,12 @@ public class MenuHandler : MonoBehaviour{
 
     bool matchingUp;
 
-    // Database stuff
-    FirebaseManager FBmanager;
-
     private void Awake() {
     }
 
     private void Start() {
-        FBmanager = FindObjectOfType<FirebaseManager>();
-
         // If already loggedin, then no need to login UI. Bring menu now
-        if (PlayerPrefs.GetInt("loggedIN") == 1)
-            LoginSuccess();
+        // if (PlayerPrefs.GetInt("loggedIN") == 1) { LoginSuccess(); }
 
         activeColor = texts[0].color;
         NotActiveColor = texts[0].color;
@@ -106,6 +100,42 @@ public class MenuHandler : MonoBehaviour{
     public void OpenOptions() {
         optionsCanvas.SetActive(true);
         buttons.SetActive(false);
+
+        // Check activation status of the preferences and update
+        #region CHECKING 
+        if (PlayerPrefs.HasKey("hiragana")) { // if there a record. Then update
+            if (PlayerPrefs.GetInt("hiragana") == 1)
+                texts[0].color = activeColor;
+            else
+                texts[0].color = NotActiveColor;
+        }
+        else {  // if there is no record, then open one.
+            PlayerPrefs.SetInt("hiragana", 1);
+            texts[0].color = activeColor;
+        }
+        if (PlayerPrefs.HasKey("katakana")) { // if there a record. Then update
+            if (PlayerPrefs.GetInt("katakana") == 1)
+                texts[1].color = activeColor;
+            else
+                texts[1].color = NotActiveColor;
+        }
+        else {  // if there is no record, then open one.
+            PlayerPrefs.SetInt("katakana", 1);
+            texts[1].color = activeColor;
+        }
+        if (PlayerPrefs.HasKey("first20")) { // if there a record. Then update
+            if (PlayerPrefs.GetInt("first20") == 1)
+                texts[2].color = activeColor;
+            else
+                texts[2].color = NotActiveColor;
+        }
+        else {  // if there is no record, then open one.
+            PlayerPrefs.SetInt("first20", 1);
+            texts[2].color = activeColor;
+        }
+        #endregion
+
+        //FindObjectOfType<Algorithm>().OpenOptionsAction();
     }
 
     public void LoginSuccess() {
@@ -131,9 +161,9 @@ public class MenuHandler : MonoBehaviour{
     }
 
     public void QuitButton() { 
+        PlayerPrefs.SetString("firstLogin", "yes");
         Application.Quit();
-        // Flag as logged out
-        PlayerPrefs.SetInt("loggedIN", 0); 
+        // FBmanager.SignOut();    // User Sign-out
     }
 
     public void ToggleActivation(string optionName) {
@@ -179,15 +209,5 @@ public class MenuHandler : MonoBehaviour{
 
     //      Private Methods     //
 
-    void TestReading(DataSnapshot snapshot){
-        Debug.Log("All children data");
-        foreach (DataSnapshot snap in snapshot.Children) {  // prints all the first layer children of the user
-            Debug.Log("Snap Key: " + snap.Key + "    Value: " + snap.Value);
-        }
-
-        DataSnapshot profileSnapshot = snapshot.Child("profileInfo");
-        Debug.Log("Is this first time in the app? --> " + profileSnapshot.Child("appFirstTime").Value); // prints yes
-        Debug.Log("Is this first time in singleplayer mod? --> " + profileSnapshot.Child("singleFirstTime").Value); // prints no
-    }
-
+   
 }

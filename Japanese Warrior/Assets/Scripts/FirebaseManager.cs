@@ -54,9 +54,6 @@ public class FirebaseManager : MonoBehaviour {
                 Debug.LogError("Could not resolve all Firebase dependencies: " + dependencyStatus);
             }
         });
-
-        // Flag that user not logged in!
-        PlayerPrefs.SetInt("loggedIN", 0);
     }
 
     //  -------------------------------------------  //
@@ -79,18 +76,37 @@ public class FirebaseManager : MonoBehaviour {
     }
 
     // Writing data
-    public void WriteUserData(string[,] _data) { StartCoroutine(UserDataWrite(_data)); }
+    public void WriteData(string[,] _data, bool _isUserData) { StartCoroutine(UserDataWrite(_data, _isUserData)); }
+
+    // Writing Json Data
+    public void WriteJsonData(string[,] _data) { 
+        Debug.Log("here ??"); 
+        for (int i = 0; i < _data.GetLength(0); i++) {
+            DBref.Child(_data[0, i]).SetRawJsonValueAsync(_data[1, i]);
+        }
+        Debug.Log(_data.GetLength(0) + " Json successfully written into the Database!!");
+    }
+    public void SingleJson(string _address, string _json) { Debug.Log("here 22 ??");
+        //StartCoroutine(SingleJsonWriting(_address, _json)); 
+        DBref.Child(_address).SetRawJsonValueAsync(_json);
+        Debug.Log("Test Address: " + _address + "   JSON: " + _json);
+    }
     //public void ReadUserData(string[] _paths) { StartCoroutine(UserDataRead(_paths)); }
 
     // Reading Data
-    public void ReadUserData(string _path, System.Action<DataSnapshot> action) {
-        // Create path for the current user
-        string dataPath = "users/" + User.UserId + "/" + _path;
+    public void ReadNormalData(string _path, System.Action<DataSnapshot> action, bool _isUserData) {
+        string dataPath = "";
+
+        // If user data requested that include the current user's user ID
+        if (_isUserData) { dataPath = "users/" + auth.CurrentUser.UserId + "/" + _path; }
+        else { dataPath = _path; }
         //Debug.Log("Data path: " + dataPath);
+
         FirebaseDatabase.DefaultInstance.GetReference(dataPath)
             .GetValueAsync().ContinueWith(task => {
                 if (task.IsFaulted) {
-                    // Handle the error...
+                    Debug.LogError("Someting went wrong with reading normal data. Error Code: "
+                        + task.Exception);
                 }
                 else if (task.IsCompleted) {
                     Debug.Log("The data has been received!");
@@ -100,12 +116,40 @@ public class FirebaseManager : MonoBehaviour {
             });
     }
 
+    public void ReadedOrderedData(string _path, System.Action<DataSnapshot> action, 
+        bool _isUserData, string _specificKey) {
+        string dataPath = "";
+
+        // If user data requested that include the current user's user ID
+        if (_isUserData) { dataPath = "users/" + auth.CurrentUser.UserId + "/" + _path; }
+        else { dataPath = _path; }
+
+        Debug.Log("Gettin data from: " + dataPath + "  ordered by " + _specificKey);
+
+        FirebaseDatabase.DefaultInstance.GetReference(dataPath).OrderByChild(_specificKey)
+            .GetValueAsync().ContinueWith(task => {
+                if (task.IsFaulted) {
+                    Debug.LogError("Someting went wrong with reading data ordered by Specific Key. Error Code: "
+                    + task.Exception);
+                }
+                else if (task.IsCompleted) {
+                    Debug.Log("The specific ordered data has been received!");
+                    DataSnapshot snapshot = null;
+                    snapshot = task.Result;
+                    action(snapshot);
+                }
+            });
+    }
+
+
 
     //              Getters and Setters              //
 
-    public string GetUsername() { return User.DisplayName; }
-    public string GetUserEmail() { return User.Email; }
-    public string GetUserID() { return User.UserId; }
+    public string GetUsername() { return auth.CurrentUser.DisplayName; }
+    public string GetUserEmail() { return auth.CurrentUser.Email; }
+    public string GetUserID() { return auth.CurrentUser.UserId; }
+    // Returns unique ID related to the given path
+    public string GetUniqueID(string _path) { return DBref.Child(_path).Push().Key; }
 
     //  -------------------------------------------  //
     //  -----------   PRIVATE METHODS   -----------  //
@@ -133,7 +177,8 @@ public class FirebaseManager : MonoBehaviour {
                 // Firebase Unity SDK is not safe to use here.
             }
         });
-
+        try { Debug.Log("Current user: " + auth.CurrentUser.DisplayName); }
+        catch { Debug.Log("There is problem with user login. Check FB Manager Initilize method."); }
     }
 
     IEnumerator ShowMessage(string _message, float time) {
@@ -288,7 +333,7 @@ public class FirebaseManager : MonoBehaviour {
 
     IEnumerator UpdateUsernameDatabase(string _username) {
         // Set the currently logged in user username in the database
-        var DBTask = DBref.Child("users").Child(User.UserId).Child("username").SetValueAsync(_username);
+        var DBTask = DBref.Child("users").Child(auth.CurrentUser.UserId).Child("username").SetValueAsync(_username);
 
         yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
 
@@ -302,12 +347,12 @@ public class FirebaseManager : MonoBehaviour {
 
     // Writing data into the database
     
-    IEnumerator UserDataWrite(string[,] _data) {
-        // _data = {path1, path2, path3....pathN},      // ROW 0    _data(0, x)
-        //         {value1, value2, value3....valueN}   // ROW 1    _data(1, x)
+    IEnumerator UserDataWrite(string[,] _data, bool _isUserData) {
+        // _data = {path1, path2, path3....pathN},      // ROW 0    _data(0, x) - Address
+        //         {value1, value2, value3....valueN}   // ROW 1    _data(1, x) - Value
         // _data = [ROWS, COLUMNS]
-
-        string userDataPath = "users/" + User.UserId + "/";
+        string userDataPath = "";
+        if (_isUserData) { userDataPath = "users/" + auth.CurrentUser.UserId + "/"; }
 
         int i = 0;  // Take the first path
         // userdata path + desired data path = data     Get first path (0,0) and first value (1,0)
@@ -327,6 +372,5 @@ public class FirebaseManager : MonoBehaviour {
             Debug.LogFormat("Data successfully written");
         }
     }
-
     #endregion
 }

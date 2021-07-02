@@ -154,11 +154,11 @@ public class UI_Handler : MonoBehaviour{
             if (secondAnswer) {
                 // Get what they are
                 learningButton = "learningButton" + firstSelection.ToString();
-                firstID = selectedContents[PlayerPrefs.GetInt(learningButton)].contentID;
+                firstID = selectedContents[PlayerPrefs.GetInt(learningButton)].contentID_OLD;
                 //Debug.Log("Learning Button: " + learningButton + "   ID: " + firstID);
 
                 learningButton = "learningButton" + secondSelection.ToString();
-                secondID = selectedContents[PlayerPrefs.GetInt(learningButton)].contentID;
+                secondID = selectedContents[PlayerPrefs.GetInt(learningButton)].contentID_OLD;
                 //Debug.Log("Learning Button: " + learningButton + "   ID: " + secondID);
 
                 // compare them
@@ -337,7 +337,7 @@ public class UI_Handler : MonoBehaviour{
                     randomQuestionIndex = Random.Range(0, contentPool.Length);
                     typeOfAnswer = contentPool[randomQuestionIndex].contentType;
                 }
-                while (randomQuestionIndex == questionToAsk.contentID || typeOfAnswer != questionToAsk.contentType);  // But if that number is equal my true number, then do it again
+                while (randomQuestionIndex == questionToAsk.contentID_OLD || typeOfAnswer != questionToAsk.contentType);  // But if that number is equal my true number, then do it again
 
                 buttons[i].GetComponentInChildren<TextMeshProUGUI>().SetText(contentPool[randomQuestionIndex].englishContent); // if not put it into button
             }
