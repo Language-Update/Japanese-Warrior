@@ -145,7 +145,12 @@ public class FirebaseManager : MonoBehaviour {
 
     //              Getters and Setters              //
 
-    public string GetUsername() { return auth.CurrentUser.DisplayName; }
+    public string GetUsername() {
+        string username;
+        try { username = auth.CurrentUser.DisplayName; }
+        catch { username = "NO U??SER"; }
+        return username;
+    }
     public string GetUserEmail() { return auth.CurrentUser.Email; }
     public string GetUserID() { return auth.CurrentUser.UserId; }
     // Returns unique ID related to the given path
@@ -177,7 +182,9 @@ public class FirebaseManager : MonoBehaviour {
                 // Firebase Unity SDK is not safe to use here.
             }
         });
-        try { Debug.Log("Current user: " + auth.CurrentUser.DisplayName); }
+        try { 
+            Debug.Log("Current u??ser: " + auth.CurrentUser.DisplayName);
+        }
         catch { Debug.Log("There is problem with user login. Check FB Manager Initilize method."); }
     }
 
@@ -307,6 +314,8 @@ public class FirebaseManager : MonoBehaviour {
                         StartCoroutine(UpdateUsernameDatabase(_username));
                         // Username is now set                        
                         StartCoroutine(ShowMessage("Registration is successful", 1));
+                        PlayerPrefs.SetString("lazyUsername", _username);
+                        PlayerPrefs.SetString("userEmail", _email);
                         FindObjectOfType<MenuHandler>().RegisterSuccess();
                     }
                 }

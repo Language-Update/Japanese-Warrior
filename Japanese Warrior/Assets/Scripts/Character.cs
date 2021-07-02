@@ -117,6 +117,9 @@ public class Character : MonoBehaviour{
         FindObjectOfType<AudioManager>().Play("DyingMan");   // Play dead sound
         transform.position = new Vector2(-100, -100);   // Send player out of range to simulate death
         gameHandler.SetCharacterStatus(true); // Let the GH know player is dead now
+        int currentMatch = PlayerPrefs.GetInt("lazyNumberOfMatch");
+        currentMatch++;
+        PlayerPrefs.SetInt("lazyNumberOfMatch", currentMatch);
     }
     public void AddMenuEnemy() {
         menuEnemy++;
