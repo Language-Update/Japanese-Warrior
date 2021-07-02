@@ -101,7 +101,41 @@ public class MenuHandler : MonoBehaviour{
         optionsCanvas.SetActive(true);
         buttons.SetActive(false);
 
-        FindObjectOfType<Algorithm>().OpenOptionsAction();
+        // Check activation status of the preferences and update
+        #region CHECKING 
+        if (PlayerPrefs.HasKey("hiragana")) { // if there a record. Then update
+            if (PlayerPrefs.GetInt("hiragana") == 1)
+                texts[0].color = activeColor;
+            else
+                texts[0].color = NotActiveColor;
+        }
+        else {  // if there is no record, then open one.
+            PlayerPrefs.SetInt("hiragana", 1);
+            texts[0].color = activeColor;
+        }
+        if (PlayerPrefs.HasKey("katakana")) { // if there a record. Then update
+            if (PlayerPrefs.GetInt("katakana") == 1)
+                texts[1].color = activeColor;
+            else
+                texts[1].color = NotActiveColor;
+        }
+        else {  // if there is no record, then open one.
+            PlayerPrefs.SetInt("katakana", 1);
+            texts[1].color = activeColor;
+        }
+        if (PlayerPrefs.HasKey("first20")) { // if there a record. Then update
+            if (PlayerPrefs.GetInt("first20") == 1)
+                texts[2].color = activeColor;
+            else
+                texts[2].color = NotActiveColor;
+        }
+        else {  // if there is no record, then open one.
+            PlayerPrefs.SetInt("first20", 1);
+            texts[2].color = activeColor;
+        }
+        #endregion
+
+        //FindObjectOfType<Algorithm>().OpenOptionsAction();
     }
 
     public void LoginSuccess() {
@@ -127,6 +161,7 @@ public class MenuHandler : MonoBehaviour{
     }
 
     public void QuitButton() { 
+        PlayerPrefs.SetString("firstLogin", "yes");
         Application.Quit();
         // FBmanager.SignOut();    // User Sign-out
     }

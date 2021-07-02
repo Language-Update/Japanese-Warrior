@@ -11,6 +11,7 @@ public class GameHandler : MonoBehaviour{
 
     UI_Handler uiHandler;
     EnemyBase enemyBase;
+    FirebaseManager FBmanager;
 
     #region Content Part
     Content[] contentPool;
@@ -143,15 +144,15 @@ public class GameHandler : MonoBehaviour{
 
         enemyBase = FindObjectOfType<EnemyBase>();
         enemyBase.SetSpawn(false);
+
+        FBmanager = FindObjectOfType<FirebaseManager>();
     }
 
     // Update Character about firing conditions
     private void FireControl() {
         // Let player know the situation so that it can fire
         FindObjectOfType<Character>().SetBladeNumber(bladeNumber); // Let it know the blade number
-    }
-
-    
+    }    
     
     // Creates the content
     private void CreateContents() {
@@ -277,8 +278,6 @@ public class GameHandler : MonoBehaviour{
         }
     }
 
-
-
     //Control Game Status
     private void GameStatusControl() {
         // Check is player dead or not
@@ -359,5 +358,6 @@ public class GameHandler : MonoBehaviour{
     
 
     public Content[] GetQuestionContent() { return contentPool; }
-        
+
+
 }

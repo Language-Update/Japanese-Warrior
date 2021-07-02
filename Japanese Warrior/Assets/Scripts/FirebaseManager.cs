@@ -76,7 +76,7 @@ public class FirebaseManager : MonoBehaviour {
     }
 
     // Writing data
-    public void WriteUserData(string[,] _data) { StartCoroutine(UserDataWrite(_data)); }
+    public void WriteData(string[,] _data, bool _isUserData) { StartCoroutine(UserDataWrite(_data, _isUserData)); }
 
     // Writing Json Data
     public void WriteJsonData(string[,] _data) { 
@@ -142,11 +142,14 @@ public class FirebaseManager : MonoBehaviour {
     }
 
 
+
     //              Getters and Setters              //
 
     public string GetUsername() { return auth.CurrentUser.DisplayName; }
     public string GetUserEmail() { return auth.CurrentUser.Email; }
     public string GetUserID() { return auth.CurrentUser.UserId; }
+    // Returns unique ID related to the given path
+    public string GetUniqueID(string _path) { return DBref.Child(_path).Push().Key; }
 
     //  -------------------------------------------  //
     //  -----------   PRIVATE METHODS   -----------  //
@@ -174,7 +177,8 @@ public class FirebaseManager : MonoBehaviour {
                 // Firebase Unity SDK is not safe to use here.
             }
         });
-        Debug.Log("Current user: " + auth.CurrentUser.DisplayName);
+        try { Debug.Log("Current user: " + auth.CurrentUser.DisplayName); }
+        catch { Debug.Log("There is problem with user login. Check FB Manager Initilize method."); }
     }
 
     IEnumerator ShowMessage(string _message, float time) {
@@ -343,12 +347,12 @@ public class FirebaseManager : MonoBehaviour {
 
     // Writing data into the database
     
-    IEnumerator UserDataWrite(string[,] _data) {
+    IEnumerator UserDataWrite(string[,] _data, bool _isUserData) {
         // _data = {path1, path2, path3....pathN},      // ROW 0    _data(0, x) - Address
         //         {value1, value2, value3....valueN}   // ROW 1    _data(1, x) - Value
         // _data = [ROWS, COLUMNS]
-
-        string userDataPath = "users/" + auth.CurrentUser.UserId + "/";
+        string userDataPath = "";
+        if (_isUserData) { userDataPath = "users/" + auth.CurrentUser.UserId + "/"; }
 
         int i = 0;  // Take the first path
         // userdata path + desired data path = data     Get first path (0,0) and first value (1,0)
