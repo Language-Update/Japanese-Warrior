@@ -63,7 +63,10 @@ public class LazyLogin : MonoBehaviour {
         // Store username with the unique ID you created
         string username = usernameInput.text;
         string tempUserID = FBmanager.GetUniqueID("users");
-        PlayerPrefs.SetString("username", username);
+        PlayerPrefs.SetString("lazyUsername", username);
+        PlayerPrefs.SetString("lazyUserID", tempUserID);
+        PlayerPrefs.SetString("userEmail", "");
+        PlayerPrefs.SetInt("lazyNumberOfMatch", 0);
 
         string dataPath = "Lazy Users/" + tempUserID + "/username";
         string[,] dataWrite = { { dataPath }, { username } };
@@ -97,6 +100,7 @@ public class LazyLogin : MonoBehaviour {
                 LazyCanvas.SetActive(false);
                 menuCanvas.SetActive(true);
                 characterObject.SetActive(true);
+                FindObjectOfType<MenuHandler>().UpdateProfile();
             }
         }
         else {

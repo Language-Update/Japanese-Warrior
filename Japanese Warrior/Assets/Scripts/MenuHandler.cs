@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using Firebase;
@@ -11,18 +12,32 @@ public class MenuHandler : MonoBehaviour{
 
     [SerializeField] GameObject menuCanvas = null;
     [SerializeField] GameObject optionsCanvas = null;
-    [SerializeField] GameObject landingCanvas = null;
+    [SerializeField] GameObject loginCanvas = null;
+    [SerializeField] GameObject characterGameObject = null;
     [SerializeField] GameObject loginUI = null;
     [SerializeField] GameObject registerUI = null;
     [SerializeField] GameObject buttons = null;
     [SerializeField] GameObject matchingCanvas = null;
     [SerializeField] TextMeshProUGUI matchingText = null;
     [SerializeField] TextMeshProUGUI[] texts = null;
+    // Profile
+    [SerializeField] TextMeshProUGUI usernameText = null;
+    [SerializeField] TextMeshProUGUI userEmail = null;
+    [SerializeField] TextMeshProUGUI numberOfMatchText = null;
+    [SerializeField] TextMeshProUGUI answeredQuestionsText = null;
+    [SerializeField] TextMeshProUGUI SuccessRateText = null;
+    [SerializeField] GameObject profilePage = null;
+    [SerializeField] GameObject registerSection = null;
+    [SerializeField] GameObject logOutButton = null;
 
     Color activeColor;
     Color NotActiveColor;
 
+    FirebaseManager FBmanager;
+
     bool matchingUp;
+    bool profileON;
+    bool profileAnimChange;
 
     private void Awake() {
     }
@@ -40,11 +55,21 @@ public class MenuHandler : MonoBehaviour{
 
         // if this is first start on this device, set default options
         SetDefaultOptions();
+
+        // Reset profile Status
+        profileON = false;
+        profileAnimChange = true;
+
+        FBmanager = FindObjectOfType<FirebaseManager>();
+        UpdateProfile();
     }
 
     private void Update() {
         MatchingTextAnim();
+        ProfileAnim();
     }
+
+    //      Private Methods     //
 
     private void MatchingTextAnim() {
         var alpha = matchingText.alpha;
@@ -60,6 +85,23 @@ public class MenuHandler : MonoBehaviour{
         else { alpha -= 1.5f * Time.deltaTime; }
 
         matchingText.alpha = alpha;
+    }
+
+    void ProfileAnim() {
+        if (profileAnimChange) {
+            if (profileON && profilePage.transform.localPosition.x < -165) {
+                profilePage.transform.Translate(Vector2.right * 1000 * Time.deltaTime);
+            }
+            else if (profileON && profilePage.transform.localPosition.x >= -165) { // Keep Y pos, set X pos to 195 to avoid gap
+                profilePage.transform.localPosition = new Vector2(-165f, profilePage.transform.localPosition.y);
+            }
+            else if (!profileON && profilePage.transform.localPosition.x > -590) {
+                profilePage.transform.Translate(Vector2.left * 1000 * Time.deltaTime);
+            }
+            else if (!profileON && profilePage.transform.localPosition.x <= -590) { // Keep Y pos, set X pos to -230 to avoid gap
+                profilePage.transform.localPosition = new Vector2(-590, profilePage.transform.localPosition.y);
+            }
+        }
     }
 
     private void SetDefaultOptions() {     
@@ -97,6 +139,7 @@ public class MenuHandler : MonoBehaviour{
     //      PUBLIC METHODS      //
     //--------------------------//
 
+    // =======  Buttons  ======= //
     public void OpenOptions() {
         optionsCanvas.SetActive(true);
         buttons.SetActive(false);
@@ -140,10 +183,15 @@ public class MenuHandler : MonoBehaviour{
 
     public void LoginSuccess() {
         menuCanvas.SetActive(true);
-        landingCanvas.SetActive(false);
+        characterGameObject.SetActive(true);
+        loginCanvas.SetActive(false);
+        UpdateProfile();
     }
 
     public void OpenRegisterUI() {
+        menuCanvas.SetActive(false);
+        characterGameObject.SetActive(false);
+        loginCanvas.SetActive(true);
         loginUI.SetActive(false);
         registerUI.SetActive(true);
     }
@@ -161,11 +209,20 @@ public class MenuHandler : MonoBehaviour{
     }
 
     public void QuitButton() { 
-        PlayerPrefs.SetString("firstLogin", "yes");
         Application.Quit();
-        // FBmanager.SignOut();    // User Sign-out
+    }
+    public void LogOutButton() {
+        PlayerPrefs.SetString("firstLogin", "yes");
+        FBmanager.SignOut();    // User Sign-out
     }
 
+    public void ProfilePicButton() {
+        if (profileON) { profileON = false; profileAnimChange = true; }            
+        else { profileON = true; profileAnimChange = true; }
+    }
+
+
+    // =======  Others  ======= //
     public void ToggleActivation(string optionName) {
         // if there no information in the system
         if (!PlayerPrefs.HasKey(optionName)) {
@@ -202,12 +259,56 @@ public class MenuHandler : MonoBehaviour{
         IEnumerator LoadMultiplayerScene() {
             float matchingTime = Random.Range(3f, 10f);
             yield return new WaitForSeconds(matchingTime);
-
+            // Increase number of match user have been
+            int currentMatch = PlayerPrefs.GetInt("lazyNumberOfMatch");
+            currentMatch++;
+            PlayerPrefs.SetInt("lazyNumberOfMatch", currentMatch);
             LoadSceneByName("MultiplayerScene");
         }
     }
+    public void UpdateProfile() {
+        // Dislpay profile Info
+        usernameText.text = PlayerPrefs.GetString("lazyUsername");
+        numberOfMatchText.text = PlayerPrefs.GetInt("lazyNumberOfMatch").ToString();
+        if (PlayerPrefs.GetString("userEmail") != "") // if we already set an email, then write it
+            userEmail.text = PlayerPrefs.GetString("userEmail");
+        else // else the user has not registered yet, then write this
+            userEmail.text = "Please Register";
 
-    //      Private Methods     //
+        // Display Statistics
+        float answeredQuestions = PlayerPrefs.GetFloat("answeredQuestions");
+        float trueAnswers = PlayerPrefs.GetFloat("trueAnswers");
+        float successRate = (trueAnswers / answeredQuestions) * 100;
 
+        answeredQuestionsText.text = answeredQuestions.ToString();
+        SuccessRateText.text = successRate.ToString("0.00") + "%";
+
+        // Remove Register section if user logged in
+        string currentUser = FBmanager.GetUsername();
+        Debug.Log("GOT THE USER NAME: " + currentUser);
+        if (currentUser == PlayerPrefs.GetString("lazyUsername")) { 
+            registerSection.SetActive(false); 
+            logOutButton.SetActive(true); 
+        }
+        else { 
+            registerSection.SetActive(true); 
+            logOutButton.SetActive(false); 
+            StartCoroutine(TryLoginAgainLater()); 
+        }
+    }
+    IEnumerator TryLoginAgainLater() {
+        yield return new WaitForSeconds(2);
+        // Remove Register section if user logged in
+        string currentUser = FBmanager.GetUsername();
+        Debug.Log("GOT THE USER NAME: " + currentUser);
+        if (currentUser == PlayerPrefs.GetString("lazyUsername")) {
+            registerSection.SetActive(false);
+            logOutButton.SetActive(true);
+        }
+        else {
+            registerSection.SetActive(true);
+            logOutButton.SetActive(false);
+        }
+    }
    
 }

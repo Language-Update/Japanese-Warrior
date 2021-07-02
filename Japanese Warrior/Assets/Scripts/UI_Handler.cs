@@ -100,13 +100,26 @@ public class UI_Handler : MonoBehaviour{
                 buttons[answer].GetComponent<Image>().color = Color.green;
                 FindObjectOfType<AudioManager>().Play("TrueAnswer");
 
+                // Update the player prefs
+                float currentAnsweredQuestions = PlayerPrefs.GetFloat("answeredQuestions");
+                float currentTrueAnswers = PlayerPrefs.GetFloat("trueAnswers");
+                currentAnsweredQuestions++; currentTrueAnswers++;
+                PlayerPrefs.SetFloat("answeredQuestions", currentAnsweredQuestions);
+                PlayerPrefs.SetFloat("trueAnswers", currentTrueAnswers);
+
                 answeredTrue = true;
                 givenAnswer = 5;    // Reset givenAnswer
             }
             else {
                 FindObjectOfType<AudioManager>().Play("WrongAnswer");
+                // Update the player prefs
+                float currentAnsweredQuestions = PlayerPrefs.GetFloat("answeredQuestions");
+                currentAnsweredQuestions++;
+                PlayerPrefs.SetFloat("answeredQuestions", currentAnsweredQuestions);
+
                 buttons[answer].GetComponent<Image>().color = Color.green;
                 buttons[givenAnswer].GetComponent<Image>().color = Color.red;
+
                 answeredTrue = false;
             }
 
@@ -312,10 +325,14 @@ public class UI_Handler : MonoBehaviour{
     private IEnumerator SetNewQuestion(bool answeredTrue) {
         canLoadQuestion = false; // Stop taking new questions (used this against buttons)
 
-        if (answeredTrue)
+        if (answeredTrue) {
+            // Set timer. Wait a bit to see correct one
             yield return new WaitForSeconds(0.3f);
-        else
+        }
+        else {
+            // Set timer. Wait for a relatively long time to see your fault
             yield return new WaitForSeconds(2f);
+        }
 
 
         contentPool = gameHandler.GetQuestionContent(); // Get updated content pool from Game Handler
