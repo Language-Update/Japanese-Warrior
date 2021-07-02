@@ -43,9 +43,6 @@ public class MenuHandler : MonoBehaviour{
     }
 
     private void Start() {
-        // If already loggedin, then no need to login UI. Bring menu now
-        // if (PlayerPrefs.GetInt("loggedIN") == 1) { LoginSuccess(); }
-
         activeColor = texts[0].color;
         NotActiveColor = texts[0].color;
         activeColor.r = 0.07843138f; activeColor.g = 0.7843137f; activeColor.b = 0f; activeColor.a = 1f;
@@ -53,8 +50,6 @@ public class MenuHandler : MonoBehaviour{
 
         matchingUp = false;
 
-        // if this is first start on this device, set default options
-        SetDefaultOptions();
 
         // Reset profile Status
         profileON = false;
@@ -103,7 +98,7 @@ public class MenuHandler : MonoBehaviour{
             }
         }
     }
-
+    /*
     private void SetDefaultOptions() {     
 
         // it part for first time
@@ -133,8 +128,7 @@ public class MenuHandler : MonoBehaviour{
             else
                 text.color = NotActiveColor;
         }
-    }
-
+    }*/
     //--------------------------//
     //      PUBLIC METHODS      //
     //--------------------------//
@@ -152,29 +146,17 @@ public class MenuHandler : MonoBehaviour{
             else
                 texts[0].color = NotActiveColor;
         }
-        else {  // if there is no record, then open one.
-            PlayerPrefs.SetInt("hiragana", 1);
-            texts[0].color = activeColor;
-        }
         if (PlayerPrefs.HasKey("katakana")) { // if there a record. Then update
             if (PlayerPrefs.GetInt("katakana") == 1)
                 texts[1].color = activeColor;
             else
                 texts[1].color = NotActiveColor;
         }
-        else {  // if there is no record, then open one.
-            PlayerPrefs.SetInt("katakana", 1);
-            texts[1].color = activeColor;
-        }
         if (PlayerPrefs.HasKey("first20")) { // if there a record. Then update
             if (PlayerPrefs.GetInt("first20") == 1)
                 texts[2].color = activeColor;
             else
                 texts[2].color = NotActiveColor;
-        }
-        else {  // if there is no record, then open one.
-            PlayerPrefs.SetInt("first20", 1);
-            texts[2].color = activeColor;
         }
         #endregion
 
@@ -224,10 +206,14 @@ public class MenuHandler : MonoBehaviour{
 
     // =======  Others  ======= //
     public void ToggleActivation(string optionName) {
-        // if there no information in the system
-        if (!PlayerPrefs.HasKey(optionName)) {
-            Debug.Log("There is no information about " + optionName);
-            return; 
+        // if there no information in the system then open one
+        if (!PlayerPrefs.HasKey(optionName)) { // then open one
+            PlayerPrefs.SetInt(optionName, 1);
+
+            foreach (TextMeshProUGUI text in texts) {
+                if (text.name == optionName)
+                    text.color = activeColor;
+            }
         }
 
         if (PlayerPrefs.GetInt(optionName) == 0) { 
@@ -285,7 +271,6 @@ public class MenuHandler : MonoBehaviour{
 
         // Remove Register section if user logged in
         string currentUser = FBmanager.GetUsername();
-        Debug.Log("GOT THE USER NAME: " + currentUser);
         if (currentUser == PlayerPrefs.GetString("lazyUsername")) { 
             registerSection.SetActive(false); 
             logOutButton.SetActive(true); 
@@ -297,10 +282,10 @@ public class MenuHandler : MonoBehaviour{
         }
     }
     IEnumerator TryLoginAgainLater() {
+        Debug.Log("Trying again to login !!");
         yield return new WaitForSeconds(2);
         // Remove Register section if user logged in
         string currentUser = FBmanager.GetUsername();
-        Debug.Log("GOT THE USER NAME: " + currentUser);
         if (currentUser == PlayerPrefs.GetString("lazyUsername")) {
             registerSection.SetActive(false);
             logOutButton.SetActive(true);

@@ -80,7 +80,6 @@ public class FirebaseManager : MonoBehaviour {
 
     // Writing Json Data
     public void WriteJsonData(string[,] _data) { 
-        Debug.Log("here ??"); 
         for (int i = 0; i < _data.GetLength(0); i++) {
             DBref.Child(_data[0, i]).SetRawJsonValueAsync(_data[1, i]);
         }
@@ -148,7 +147,7 @@ public class FirebaseManager : MonoBehaviour {
     public string GetUsername() {
         string username;
         try { username = auth.CurrentUser.DisplayName; }
-        catch { username = "NO U??SER"; }
+        catch { username = "NO USER ?? Check FBManager's GetUsername method"; }
         return username;
     }
     public string GetUserEmail() { return auth.CurrentUser.Email; }
@@ -183,7 +182,7 @@ public class FirebaseManager : MonoBehaviour {
             }
         });
         try { 
-            Debug.Log("Current u??ser: " + auth.CurrentUser.DisplayName);
+            Debug.Log("Current user: " + auth.CurrentUser.DisplayName);
         }
         catch { Debug.Log("There is problem with user login. Check FB Manager Initilize method."); }
     }

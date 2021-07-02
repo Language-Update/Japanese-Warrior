@@ -138,11 +138,13 @@ public class EnemyBase : MonoBehaviour{
         }
 
         // Let the GameHandler know how many blade needed for this one
-        FindObjectOfType<Character>().ChangeBladeNeeded(newTurtle.GetComponent<Health>().GetHealth() / 10);
+        try { FindObjectOfType<Character>().ChangeBladeNeeded(newTurtle.GetComponent<Health>().GetHealth() / 10); }
+        catch { Debug.Log("Character Object not found!"); }
         //Debug.Log("EnemyBase Sent: " + newTurtle.GetComponent<Health>().GetHealth() / 10);
 
         if (_menuState) {
-            FindObjectOfType<Character>().AddMenuEnemy();
+            try { FindObjectOfType<Character>().AddMenuEnemy(); }
+            catch { Debug.Log("Character Object not found!"); }
             newTurtle.speed = 1f;
         }
             
