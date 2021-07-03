@@ -294,6 +294,7 @@ public class FirebaseManager : MonoBehaviour {
                 if (User != null) {
                     // Create a user profile and set the username
                     UserProfile profile = new UserProfile { DisplayName = _username };
+                    Debug.Log("even here?");
 
                     // Call the Firebase auth update user profile function passing the profile with the username
                     var ProfileTask = User.UpdateUserProfileAsync(profile);
@@ -316,6 +317,7 @@ public class FirebaseManager : MonoBehaviour {
                         PlayerPrefs.SetString("lazyUsername", _username);
                         PlayerPrefs.SetString("userEmail", _email);
                         FindObjectOfType<MenuHandler>().RegisterSuccess();
+                        Debug.Log("even he11re?");
                     }
                 }
             }

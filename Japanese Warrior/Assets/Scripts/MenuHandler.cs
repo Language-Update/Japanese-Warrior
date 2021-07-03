@@ -14,6 +14,7 @@ public class MenuHandler : MonoBehaviour{
     [SerializeField] GameObject optionsCanvas = null;
     [SerializeField] GameObject loginCanvas = null;
     [SerializeField] GameObject characterGameObject = null;
+    [SerializeField] GameObject enemyBase = null;
     [SerializeField] GameObject loginUI = null;
     [SerializeField] GameObject registerUI = null;
     [SerializeField] GameObject buttons = null;
@@ -166,6 +167,7 @@ public class MenuHandler : MonoBehaviour{
     public void LoginSuccess() {
         menuCanvas.SetActive(true);
         characterGameObject.SetActive(true);
+        enemyBase.SetActive(true);
         loginCanvas.SetActive(false);
         UpdateProfile();
     }
@@ -173,6 +175,7 @@ public class MenuHandler : MonoBehaviour{
     public void OpenRegisterUI() {
         menuCanvas.SetActive(false);
         characterGameObject.SetActive(false);
+        enemyBase.SetActive(false);
         loginCanvas.SetActive(true);
         loginUI.SetActive(false);
         registerUI.SetActive(true);
