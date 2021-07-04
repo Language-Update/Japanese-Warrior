@@ -104,24 +104,29 @@ public class LazyLogin : MonoBehaviour {
         LazyCanvas.SetActive(true);
     }
     public void SetUsername() {
-        // Store username with the unique ID you created
-        string username = usernameInput.text;
-        string tempUserID = FBmanager.GetUniqueID("users");
-        PlayerPrefs.SetString("lazyUsername", username);
-        PlayerPrefs.SetString("lazyUserID", tempUserID);
-        PlayerPrefs.SetString("userEmail", "");
-        PlayerPrefs.SetInt("lazyNumberOfMatch", 0);
+        if (usernameInput.text == "") {
+            Debug.LogError("Username Shouldn't be empty!");
+        }
+        else {
+            // Store username with the unique ID you created
+            string username = usernameInput.text;
+            string tempUserID = FBmanager.GetUniqueID("users");
+            PlayerPrefs.SetString("lazyUsername", username);
+            PlayerPrefs.SetString("lazyUserID", tempUserID);
+            PlayerPrefs.SetString("userEmail", "");
+            PlayerPrefs.SetInt("lazyNumberOfMatch", 0);
 
-        string dataPath = "Lazy Users/" + tempUserID + "/username";
-        string[,] dataWrite = { { dataPath }, { username } };
-        FBmanager.WriteData(dataWrite, false);
-        usernameText.SetText(username);
+            string dataPath = "Lazy Users/" + tempUserID + "/username";
+            string[,] dataWrite = { { dataPath }, { username } };
+            FBmanager.WriteData(dataWrite, false);
+            usernameText.SetText(username);
 
-        // Ask what player wants to learn
-        usernameCanvas.SetActive(false);
-        learningPreferences.SetActive(true);
+            // Ask what player wants to learn
+            usernameCanvas.SetActive(false);
+            learningPreferences.SetActive(true);
 
-        // Give all the contents that 
+            // Give all the contents that 
+        }
     }
     public void SetLearningPreferences() {
         // Saved! what to learn
