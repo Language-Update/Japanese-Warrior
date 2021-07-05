@@ -40,6 +40,89 @@ public class MenuHandler : MonoBehaviour{
     bool profileON;
     bool profileAnimChange;
 
+
+    #region Content Part
+
+    // Hiragana
+    string[] hiragana_JP = new string[] {"あ", "い", "う", "え", "お",
+        "か", "き", "く", "け", "こ", "が", "ぎ", "ぐ", "げ", "ご",
+        "さ", "し", "す", "せ", "そ", "ざ", "じ", "ず", "ぜ", "ぞ",
+        "た", "ち", "つ", "て", "と", "だ", "ぢ", "づ", "で", "ど",
+        "な", "に", "ぬ", "ね", "の", "は", "ひ", "ふ", "へ", "ほ",
+        "ば", "び", "ぶ", "べ", "ぼ", "ぱ", "ぴ", "ぷ", "ぺ", "ぽ",
+        "ま", "み", "む", "め", "も", "や", "ゆ", "よ", "ら", "り",
+        "る", "れ", "ろ", "わ", "を", "きゃ", "きゅ",  "きょ", "しゃ",
+        "しゅ", "しょ", "ちゃ", "ちゅ", "ちょ", "にゃ", "にゅ", "にょ",
+        "ひゃ", "ひゅ", "ひょ", "みゃ", "みゅ", "みょ", "りゃ", "りゅ",
+        "りょ", "ぎゃ", "ぎゅ", "ぎょ", "じゃ", "じゅ", "じょ", "びゃ", "びゅ",
+        "びょ", "ぴゃ", "ぴゅ", "ぴょ", "ん"
+    };
+
+    string[] hiragana_EN = new string[] {"a", "i", "u", "e", "o",
+        "ka", "ki", "ku", "ke", "ko", "ga", "gi", "gu", "ge", "go",
+        "sa", "shi", "su", "se", "so", "za", "ji", "zu", "ze", "zo",
+        "ta", "chi", "tsu", "te", "to", "da", "ji", "zu", "de", "do",
+        "na", "ni", "nu", "ne", "no", "ha", "hi", "fu", "he", "ho",
+        "ba", "bi", "bu", "be", "bo", "pa", "pi", "pu", "pe", "po",
+        "ma", "mi", "mu", "me", "mo", "ya", "yu", "yo", "ra", "ri",
+        "ru", "re", "ro", "wa", "wo", "kya ", "kyu ", "kyo ", "sha",
+        "shu ", "sho ", "cha ", "chu ", "cho", "nya", "nyu", "nyo",
+        "hya", "hyu", "hyo", "mya", "myu", "myo", "rya", "ryu",
+        "ryo", "gya", "gyu", "gyo", "ja", "ju", "jo", "bya", "byu",
+        "byo", "pya", "pyu", "pyo", "n"
+    };
+
+    // Katakana
+    string[] katakana_JP = new string[] {"ア", "イ", "ウ", "エ", "オ",
+        "カ", "キ", "ク", "ケ", "コ", "ガ", "ギ", "グ", "ゲ", "ゴ",
+        "サ", "シ", "ス", "セ", "ソ", "ザ", "ジ", "ズ", "ゼ", "ゾ",
+        "タ", "チ", "ツ", "テ", "ト", "ダ", "ヂ", "ヅ", "デ", "ド",
+        "ナ", "ニ", "ヌ", "ネ", "ノ", "ハ", "ヒ", "フ", "ヘ", "ホ",
+        "バ", "ビ", "ブ", "ベ", "ボ", "パ", "ピ", "プ", "ペ", "ポ",
+        "マ", "ミ", "ム", "メ", "モ", "ヤ", "ユ", "ヨ", "ラ", "リ", "ル", "レ", "ロ",
+        "ワ", "ヲ", "ン", "キャ", "キュ", "キョ", "シャ", "シュ", "ショ",
+        "チャ", "チュ", "チョ", "ニャ", "ニュ", "ニョ", "ヒャ", "ヒュ", "ヒョ",
+        "ミャ", "ミュ", "ミョ", "リャ", "リュ", "リョ", "ギャ", "ギュ", "ギョ",
+        "ジャ", "ジュ", "ジョ", "ビャ", "ビュ", "ビョ", "ピャ", "ピュ", "ピョ",
+    };
+
+    string[] katakana_EN = new string[] {"a", "i", "u", "e", "o",
+        "ka", "ki", "ku", "ke", "ko", "ga", "gi", "gu", "ge", "go",
+        "sa", "shi", "su", "se", "so", "zo", "ji", "zu", "ze", "zo",
+        "ta", "chi", "tsu", "te", "to", "da", "ji", "zu", "de", "do",
+        "na", "ni", "nu", "ne", "no", "ha", "hi", "hu", "he", "ho",
+        "ba", "bi", "bu", "be", "bo", "pa", "pi", "pu", "pe", "po",
+        "ma", "mi", "mu", "me", "mo", "ya", "yu", "yo", "ra", "ri", "ru", "re", "ro",
+        "wa", "wo", "n", "kya", "kyu", "kyo", "sha", "shu", "sho",
+        "cha", "chu", "cho", "nya", "nyu", "nyo", "hya", "hyu", "hyo",
+        "mya", "myu", "myo", "rya", "ryu", "ryo", "gya", "gyu", "gyo",
+        "ja", "ju", "jo", "bya", "byu", "byo", "pya", "pyu", "pyo",
+    };
+
+    // first20
+    string[] first20_JP = new string[] {"おはようございます", "こんにちは", "こんばんは",
+
+        "おやすみなさい", "ありがとうございます", "わたしのなまえは ～ です", "わたしの ～ です",
+
+        "～ へいきたいです", "～ はどこですか？", "まっすぐです", "～ をください",
+
+        "いくらですか？", "～ ありますか？", "すきです", "だいじょうぶです",
+
+        "なに", "わかりません", "ぐあいがわるいです", "おいしい", "トイレ"};
+
+    string[] first20_EN = new string[] {"Good Morning", "Hello", "Good Evening",
+
+        "Good Night", "Thank You", "My name is ~", "This is my ~",
+
+        "I want to go to ~", "Where is ~ ?", "Go straight", "May I have ~",
+
+        "How much is it?", "Is there any ~ ?", "I like it", "I'm fine",
+
+        "What?", "I don't understand", "I don't feel well", "Delicious", "Toilet"};
+
+    #endregion
+
+
     private void Awake() {
     }
 
@@ -204,6 +287,71 @@ public class MenuHandler : MonoBehaviour{
     public void ProfilePicButton() {
         if (profileON) { profileON = false; profileAnimChange = true; }            
         else { profileON = true; profileAnimChange = true; }
+
+        // Do it once - Upload all the contents into EN-JP with their categories
+        // hiragana
+        /*
+        int numberOfData = hiragana_EN.Length;
+        Debug.Log("Number of data EN: " + numberOfData);
+        Debug.Log("Number of data JP: " + hiragana_JP.Length);
+
+        string[,] initialData = new string[numberOfData, numberOfData];
+        for (int i = 0; i < numberOfData; i++) {
+            // Create an ID
+            string ID = "448100";           // 44-81 EN-JP, 00 - Hiragana
+            if (i < 10) { ID += "000" + i; }
+            else if (i < 100) { ID += "00" + i; }
+            else { ID += "0" + i; }
+
+            Content newContent = new Content(ID, "letter", "hiragana", "EN-JP",
+                hiragana_JP[i], hiragana_EN[i]);
+
+            initialData[0, i] = "EN-JP/hiragana/" + ID;
+            initialData[1, i] = JsonUtility.ToJson(newContent);
+        }
+        FBmanager.WriteJsonData(initialData);
+        */
+        // katakana
+        /*
+        int numberOfData = katakana_EN.Length;
+        Debug.Log("Number of data EN: " + numberOfData);
+        Debug.Log("Number of data JP: " + katakana_JP.Length);
+
+        string[,] initialData = new string[numberOfData, numberOfData];
+        for (int i = 0; i < numberOfData; i++) {
+            // Create an ID
+            string ID = "448101";           // 44-81 EN-JP | 01 - Katakana
+            if (i < 10) { ID += "000" + i; }
+            else if (i < 100) { ID += "00" + i; }
+            else { ID += "0" + i; }
+
+            Content newContent = new Content(ID, "letter", "katakana", "EN-JP",
+                katakana_JP[i], katakana_EN[i]);
+
+            initialData[0, i] = "EN-JP/katakana/" + ID;
+            initialData[1, i] = JsonUtility.ToJson(newContent);
+        }
+        FBmanager.WriteJsonData(initialData);
+        */
+        int numberOfData = first20_EN.Length;
+        Debug.Log("Number of data EN: " + numberOfData);
+        Debug.Log("Number of data JP: " + first20_JP.Length);
+
+        string[,] initialData = new string[numberOfData, numberOfData];
+        for (int i = 0; i < numberOfData; i++) {
+            // Create an ID
+            string ID = "448102";           // 44-81 EN-JP, 02 - first20
+            if (i < 10) { ID += "000" + i; }
+            else if (i < 100) { ID += "00" + i; }
+            else { ID += "0" + i; }
+
+            Content newContent = new Content(ID, "letter", "first20", "EN-JP",
+                first20_JP[i], first20_EN[i]);
+
+            initialData[0, i] = "EN-JP/first20/" + ID;
+            initialData[1, i] = JsonUtility.ToJson(newContent);
+        }
+        FBmanager.WriteJsonData(initialData);
     }
 
 

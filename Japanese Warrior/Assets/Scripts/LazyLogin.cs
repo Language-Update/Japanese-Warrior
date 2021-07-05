@@ -25,46 +25,6 @@ public class LazyLogin : MonoBehaviour {
     ColorBlock notSelectedColor;
 
 
-    #region Content Part
-
-    // Hiragana
-    string[] hiragana_JP = new string[] {"あ", "い", "う", "え", "お",
-        "か", "き", "く", "け", "こ", "が", "ぎ", "ぐ", "げ", "ご", 
-        "さ", "し", "す", "せ", "そ"};
-
-    string[] hiragana_EN = new string[] {"a", "i", "u", "e", "o", "ka", "ki",
-    "ku", "ke", "ko", "ga", "gi", "gu", "ge", "go", "sa", "shi", "su", "se", "so"};
-
-    // Katakana
-    string[] katakana_JP = new string[] {"ア", "イ", "ウ", "エ", "オ", "カ", "キ",
-    "ク", "ケ", "コ", "サ", "シ", "ス", "セ", "ソ", "タ", "チ", "ツ", "テ", "ト"};
-
-    string[] katakana_EN = new string[] {"a", "i", "u", "e", "o", "ka", "ki",
-    "ku", "ke", "ko", "sa", "shi", "su", "se", "so", "ta", "chi", "tsu", "te", "to"};
-
-    // first20
-    string[] first20_JP = new string[] {"おはようございます", "こんにちは", "こんばんは",
-
-        "おやすみなさい", "ありがとうございます", "わたしのなまえは ～ です", "わたしの ～ です",
-
-        "～ へいきたいです", "～ はどこですか？", "まっすぐです", "～ をください",
-
-        "いくらですか？", "～ ありますか？", "すきです", "だいじょうぶです",
-
-        "なに", "わかりません", "ぐあいがわるいです", "おいしい", "トイレ"};
-
-    string[] first20_EN = new string[] {"Good Morning", "Hello", "Good Evening",
-
-        "Good Night", "Thank You", "My name is ~", "This is my ~",
-
-        "I want to go to ~", "Where is ~ ?", "Go straight", "May I have ~",
-
-        "How much is it?", "Is there any ~ ?", "I like it", "I'm fine",
-
-        "What?", "I don't understand", "I don't feel well", "Delicious", "Toilet"};
-
-    #endregion
-
     private void Awake() {
         // Lazy Login feature
         if (PlayerPrefs.HasKey("firstLogin")) {
@@ -91,9 +51,6 @@ public class LazyLogin : MonoBehaviour {
         notSelectedColor.selectedColor = new Color(0.756f, 0.756f, 0.756f);
         selectedColor.normalColor = new Color(1f, 1f, 1f);
         selectedColor.selectedColor = new Color(1f, 1f, 1f);
-
-        // Do it once - Upload all the contents into EN-JP with their categories
-
     }
     
     private void StartLazyLogin() {
