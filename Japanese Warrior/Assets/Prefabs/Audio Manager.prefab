@@ -74,3 +74,273 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 0
+  - name: a
+    clip: {fileID: 8300000, guid: 97749db4b2ff83d41b6c9badf26cf613, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: chi
+    clip: {fileID: 8300000, guid: e287d80752ff8a748ab343993f17b0f7, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: e
+    clip: {fileID: 8300000, guid: 4f1a99ce9371d9b45a2fb17f9c138c84, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: ga
+    clip: {fileID: 8300000, guid: 193297c0e6880fa40a8c32db2db2595c, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: ge
+    clip: {fileID: 8300000, guid: bf778baf4c3514f4ab0f22d5e9bb0efb, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: gi
+    clip: {fileID: 8300000, guid: 227a055e4ad2d5e43a0842c737a0a307, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: go
+    clip: {fileID: 8300000, guid: 25e92b5d90f8b6348af6182c51fad905, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: gu
+    clip: {fileID: 8300000, guid: 35873afd185e66f40991edaa6d970ead, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: i
+    clip: {fileID: 8300000, guid: 8ba2a43848087f6459710458b7cc8c45, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: ka
+    clip: {fileID: 8300000, guid: 492037ed402c47c48b60aa85590c8f02, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: ke
+    clip: {fileID: 8300000, guid: a770fcc2bbd49ca43b13d4a6d282fc9e, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: ki
+    clip: {fileID: 8300000, guid: 8f70a0b828e5bf144b4656f38022df9d, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: ko
+    clip: {fileID: 8300000, guid: fca68731be9c72245a8e11f2b35cb533, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: ku
+    clip: {fileID: 8300000, guid: afe59bcebcfeab54aa4bda1b0aa03344, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: o
+    clip: {fileID: 8300000, guid: 288eaed83318a284da8a60bd23855ffa, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: sa
+    clip: {fileID: 8300000, guid: f5c7e012fb5456d43a5a27e44511e23f, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: se
+    clip: {fileID: 8300000, guid: 4714e21c08a606942a9c730db9c686bf, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: shi
+    clip: {fileID: 8300000, guid: 3f309022dbc73ec4fb0b200afe6880a2, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: so
+    clip: {fileID: 8300000, guid: 222dccf6252f10e479873ad7cfb1e75a, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: su
+    clip: {fileID: 8300000, guid: a346360c32ff1d64a803cdcd51be1f4f, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: ta
+    clip: {fileID: 8300000, guid: d962aec0a15d7bd449a64490f030501a, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: te
+    clip: {fileID: 8300000, guid: 1207bd62c1f50f54394a3b010081951d, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: to
+    clip: {fileID: 8300000, guid: abbfbb006004a9949a457374e66e7c19, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: tsu
+    clip: {fileID: 8300000, guid: 8669dc4e5d120bd42b4cff64df3c721a, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: u
+    clip: {fileID: 8300000, guid: b32083bf3ba3e3540bc7857fbf5af697, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: Delicious
+    clip: {fileID: 8300000, guid: 984da6fd8864a2a428170baba304966f, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: Go straight
+    clip: {fileID: 8300000, guid: 927ab4f6491ad594c842dd3efb77e62e, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: Good Evening
+    clip: {fileID: 8300000, guid: db0bdc96454e6fe4c88f0fe83eab1b86, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: Good Morning
+    clip: {fileID: 8300000, guid: c6b406ae37f971d46954537b99c419a3, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: Good Night
+    clip: {fileID: 8300000, guid: 7a6ce714c7f85394183d8307b74a9e42, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: Hello
+    clip: {fileID: 8300000, guid: 6fd69549d1eb7ad438a735845a886f45, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: How much is it?
+    clip: {fileID: 8300000, guid: fb3a115349575ff438d1274993448d26, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: I don't feel well
+    clip: {fileID: 8300000, guid: 0f225570d9cef72489eaee176592df64, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: I don't understand
+    clip: {fileID: 8300000, guid: 993b2b9488079da4b8ea1c69361e13b6, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: I like it
+    clip: {fileID: 8300000, guid: 7169bf089fefce14095d4951f8ed57a0, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: I want to go to ~
+    clip: {fileID: 8300000, guid: c209cc369e7a1004b8c27271d3570647, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: I'm fine
+    clip: {fileID: 8300000, guid: 32535a7de5ec6594aad7497b13e716b8, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: Is there any ~ ?
+    clip: {fileID: 8300000, guid: 940d11812ca3ad04fab85a3e5b4a6a13, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: May I have ~
+    clip: {fileID: 8300000, guid: 132bed5feaf892e4191d5800913ae584, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: My name is ~
+    clip: {fileID: 8300000, guid: f2952092cbe12854eb8f42c03ecaef28, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: Thank You
+    clip: {fileID: 8300000, guid: 5fb13cda04eb3f0448a5f1ff17ce0784, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: This is my ~
+    clip: {fileID: 8300000, guid: 8627d9c3d522b084abd588a7b9b7523c, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: Toilet
+    clip: {fileID: 8300000, guid: 60d0901d93deba54bb7d28092fc27d3b, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: What?
+    clip: {fileID: 8300000, guid: 52b4718d19ca71549800a5881786de70, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: Where is ~ ?
+    clip: {fileID: 8300000, guid: 2334b9e4ec3b61245ae8252b3d3275b1, type: 3}
+    source: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0

@@ -333,6 +333,8 @@ public class MenuHandler : MonoBehaviour{
         }
         FBmanager.WriteJsonData(initialData);
         */
+        // first 20
+        /*
         int numberOfData = first20_EN.Length;
         Debug.Log("Number of data EN: " + numberOfData);
         Debug.Log("Number of data JP: " + first20_JP.Length);
@@ -352,6 +354,7 @@ public class MenuHandler : MonoBehaviour{
             initialData[1, i] = JsonUtility.ToJson(newContent);
         }
         FBmanager.WriteJsonData(initialData);
+        */
     }
 
 

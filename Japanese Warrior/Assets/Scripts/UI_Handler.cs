@@ -11,6 +11,7 @@ public class UI_Handler : MonoBehaviour{
     [SerializeField] UnityEngine.UI.Button[] buttons = null;
 
     GameHandler gameHandler;
+    AudioManager AudioManager;
     Content[] contentPool;
     UnityEngine.UI.ColorBlock theColor;
     Color originalColor;
@@ -30,11 +31,13 @@ public class UI_Handler : MonoBehaviour{
     int numberOfTrueSelection, firstSelection, secondSelection, newSelection,
         firstID, secondID;
     string learningButton = "";
+    string askedQuestionSound = "";
     Color normalColor;
 
     public bool _learningState, _playState;
 
     void Start()    {
+        askedQuestionSound = "";
         if (_playState) {
             // Reset all paramaters
             bladeText.SetText("Blade: 0"); // Start with zero blade   
@@ -328,10 +331,14 @@ public class UI_Handler : MonoBehaviour{
         if (answeredTrue) {
             // Set timer. Wait a bit to see correct one
             yield return new WaitForSeconds(0.3f);
+            // Read the true answer
         }
         else {
             // Set timer. Wait for a relatively long time to see your fault
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(0.5f);
+            // Read the true answer
+            FindObjectOfType<AudioManager>().Play(askedQuestionSound);
+            yield return new WaitForSeconds(1.5f);
         }
 
 
@@ -345,17 +352,29 @@ public class UI_Handler : MonoBehaviour{
         int randomQuestionIndex;            // Used for avoid multiple true answer
 
         Content questionToAsk = contentPool[Random.Range(0, contentPool.Length)];   //  Select new question
+        askedQuestionSound = questionToAsk.englishContent;
+        FindObjectOfType<AudioManager>().Play(askedQuestionSound);      // Read the pronounsation
         questionText.SetText(questionToAsk.japaneseContent);                        //  Add it's Hiragana to the question Text
         buttons[answer].GetComponentInChildren<TextMeshProUGUI>().SetText(questionToAsk.englishContent);                  //  Add it's answer to the right place
+        int[] selectedAnswers = new int[4]; int selectedAnswerIndex = 0; // store selected answers to avoid dublication
+        selectedAnswers[selectedAnswerIndex] = questionToAsk.contentID_OLD; // store the true answers's ID
+        selectedAnswerIndex++;
         for (int i = 0; i < buttons.Length; i++) {                              //  Add random other 3 answers
             string typeOfAnswer = "";
+            int randomSelectionID = 0;
             if (i != answer) {  // skip the true button cuz we already put the true answer in it.
                 do {        // I'll pick a number from the pool to get random answer
                     randomQuestionIndex = Random.Range(0, contentPool.Length);
                     typeOfAnswer = contentPool[randomQuestionIndex].contentType;
-                }
-                while (randomQuestionIndex == questionToAsk.contentID_OLD || typeOfAnswer != questionToAsk.contentType);  // But if that number is equal my true number, then do it again
-
+                    randomSelectionID = contentPool[randomQuestionIndex].contentID_OLD;
+                }   // if randomly selected content's id is one of the selected ids then do it again
+                while (selectedAnswers[0] == randomSelectionID || selectedAnswers[1] == randomSelectionID
+                    || selectedAnswers[2] == randomSelectionID || selectedAnswers[3] == randomSelectionID
+                    || typeOfAnswer != questionToAsk.contentType );
+                // store the selected one and increase the index
+                selectedAnswers[selectedAnswerIndex] = randomSelectionID;
+                selectedAnswerIndex++;
+                // Get the content
                 buttons[i].GetComponentInChildren<TextMeshProUGUI>().SetText(contentPool[randomQuestionIndex].englishContent); // if not put it into button
             }
                 

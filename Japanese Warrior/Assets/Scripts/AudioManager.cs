@@ -32,10 +32,9 @@ public class AudioManager : MonoBehaviour {
         Sound s = Array.Find(sounds, sound => sound.name == name);
 
         if (s == null) {
-            Debug.Log("There is no sound called " + " !");
+            Debug.LogWarning("There is no sound called \"" + name + "\" !");
             return;
         }
-
         s.source.Play();
     }
 
