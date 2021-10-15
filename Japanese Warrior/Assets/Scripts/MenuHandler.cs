@@ -282,6 +282,7 @@ public class MenuHandler : MonoBehaviour{
     public void LogOutButton() {
         PlayerPrefs.SetString("firstLogin", "yes");
         FBmanager.SignOut();    // User Sign-out
+        Application.Quit();     // Quit App
     }
 
     public void ProfilePicButton() {
