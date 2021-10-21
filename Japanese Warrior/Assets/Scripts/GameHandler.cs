@@ -359,5 +359,4 @@ public class GameHandler : MonoBehaviour{
 
     public Content[] GetQuestionContent() { return contentPool; }
 
-
 }

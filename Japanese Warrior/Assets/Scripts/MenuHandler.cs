@@ -21,6 +21,7 @@ public class MenuHandler : MonoBehaviour{
     [SerializeField] GameObject matchingCanvas = null;
     [SerializeField] TextMeshProUGUI matchingText = null;
     [SerializeField] TextMeshProUGUI[] texts = null;
+    [SerializeField] TextMeshProUGUI messageText = null;
     // Profile
     [SerializeField] TextMeshProUGUI usernameText = null;
     [SerializeField] TextMeshProUGUI userEmail = null;
@@ -389,7 +390,13 @@ public class MenuHandler : MonoBehaviour{
         }
     }
     public void LoadSceneByName(string SceneName) {
-        SceneManager.LoadScene(SceneName);
+        if (SceneName == "LearningScene") {
+            // Learning part is out of service !!!
+            StartCoroutine(ShowMessage("Sorry! Learning is not in use for now.", 3f));
+        }
+        else {
+            SceneManager.LoadScene(SceneName);
+        }
     }
 
     public void Matching() {
@@ -450,5 +457,12 @@ public class MenuHandler : MonoBehaviour{
             logOutButton.SetActive(false);
         }
     }
-   
+
+    IEnumerator ShowMessage(string _message, float time) {
+        // messageText.SetText(_message);
+        messageText.text = _message;
+        yield return new WaitForSeconds(time);
+        messageText.text = "";
+    }
+
 }

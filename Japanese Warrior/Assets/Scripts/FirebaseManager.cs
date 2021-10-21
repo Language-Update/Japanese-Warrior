@@ -141,7 +141,6 @@ public class FirebaseManager : MonoBehaviour {
     }
 
 
-
     //              Getters and Setters              //
 
     public string GetUsername() {
